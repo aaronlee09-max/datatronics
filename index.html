@@ -11,40 +11,19 @@
 <body>
   <div class="app-shell">
     <header class="hero">
-      <div class="topbar">
-        <span class="eyebrow">FONT LIBRARY</span>
-        <button class="theme" id="themeBtn" type="button" aria-label="다크 모드 전환">◐</button>
-      </div>
+      <div class="topbar"><span class="eyebrow">FONT LIBRARY</span><button class="theme" id="themeBtn" type="button" aria-label="다크 모드 전환">◐</button></div>
       <h1>iPhone<br><span>Fonts.</span></h1>
-      <p>아이폰에서 바로 찾아보고 설치할 폰트를 한곳에 모았어요.</p>
-      <div class="search-wrap">
-        <span>⌕</span>
-        <input id="search" type="search" placeholder="폰트 검색" autocomplete="off">
-      </div>
+      <p>마음에 드는 폰트를 골라 담고, 한 번에 모바일 구성 프로파일로 만들어보세요.</p>
+      <div class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="폰트 검색" autocomplete="off"></div>
     </header>
-
     <main>
-      <section class="intro-card">
-        <div>
-          <span class="pill">iOS READY</span>
-          <h2>내 취향의 글꼴을<br>빠르게 찾아보세요.</h2>
-          <p>폰트 미리보기, 정보 확인, 설치 파일 다운로드를 한 화면에서 제공합니다.</p>
-        </div>
-        <div class="phone-glyph" aria-hidden="true">Aa</div>
-      </section>
-
-      <div class="section-head">
-        <h2>Fonts</h2>
-        <span id="count">0 fonts</span>
-      </div>
+      <section class="intro-card"><div><span class="pill">PICK & INSTALL</span><h2>내 취향의 글꼴을<br>골라 담아보세요.</h2><p>폰트를 선택한 뒤 아래에서 하나의 <b>.mobileconfig</b> 파일로 만들 수 있어요.</p></div><div class="phone-glyph" aria-hidden="true">Aa</div></section>
+      <div class="section-head"><h2>Fonts</h2><span id="count">0 fonts</span></div>
       <section id="fontGrid" class="font-grid" aria-live="polite"></section>
       <p id="empty" class="empty" hidden>검색 결과가 없습니다.</p>
     </main>
-
-    <footer>
-      <p>iPhone Fonts · datatronics</p>
-      <p class="small">폰트의 저작권과 라이선스는 각 제작자에게 있습니다.</p>
-    </footer>
+    <div id="selectionBar" class="selection-bar" hidden><div><strong>내 폰트 바구니</strong><span id="selectedNames"></span></div><button id="makeProfile" type="button" disabled>모바일 구성 만들기</button></div>
+    <footer><p>iPhone Fonts · datatronics</p><p class="small">폰트의 저작권과 라이선스는 각 제작자에게 있습니다.</p></footer>
   </div>
   <script src="./script.js"></script>
 </body>
