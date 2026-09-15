@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-09-15T06:50:00+09:00",
+  "status": "archives_not_found_in_repository",
+  "repository": "https://github.com/aaronlee09-max/datatronics",
+  "deployUrl": "https://softronics.run.place",
+  "storage": "GitHub Pages + git text files only. Font binaries were not committed because source archives were not present in the repository tree.",
+  "iphoneInstall": "untested",
+  "iphoneInstallNote": "Generator follows Apple com.apple.font payload (Font + Name keys, TTF/OTF only). Device install has not been verified on a physical iPhone.",
+  "expectedArchives": [
+    "아카이브 (1).zip",
+    "아카이브 (2).zip",
+    "안심글꼴_폰트폴더에파일붙여넣기.zip"
+  ],
+  "archivesFound": [],
+  "searchedLocations": [
+    "github.com/aaronlee09-max/datatronics current main tree",
+    "github.com/aaronlee09-max/datatronics releases",
+    "github.com/aaronlee09-max/informatics root",
+    "connected Google Drive title search"
+  ],
+  "counts": {
+    "sourceFontFiles": 0,
+    "uniqueBySha256": 0,
+    "duplicatesRemoved": 0,
+    "damaged": 0,
+    "fontsJsonEntries": 0,
+    "filesOnDisk": 0
+  },
+  "extensions": [],
+  "sha256Generated": false,
+  "categories": {
+    "귀여운 둥근폰트": 0,
+    "기본 한국폰트": 0,
+    "배달의민족": 0,
+    "독립서체": 0,
+    "개성폰트": 0,
+    "기타": 0
+  },
+  "fonts": [],
+  "duplicates": [],
+  "licenseNotes": [
+    "No font binaries were published, so no license text was extracted from archives.",
+    "Do not label unpublished or unverified fonts as free."
+  ],
+  "brokenLinks": [],
+  "previousBrokenCatalog": {
+    "file": "fonts-00.json",
+    "action": "removed",
+    "reason": "Referenced missing font files and would produce 404 download links."
+  }
+}
