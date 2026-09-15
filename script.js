@@ -39,11 +39,8 @@ if(localStorage.getItem('font-theme')==='dark')document.body.classList.add('dark
 
 async function init(){
  try{
-  const response=await fetch('./fonts.json',{cache:'no-store'});
-  if(!response.ok)throw new Error('fonts.json을 불러오지 못했습니다.');
-  const data=await response.json();
-  if(!Array.isArray(data))throw new Error('fonts.json 형식이 올바르지 않습니다.');
-  fonts=data;
+  const parts=await Promise.all(Array.from({length:7},(_,i)=>fetch(`./fonts-${String(i).padStart(2,'0')}.json`,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`fonts-${String(i).padStart(2,'0')}.json을 불러오지 못했습니다.`);return r.json();})));
+  fonts=parts.flat();
   render();
  }catch(error){
   fonts=[];
