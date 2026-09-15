@@ -1,19 +1,16 @@
-const fonts=[
-  {name:"호승쌤체",category:"Handwriting",preview:"오늘도 예쁘게 기록해요",description:"손글씨 느낌의 폰트",file:null},
-  {name:"폰트 준비 중",category:"Coming soon",preview:"Aa 가나다 123",description:"다음 폰트를 순차적으로 추가 예정",file:null}
-];
+let fonts=[];
 const selected=new Set();
 const grid=document.querySelector('#fontGrid'),count=document.querySelector('#count'),empty=document.querySelector('#empty'),search=document.querySelector('#search');
 
 function render(){
  const q=search.value.trim().toLowerCase();
- const list=fonts.filter(f=>`${f.name} ${f.category} ${f.description}`.toLowerCase().includes(q));
+ const list=fonts.filter(f=>`${f.name} ${f.category||''} ${f.description||''}`.toLowerCase().includes(q));
  count.textContent=`${list.length} font${list.length===1?'':'s'}`;
  empty.hidden=list.length!==0;
- grid.innerHTML=list.map((f,i)=>`<article class="font-card ${selected.has(f.name)?'selected':''}">
+ grid.innerHTML=list.map(f=>`<article class="font-card ${selected.has(f.name)?'selected':''}">
   <label class="select-row"><input class="font-check" type="checkbox" data-font="${escapeAttr(f.name)}" ${selected.has(f.name)?'checked':''} ${!f.file?'disabled':''}><span>담기</span></label>
-  <div class="font-meta"><span class="font-name">${escapeHtml(f.name)}</span><span class="tag">${escapeHtml(f.category)}</span></div>
-  <div class="preview">${escapeHtml(f.preview)}</div><div class="font-info">${escapeHtml(f.description)}</div>
+  <div class="font-meta"><span class="font-name">${escapeHtml(f.name)}</span><span class="tag">${escapeHtml(f.category||'Font')}</span></div>
+  <div class="preview">${escapeHtml(f.preview||'Aa 가나다 123')}</div><div class="font-info">${escapeHtml(f.description||'')}</div>
   <div class="actions">${f.file?`<a class="download" href="${encodeURI(f.file)}" download>다운로드</a>`:'<button class="download" type="button" disabled style="opacity:.45">파일 준비 중</button>'}<button class="details" type="button" data-copy="${escapeAttr(f.name)}">이름 복사</button></div>
  </article>`).join('');
  grid.querySelectorAll('.font-check').forEach(b=>b.addEventListener('change',()=>{b.checked?selected.add(b.dataset.font):selected.delete(b.dataset.font);render();}));
@@ -36,6 +33,24 @@ async function makeMobileConfig(){
  const blob=new Blob([xml],{type:'application/x-apple-aspen-config'}); const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='iPhone-Fonts.mobileconfig';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 function blobToBase64(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result).split(',')[1]);r.onerror=reject;r.readAsDataURL(blob);});}
-function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function escapeAttr(s){return escapeHtml(s)}function escapeXml(s){return escapeHtml(s)}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function escapeAttr(s){return escapeHtml(s)}function escapeXml(s){return escapeHtml(s)}
 search.addEventListener('input',render);document.querySelector('#themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');localStorage.setItem('font-theme',document.body.classList.contains('dark')?'dark':'light')});document.querySelector('#makeProfile')?.addEventListener('click',()=>makeMobileConfig().catch(e=>alert(e.message)));
-if(localStorage.getItem('font-theme')==='dark')document.body.classList.add('dark');render();
+if(localStorage.getItem('font-theme')==='dark')document.body.classList.add('dark');
+
+async function init(){
+ try{
+  const response=await fetch('./fonts.json',{cache:'no-store'});
+  if(!response.ok)throw new Error('fonts.json을 불러오지 못했습니다.');
+  const data=await response.json();
+  if(!Array.isArray(data))throw new Error('fonts.json 형식이 올바르지 않습니다.');
+  fonts=data;
+  render();
+ }catch(error){
+  fonts=[];
+  count.textContent='0 fonts';
+  empty.hidden=false;
+  empty.textContent='폰트 목록을 불러오지 못했습니다.';
+  console.error(error);
+ }
+}
+init();
