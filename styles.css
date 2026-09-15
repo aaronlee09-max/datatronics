@@ -153,6 +153,11 @@ input {
   line-height: 1.5;
   margin-bottom: 22px;
 }
+.status-banner[hidden],
+.selection-bar[hidden],
+.empty[hidden] {
+  display: none !important;
+}
 
 .section-head {
   display: flex;
