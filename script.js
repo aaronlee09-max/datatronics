@@ -41,6 +41,10 @@ function windowsInstallable(font) {
   return ["ttf", "otf", "ttc", "otc"].includes(fileExtension(font));
 }
 
+function selectable(font) {
+  return canInstall(font) || windowsInstallable(font);
+}
+
 function windowsDownloadLabel(font) {
   const ext = fileExtension(font);
   if (["ttf", "otf", "ttc", "otc"].includes(ext)) return "🪟 Windows 다운로드";
@@ -93,8 +97,8 @@ function render() {
         : "파일을 다운로드해 용도에 맞게 사용하세요.";
     return `<article class="font-card ${selected.has(id) ? "selected" : ""}" data-id="${escapeAttr(id)}" data-file="${escapeAttr(f.file || "")}" data-family="${escapeAttr(face)}">
       <label class="select-row">
-        <input class="font-check" type="checkbox" data-id="${escapeAttr(id)}" ${selected.has(id) ? "checked" : ""} ${canInstall(f) ? "" : "disabled"}>
-        <span>담기</span>
+        <input class="font-check" type="checkbox" data-id="${escapeAttr(id)}" ${selected.has(id) ? "checked" : ""} ${selectable(f) ? "" : "disabled"}>
+        <span>골라 담기</span>
       </label>
       <div class="font-meta">
         <span class="font-name">${escapeHtml(f.name)}</span>
@@ -179,21 +183,47 @@ function styleCards(font) {
 function updateBuilder() {
   const bar = document.querySelector("#selectionBar");
   const names = document.querySelector("#selectedNames");
-  const btn = document.querySelector("#makeProfile");
+  const iphoneBtn = document.querySelector("#makeProfile");
+  const windowsBtn = document.querySelector("#downloadWindows");
   if (!bar) return;
-  const chosen = fonts.filter((f) => selected.has(fontId(f)) && canInstall(f));
+
+  const chosenWindows = fonts.filter((f) => selected.has(fontId(f)) && windowsInstallable(f));
+  const chosenIphone = fonts.filter((f) => selected.has(fontId(f)) && canInstall(f));
+  const chosen = fonts.filter((f) => selected.has(fontId(f)) && selectable(f));
+
   bar.hidden = chosen.length === 0;
   names.textContent = chosen.length
     ? `${chosen.length}개 선택 · ${chosen.map((f) => f.name).join(", ")}`
     : "";
-  btn.disabled = chosen.length === 0;
+  iphoneBtn.disabled = chosenIphone.length === 0;
+  windowsBtn.disabled = chosenWindows.length === 0;
+}
+
+async function downloadSelectedWindows() {
+  const chosen = fonts.filter((f) => selected.has(fontId(f)) && windowsInstallable(f));
+  if (!chosen.length) return;
+
+  if (chosen.length > 1) {
+    const ok = confirm(`${chosen.length}개의 Windows 폰트를 차례로 다운로드할까요? 브라우저에서 여러 다운로드 허용을 요청할 수 있습니다.`);
+    if (!ok) return;
+  }
+
+  for (const font of chosen) {
+    const a = document.createElement("a");
+    a.href = encodeURI(font.file);
+    a.download = font.file.split("/").pop() || `${font.name}.${fileExtension(font)}`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    await new Promise((resolve) => setTimeout(resolve, 450));
+  }
 }
 
 async function makeMobileConfig() {
   const chosen = fonts.filter((f) => selected.has(fontId(f)) && canInstall(f));
   if (!chosen.length) return;
   if (chosen.length > 20) {
-    const ok = confirm(`선택한 폰트가 ${chosen.length}개입니다. 큰 프로파일은 생성·설치가 실패할 수 있습니다. 계속할까요?`);
+    const ok = confirm(`선택한 iPhone 폰트가 ${chosen.length}개입니다. 큰 프로파일은 생성·설치가 실패할 수 있습니다. 계속할까요?`);
     if (!ok) return;
   }
 
@@ -243,11 +273,11 @@ async function makeMobileConfig() {
   <key>PayloadDescription</key>
   <string>선택한 글꼴을 iPhone에 설치하기 위한 구성 프로파일입니다. 실제 기기 설치는 테스트가 필요합니다.</string>
   <key>PayloadDisplayName</key>
-  <string>iPhone Fonts · 선택한 폰트</string>
+  <string>Fontory · 선택한 iPhone 폰트</string>
   <key>PayloadIdentifier</key>
   <string>datatronics.iphone-fonts.${profileUuid}</string>
   <key>PayloadOrganization</key>
-  <string>iPhone Fonts</string>
+  <string>Fontory</string>
   <key>PayloadRemovalDisallowed</key>
   <false/>
   <key>PayloadType</key>
@@ -262,7 +292,7 @@ async function makeMobileConfig() {
   const blob = new Blob([xml], { type: "application/x-apple-aspen-config" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "iPhone-Fonts.mobileconfig";
+  a.download = "Fontory-iPhone-Fonts.mobileconfig";
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
@@ -304,6 +334,9 @@ document.querySelector("#themeBtn").addEventListener("click", () => {
 });
 document.querySelector("#makeProfile").addEventListener("click", () => {
   makeMobileConfig().catch((error) => alert(error.message));
+});
+document.querySelector("#downloadWindows").addEventListener("click", () => {
+  downloadSelectedWindows().catch((error) => alert(error.message));
 });
 if (localStorage.getItem("font-theme") === "dark") document.body.classList.add("dark");
 
