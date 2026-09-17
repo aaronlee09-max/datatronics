@@ -228,12 +228,20 @@ input {
   line-height: 1.25;
   overflow: hidden;
   white-space: nowrap;
+  font-synthesis: none;
 }
 .preview-sub {
   margin-top: 8px;
   font-size: 15px;
   color: var(--muted);
   letter-spacing: -.02em;
+  font-synthesis: none;
+}
+.preview-failed {
+  font-family: inherit !important;
+  color: var(--muted);
+  font-size: 13px !important;
+  letter-spacing: 0 !important;
 }
 .font-info {
   font-size: 13px;
