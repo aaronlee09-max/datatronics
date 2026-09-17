@@ -1,0 +1,79 @@
+name: Import Some Fonts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download first font batch
+        env:
+          API_KEY: AIzaSyC1qbk75NzWBvSaDh6KnsjjA9pIrP4lYIE
+        run: |
+          python3 - <<'PY'
+          import os, urllib.request
+          from pathlib import Path
+
+          KEY = os.environ['API_KEY']
+          HEADERS = {
+              'User-Agent': 'Mozilla/5.0',
+              'Referer': 'https://drive.google.com/',
+          }
+          files = [
+              ('1UvP8xorKZq4lRtBQ_L8Sz9l9EHc_19N2', 'Cafe24Angbanana.otf'),
+              ('1EOFqMdCAKQjNrDllLWL-HoBdAKYNNEY-', 'Cafe24Angbanana.ttf'),
+              ('1tTsO4bo2KoQSVNjHxPX64xh06EGFT5oG', 'Cafe24Nyangi-B-v1.0.otf'),
+              ('1Xrs5egQwvqSp7pms6K5gRfH3c9wKKnkA', 'Cafe24Nyangi-W-v1.0.otf'),
+              ('1b_TwLXbswd3En0cjpCPnStTagGYRih5r', 'Cafe24Nyangi-B-v1.0.ttf'),
+              ('1afE54O71Cdq6WLbwjfnZ43I03muLb82C', 'Cafe24Nyangi-W-v1.0.ttf'),
+              ('1hy7fXJt4zG7wYvWgwWMjGTt9Gq-qhkOl', 'Cafe24Meongi-B-v1.0.otf'),
+              ('13oPdKR6If6B8S6Txb8gpk_JmdIXmp6EE', 'Cafe24Meongi-W-v1.0.otf'),
+              ('1UmFkigjicHDG5o3tm6oUWz6e3yVFrqqk', 'Cafe24Meongi-B-v1.0.ttf'),
+              ('1B6r2t4f2GQekF1IZCBQ03WVLzC4U3-r3', 'Cafe24Meongi-W-v1.0.ttf'),
+              ('1lEOzAyPi9JBEOBvDfaAbxRAnaBr1xUpG', 'Cafe24Behappy.ttf'),
+              ('1JjOXGrjDHgfi67ne3xDSG3vSVctmq5Yh', 'Cafe24Lovingu.ttf'),
+              ('1W42W5KygEawEMFCkmaDLMjAvlTMY1atB', 'Cafe24Decobox.ttf'),
+              ('1QNULCDGDaeaaDYDuKcP0TlvwRZgKkjvX', 'Cafe24Decoline.ttf'),
+              ('1dFnukE0SVTqx-V3xuFjP6AHfjMjm0FUB', 'Cafe24Decoshadow.ttf'),
+              ('1DA7LZDOb0kqhWWMtlFhSx9gPELzJG6HX', 'Cafe24Decomilk.ttf'),
+          ]
+          dest = Path('fonts')
+          dest.mkdir(exist_ok=True)
+          ok = fail = 0
+          for fid, name in files:
+              target = dest / name
+              url = f'https://www.googleapis.com/drive/v3/files/{fid}?alt=media&key={KEY}'
+              req = urllib.request.Request(url, headers=HEADERS)
+              try:
+                  data = urllib.request.urlopen(req, timeout=60).read()
+                  if len(data) < 100:
+                      raise RuntimeError('too small: %s' % len(data))
+                  target.write_bytes(data)
+                  ok += 1
+                  print('OK', name, len(data))
+              except Exception as e:
+                  fail += 1
+                  print('FAIL', name, e)
+          print('SUMMARY ok', ok, 'fail', fail)
+          if ok == 0:
+              raise SystemExit('no fonts downloaded')
+          PY
+
+      - name: Commit fonts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fonts
+          if git diff --cached --quiet; then
+            echo "No font changes"
+          else
+            git commit -m "Add first batch of font files to fonts/"
+            git push
+          fi
