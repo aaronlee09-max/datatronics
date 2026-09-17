@@ -12,6 +12,8 @@ let fonts = [];
 const selected = new Set();
 let activeCategory = "전체";
 const loadedFaces = new Set();
+const PAGE_SIZE = 36;
+let page = 1;
 
 const grid = document.querySelector("#fontGrid");
 const count = document.querySelector("#count");
@@ -19,6 +21,7 @@ const empty = document.querySelector("#empty");
 const search = document.querySelector("#search");
 const categoryBar = document.querySelector("#categoryBar");
 const statusBanner = document.querySelector("#statusBanner");
+const pagination = document.querySelector("#pagination");
 
 function fontId(font) {
   return font.id || font.file || font.name;
@@ -38,6 +41,7 @@ function renderCategories() {
   categoryBar.querySelectorAll("[data-cat]").forEach((btn) => {
     btn.addEventListener("click", () => {
       activeCategory = btn.dataset.cat;
+      page = 1;
       render();
     });
   });
@@ -52,12 +56,15 @@ function matchesQuery(font, q) {
 function render() {
   renderCategories();
   const q = search.value.trim().toLowerCase();
-  const list = fonts.filter((f) => {
+  const filtered = fonts.filter((f) => {
     const catOk = activeCategory === "전체" || f.category === activeCategory;
     return catOk && matchesQuery(f, q);
   });
-  count.textContent = `${list.length} font${list.length === 1 ? "" : "s"}`;
-  empty.hidden = list.length !== 0;
+  const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  page = Math.min(page, pages);
+  const list = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  count.textContent = `${filtered.length} fonts · ${page} / ${pages}`;
+  empty.hidden = filtered.length !== 0;
   empty.textContent = fonts.length ? "검색 결과가 없습니다." : "등록된 폰트 파일이 아직 없습니다.";
 
   grid.innerHTML = list.map((f) => {
@@ -86,6 +93,19 @@ function render() {
       </div>
     </article>`;
   }).join("");
+
+  pagination.hidden = filtered.length <= PAGE_SIZE;
+  pagination.innerHTML = pagination.hidden ? "" : `
+    <button type="button" data-page="prev" ${page === 1 ? "disabled" : ""}>이전</button>
+    <span>${page} / ${pages}</span>
+    <button type="button" data-page="next" ${page === pages ? "disabled" : ""}>다음</button>`;
+  pagination.querySelectorAll("[data-page]").forEach((button) => {
+    button.addEventListener("click", () => {
+      page += button.dataset.page === "next" ? 1 : -1;
+      render();
+      document.querySelector(".section-head")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 
   grid.querySelectorAll(".font-check").forEach((box) => {
     box.addEventListener("change", () => {
@@ -257,7 +277,7 @@ function escapeHtml(value) {
 function escapeAttr(value) { return escapeHtml(value); }
 function escapeXml(value) { return escapeHtml(value); }
 
-search.addEventListener("input", render);
+search.addEventListener("input", () => { page = 1; render(); });
 document.querySelector("#themeBtn").addEventListener("click", () => {
   document.body.classList.toggle("dark");
   localStorage.setItem("font-theme", document.body.classList.contains("dark") ? "dark" : "light");

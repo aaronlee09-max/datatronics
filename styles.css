@@ -261,6 +261,26 @@ input {
 }
 .details { background: var(--bg); color: var(--ink); }
 .empty { text-align: center; color: var(--muted); padding: 50px 0; }
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+.pagination button {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 14px;
+  color: var(--ink);
+  background: var(--card);
+  font-weight: 800;
+  cursor: pointer;
+}
+.pagination button:disabled { opacity: .45; cursor: not-allowed; }
 
 .selection-bar {
   position: fixed;
