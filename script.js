@@ -8,10 +8,12 @@ const CATEGORIES = [
   "기타",
 ];
 
+const GITHUB_LFS_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
 let fonts = [];
 const selected = new Set();
 let activeCategory = "전체";
 const loadedFaces = new Set();
+const failedFaces = new Set();
 const PAGE_SIZE = 36;
 let page = 1;
 
@@ -27,14 +29,12 @@ function fontId(font) {
   return font.id || font.file || font.name;
 }
 
-function canInstall(font) {
-  if (!font.file) return false;
-  const ext = String(font.file).split(".").pop().toLowerCase();
-  return ext === "ttf" || ext === "otf";
-}
-
 function fileExtension(font) {
   return String(font.file || "").split(".").pop().toLowerCase();
+}
+
+function canInstall(font) {
+  return ["ttf", "otf"].includes(fileExtension(font));
 }
 
 function windowsInstallable(font) {
@@ -42,13 +42,34 @@ function windowsInstallable(font) {
 }
 
 function selectable(font) {
-  return canInstall(font) || windowsInstallable(font);
+  return windowsInstallable(font);
+}
+
+function webPreviewable(font) {
+  return ["ttf", "otf", "woff", "woff2"].includes(fileExtension(font));
+}
+
+function fontFormat(font) {
+  const ext = fileExtension(font);
+  return ({
+    ttf: "truetype",
+    otf: "opentype",
+    woff: "woff",
+    woff2: "woff2",
+  })[ext] || ext;
+}
+
+function assetUrl(font) {
+  if (!font.file) return "";
+  return new URL(font.file, GITHUB_LFS_BASE).href;
+}
+
+function previewFamily(font) {
+  return `FontoryPreview-${fontId(font).replace(/[^a-zA-Z0-9_-]/g, "-")}`;
 }
 
 function windowsDownloadLabel(font) {
-  const ext = fileExtension(font);
-  if (["ttf", "otf", "ttc", "otc"].includes(ext)) return "🪟 Windows 다운로드";
-  return "Windows 다운로드";
+  return windowsInstallable(font) ? "🪟 Windows 다운로드" : "Windows 다운로드";
 }
 
 function renderCategories() {
@@ -90,6 +111,7 @@ function render() {
     const preview = f.preview || "오늘도 예쁘게 기록해요";
     const face = f.family || f.name;
     const ext = fileExtension(f);
+    const previewState = failedFaces.has(f.file) ? "preview-failed" : "";
     const windowsHelp = windowsInstallable(f)
       ? "Windows: 다운로드 후 파일 우클릭 → 설치"
       : ext === "woff" || ext === "woff2"
@@ -105,14 +127,16 @@ function render() {
         <span class="tag">${escapeHtml(f.category || "기타")}</span>
       </div>
       <div class="preview-stack">
-        <div class="preview" data-preview="ko">${escapeHtml(preview)}</div>
-        <div class="preview-sub" data-preview="mix">가나다 ABC 123</div>
+        <div class="preview ${previewState}" data-preview="ko">${escapeHtml(preview)}</div>
+        <div class="preview-sub ${previewState}" data-preview="mix">가나다 ABC 123</div>
       </div>
-      <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "미리보기는 파일이 있을 때 적용됩니다.")}<br><span class="windows-help">${escapeHtml(windowsHelp)}</span></div>
+      <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "실제 폰트 파일을 적용해 미리봅니다.")}<br><span class="windows-help">${escapeHtml(windowsHelp)}</span></div>
       <div class="actions">
-        ${f.file
-          ? `<a class="download" href="${encodeURI(f.file)}" download>${windowsDownloadLabel(f)}</a>`
-          : `<button class="download" type="button" disabled>파일 없음</button>`}
+        ${f.file && windowsInstallable(f)
+          ? `<a class="download" href="${escapeAttr(assetUrl(f))}" download="${escapeAttr(f.file.split("/").pop() || f.name)}">${windowsDownloadLabel(f)}</a>`
+          : f.file
+            ? `<a class="download" href="${escapeAttr(assetUrl(f))}" target="_blank" rel="noopener">파일 열기</a>`
+            : `<button class="download" type="button" disabled>파일 없음</button>`}
         <button class="details" type="button" data-copy="${escapeAttr(f.name)}">이름 복사</button>
       </div>
     </article>`;
@@ -153,28 +177,58 @@ function render() {
   updateBuilder();
 }
 
+async function loadFontFace(font) {
+  if (!font.file || !webPreviewable(font)) return false;
+  const key = font.file;
+  if (loadedFaces.has(key)) return true;
+  if (failedFaces.has(key)) return false;
+
+  try {
+    const family = previewFamily(font);
+    const source = `url("${assetUrl(font)}") format("${fontFormat(font)}")`;
+    const face = new FontFace(family, source, {
+      style: "normal",
+      weight: "400",
+      display: "swap",
+    });
+    const loaded = await face.load();
+    document.fonts.add(loaded);
+    if (loaded.status !== "loaded") throw new Error("font face failed");
+    loadedFaces.add(key);
+    return true;
+  } catch (error) {
+    failedFaces.add(key);
+    console.warn("Font preview failed:", font.name, error);
+    return false;
+  }
+}
+
 function applyVisiblePreviews(list) {
-  list.forEach((font) => {
-    if (!font.file || !font.family) return;
-    const key = font.file;
-    if (loadedFaces.has(key)) {
-      styleCards(font);
-      return;
-    }
-    const face = new FontFace(font.family, `url(${encodeURI(font.file)})`);
-    face.load().then((loaded) => {
-      document.fonts.add(loaded);
-      loadedFaces.add(key);
-      styleCards(font);
-    }).catch(() => {});
+  list.filter(webPreviewable).forEach(async (font) => {
+    const ok = await loadFontFace(font);
+    if (ok) styleCards(font);
+    else markPreviewFailed(font);
   });
 }
 
 function styleCards(font) {
+  const family = previewFamily(font);
   grid.querySelectorAll(".font-card").forEach((card) => {
     if (card.dataset.file === font.file) {
       card.querySelectorAll("[data-preview]").forEach((el) => {
-        el.style.fontFamily = `"${font.family}", sans-serif`;
+        el.classList.remove("preview-failed");
+        el.style.fontFamily = `"${family}", sans-serif`;
+      });
+    }
+  });
+}
+
+function markPreviewFailed(font) {
+  grid.querySelectorAll(".font-card").forEach((card) => {
+    if (card.dataset.file === font.file) {
+      card.querySelectorAll("[data-preview]").forEach((el) => {
+        el.classList.add("preview-failed");
+        el.textContent = "실제 폰트 미리보기 로드 실패";
       });
     }
   });
@@ -185,11 +239,11 @@ function updateBuilder() {
   const names = document.querySelector("#selectedNames");
   const iphoneBtn = document.querySelector("#makeProfile");
   const windowsBtn = document.querySelector("#downloadWindows");
-  if (!bar) return;
+  if (!bar || !names || !iphoneBtn || !windowsBtn) return;
 
-  const chosenWindows = fonts.filter((f) => selected.has(fontId(f)) && windowsInstallable(f));
-  const chosenIphone = fonts.filter((f) => selected.has(fontId(f)) && canInstall(f));
   const chosen = fonts.filter((f) => selected.has(fontId(f)) && selectable(f));
+  const chosenWindows = chosen.filter(windowsInstallable);
+  const chosenIphone = chosen.filter(canInstall);
 
   bar.hidden = chosen.length === 0;
   names.textContent = chosen.length
@@ -197,6 +251,29 @@ function updateBuilder() {
     : "";
   iphoneBtn.disabled = chosenIphone.length === 0;
   windowsBtn.disabled = chosenWindows.length === 0;
+}
+
+async function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  try {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } finally {
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  }
+}
+
+async function fetchFontBlob(font) {
+  const response = await fetch(assetUrl(font), { mode: "cors", credentials: "omit", cache: "force-cache" });
+  if (!response.ok) throw new Error(`${font.name}: 폰트 파일을 불러오지 못했습니다 (${response.status}).`);
+  const blob = await response.blob();
+  if (blob.size < 1024) throw new Error(`${font.name}: 실제 폰트 데이터가 아닌 파일이 반환되었습니다.`);
+  return blob;
 }
 
 async function downloadSelectedWindows() {
@@ -208,14 +285,19 @@ async function downloadSelectedWindows() {
     if (!ok) return;
   }
 
-  for (const font of chosen) {
-    const a = document.createElement("a");
-    a.href = encodeURI(font.file);
-    a.download = font.file.split("/").pop() || `${font.name}.${fileExtension(font)}`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    await new Promise((resolve) => setTimeout(resolve, 450));
+  const button = document.querySelector("#downloadWindows");
+  const oldText = button.textContent;
+  button.disabled = true;
+  try {
+    for (const font of chosen) {
+      const blob = await fetchFontBlob(font);
+      const filename = font.file.split("/").pop() || `${font.name}.${fileExtension(font)}`;
+      await downloadBlob(blob, filename);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  } finally {
+    button.disabled = false;
+    button.textContent = oldText;
   }
 }
 
@@ -228,19 +310,36 @@ async function makeMobileConfig() {
   }
 
   const payloads = [];
+  const rejected = [];
   for (const font of chosen) {
-    const response = await fetch(font.file);
-    if (!response.ok) throw new Error(`${font.name} 파일을 불러오지 못했습니다.`);
-    const blob = await response.blob();
-    if (blob.size > 8 * 1024 * 1024) {
-      throw new Error(`${font.name}이(가) 커서 브라우저에서 한 번에 넣지 않았습니다.`);
+    try {
+      const blob = await fetchFontBlob(font);
+      if (blob.size > 8 * 1024 * 1024) {
+        rejected.push(`${font.name} (8MB 초과)`);
+        continue;
+      }
+
+      const family = `FontoryValidation-${fontId(font).replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+      const testFace = new FontFace(family, await blob.arrayBuffer(), {
+        style: "normal",
+        weight: "400",
+      });
+      const loaded = await testFace.load();
+      if (loaded.status !== "loaded") throw new Error("폰트 데이터가 브라우저에서 유효하지 않습니다.");
+
+      const base64 = await blobToBase64(blob);
+      payloads.push({
+        name: font.name,
+        fileName: font.file.split("/").pop() || `${font.name}.ttf`,
+        data: wrapBase64(base64),
+      });
+    } catch (error) {
+      rejected.push(`${font.name} (${error.message})`);
     }
-    const base64 = await blobToBase64(blob);
-    payloads.push({
-      name: font.name,
-      fileName: (font.file.split("/").pop() || `${font.name}.ttf`),
-      data: wrapBase64(base64),
-    });
+  }
+
+  if (!payloads.length) {
+    throw new Error("유효한 iPhone용 폰트를 찾지 못했습니다. 선택한 폰트 파일을 확인해 주세요.");
   }
 
   const profileUuid = uuid();
@@ -254,7 +353,7 @@ async function makeMobileConfig() {
       <key>PayloadDisplayName</key>
       <string>${escapeXml(p.name)}</string>
       <key>PayloadIdentifier</key>
-      <string>datatronics.iphone-fonts.font.${id}</string>
+      <string>fontory.iphone-fonts.font.${id}</string>
       <key>PayloadType</key>
       <string>com.apple.font</string>
       <key>PayloadUUID</key>
@@ -271,11 +370,11 @@ async function makeMobileConfig() {
   <key>PayloadContent</key>
   <array>${fontXml}</array>
   <key>PayloadDescription</key>
-  <string>선택한 글꼴을 iPhone에 설치하기 위한 구성 프로파일입니다. 실제 기기 설치는 테스트가 필요합니다.</string>
+  <string>Fontory에서 실제 폰트 데이터를 검증한 후 생성한 iPhone용 구성 프로파일입니다.</string>
   <key>PayloadDisplayName</key>
   <string>Fontory · 선택한 iPhone 폰트</string>
   <key>PayloadIdentifier</key>
-  <string>datatronics.iphone-fonts.${profileUuid}</string>
+  <string>fontory.iphone-fonts.${profileUuid}</string>
   <key>PayloadOrganization</key>
   <string>Fontory</string>
   <key>PayloadRemovalDisallowed</key>
@@ -295,6 +394,10 @@ async function makeMobileConfig() {
   a.download = "Fontory-iPhone-Fonts.mobileconfig";
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+
+  if (rejected.length) {
+    setTimeout(() => alert(`유효하지 않아 제외된 폰트 ${rejected.length}개:\n\n${rejected.join("\n")}`), 100);
+  }
 }
 
 function wrapBase64(data) {
@@ -325,7 +428,9 @@ function escapeHtml(value) {
   }[c]));
 }
 function escapeAttr(value) { return escapeHtml(value); }
-function escapeXml(value) { return escapeHtml(value); }
+function escapeXml(value) { return String(value).replace(/[&<>"']/g, (c) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;",
+}[c])); }
 
 search.addEventListener("input", () => { page = 1; render(); });
 document.querySelector("#themeBtn").addEventListener("click", () => {
