@@ -33,6 +33,20 @@ function canInstall(font) {
   return ext === "ttf" || ext === "otf";
 }
 
+function fileExtension(font) {
+  return String(font.file || "").split(".").pop().toLowerCase();
+}
+
+function windowsInstallable(font) {
+  return ["ttf", "otf", "ttc", "otc"].includes(fileExtension(font));
+}
+
+function windowsDownloadLabel(font) {
+  const ext = fileExtension(font);
+  if (["ttf", "otf", "ttc", "otc"].includes(ext)) return "🪟 Windows 다운로드";
+  return "Windows 다운로드";
+}
+
 function renderCategories() {
   categoryBar.innerHTML = CATEGORIES.map((cat) => {
     const n = cat === "전체" ? fonts.length : fonts.filter((f) => f.category === cat).length;
@@ -71,6 +85,12 @@ function render() {
     const id = fontId(f);
     const preview = f.preview || "오늘도 예쁘게 기록해요";
     const face = f.family || f.name;
+    const ext = fileExtension(f);
+    const windowsHelp = windowsInstallable(f)
+      ? "Windows: 다운로드 후 파일 우클릭 → 설치"
+      : ext === "woff" || ext === "woff2"
+        ? "웹폰트 파일: 브라우저/CSS용으로 사용할 수 있습니다."
+        : "파일을 다운로드해 용도에 맞게 사용하세요.";
     return `<article class="font-card ${selected.has(id) ? "selected" : ""}" data-id="${escapeAttr(id)}" data-file="${escapeAttr(f.file || "")}" data-family="${escapeAttr(face)}">
       <label class="select-row">
         <input class="font-check" type="checkbox" data-id="${escapeAttr(id)}" ${selected.has(id) ? "checked" : ""} ${canInstall(f) ? "" : "disabled"}>
@@ -84,10 +104,10 @@ function render() {
         <div class="preview" data-preview="ko">${escapeHtml(preview)}</div>
         <div class="preview-sub" data-preview="mix">가나다 ABC 123</div>
       </div>
-      <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "미리보기는 파일이 있을 때 적용됩니다.")}</div>
+      <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "미리보기는 파일이 있을 때 적용됩니다.")}<br><span class="windows-help">${escapeHtml(windowsHelp)}</span></div>
       <div class="actions">
         ${f.file
-          ? `<a class="download" href="${encodeURI(f.file)}" download>다운로드</a>`
+          ? `<a class="download" href="${encodeURI(f.file)}" download>${windowsDownloadLabel(f)}</a>`
           : `<button class="download" type="button" disabled>파일 없음</button>`}
         <button class="details" type="button" data-copy="${escapeAttr(f.name)}">이름 복사</button>
       </div>
