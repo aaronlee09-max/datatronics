@@ -1,0 +1,157 @@
+name: Import Drive Fonts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Fonts from Google Drive
+        env:
+          DRIVE_FOLDER_ID: 1pzpRLbkPypG7cG-egq5i1d8hJzgfOwCF
+          API_KEY: AIzaSyC1qbk75NzWBvSaDh6KnsjjA9pIrP4lYIE
+        run: |
+          python3 - <<'PY'
+          import json, os, time, urllib.parse, urllib.request, zipfile
+          from pathlib import Path
+
+          KEY = os.environ['API_KEY']
+          ROOT = os.environ['DRIVE_FOLDER_ID']
+          HEADERS = {
+              'User-Agent': 'Mozilla/5.0',
+              'Referer': 'https://drive.google.com/',
+              'Origin': 'https://drive.google.com',
+          }
+          DEST = Path('fonts')
+          DEST.mkdir(exist_ok=True)
+          report = {
+              'drive_folder_id': ROOT,
+              'items': 0,
+              'folders': 0,
+              'files': 0,
+              'downloaded': 0,
+              'skipped_existing': 0,
+              'failed': [],
+              'over_100mb': [],
+              'zips': [],
+              'extracted': [],
+          }
+
+          def list_children(fid):
+              items, token = [], None
+              while True:
+                  q = urllib.parse.quote(f"'{fid}' in parents and trashed=false")
+                  url = (
+                      'https://www.googleapis.com/drive/v3/files'
+                      f'?q={q}&fields=files(id,name,mimeType,size),nextPageToken'
+                      f'&pageSize=1000&key={KEY}&supportsAllDrives=true'
+                      '&includeItemsFromAllDrives=true'
+                  )
+                  if token:
+                      url += '&pageToken=' + urllib.parse.quote(token)
+                  req = urllib.request.Request(url, headers=HEADERS)
+                  for attempt in range(6):
+                      try:
+                          with urllib.request.urlopen(req, timeout=60) as r:
+                              j = json.loads(r.read())
+                          break
+                      except Exception:
+                          time.sleep(2 ** attempt)
+                  else:
+                      raise RuntimeError('list failed ' + fid)
+                  items.extend(j.get('files', []))
+                  token = j.get('nextPageToken')
+                  if not token:
+                      break
+              return items
+
+          def download(fid, dest: Path):
+              url = f'https://www.googleapis.com/drive/v3/files/{fid}?alt=media&key={KEY}'
+              req = urllib.request.Request(url, headers=HEADERS)
+              last = None
+              for attempt in range(5):
+                  try:
+                      with urllib.request.urlopen(req, timeout=180) as r:
+                          dest.write_bytes(r.read())
+                      return True
+                  except Exception as e:
+                      last = e
+                      time.sleep(2 ** attempt)
+              raise last
+
+          stack = [(ROOT, DEST)]
+          seen = set()
+          while stack:
+              fid, path = stack.pop()
+              if fid in seen:
+                  continue
+              seen.add(fid)
+              kids = list_children(fid)
+              for it in kids:
+                  report['items'] += 1
+                  name = it['name']
+                  target = path / name
+                  if it.get('mimeType') == 'application/vnd.google-apps.folder':
+                      report['folders'] += 1
+                      target.mkdir(parents=True, exist_ok=True)
+                      stack.append((it['id'], target))
+                      continue
+                  report['files'] += 1
+                  size = int(it.get('size') or 0)
+                  if size > 100 * 1024 * 1024:
+                      report['over_100mb'].append({'path': str(target), 'size': size, 'id': it['id']})
+                      continue
+                  if target.exists() and target.stat().st_size == size and size > 0:
+                      report['skipped_existing'] += 1
+                      continue
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  try:
+                      download(it['id'], target)
+                      report['downloaded'] += 1
+                      print('OK', target, flush=True)
+                  except Exception as e:
+                      report['failed'].append({'path': str(target), 'id': it['id'], 'error': str(e)[:200]})
+                      print('FAIL', target, e, flush=True)
+
+          # empty folders
+          for p in DEST.rglob('*'):
+              if p.is_dir() and not any(p.iterdir()):
+                  (p / '.gitkeep').write_text('')
+
+          # inspect zips, extract beside them without deleting zip
+          for zpath in DEST.rglob('*'):
+              if zpath.is_file() and zpath.suffix.lower() == '.zip':
+                  report['zips'].append(str(zpath))
+                  outdir = zpath.with_suffix('') 
+                  outdir = Path(str(zpath) + '.extracted')
+                  try:
+                      outdir.mkdir(exist_ok=True)
+                      with zipfile.ZipFile(zpath) as zf:
+                          zf.extractall(outdir)
+                      report['extracted'].append({'zip': str(zpath), 'to': str(outdir), 'n': sum(1 for _ in outdir.rglob('*') if _.is_file())})
+                  except Exception as e:
+                      report['failed'].append({'path': str(zpath), 'error': 'zip extract: ' + str(e)[:200]})
+
+          Path('fonts/_import_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2))
+          print('REPORT', json.dumps({k: report[k] for k in report if k != 'failed'}, ensure_ascii=False))
+          print('FAILED_COUNT', len(report['failed']))
+          PY
+
+      - name: Commit fonts if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fonts
+          if git diff --cached --quiet; then
+            echo "No font changes"
+          else
+            git commit -m "Import Google Drive Fonts folder into fonts/"
+            git push
+          fi
