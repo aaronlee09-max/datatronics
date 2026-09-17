@@ -16,13 +16,15 @@ jobs:
       - name: Download Fonts from Google Drive
         env:
           DRIVE_FOLDER_ID: 1pzpRLbkPypG7cG-egq5i1d8hJzgfOwCF
-          API_KEY: AIzaSyC1qbk75NzWBvSaDh6KnsjjA9pIrP4lYIE
+          API_KEY: ${{ secrets.GDRIVE_API_KEY }}
         run: |
           python3 - <<'PY'
           import json, os, time, urllib.parse, urllib.request, zipfile
           from pathlib import Path
 
           KEY = os.environ['API_KEY']
+          if not KEY:
+              raise RuntimeError('GDRIVE_API_KEY GitHub Secret is not configured')
           ROOT = os.environ['DRIVE_FOLDER_ID']
           HEADERS = {
               'User-Agent': 'Mozilla/5.0',
@@ -120,16 +122,13 @@ jobs:
                       report['failed'].append({'path': str(target), 'id': it['id'], 'error': str(e)[:200]})
                       print('FAIL', target, e, flush=True)
 
-          # empty folders
           for p in DEST.rglob('*'):
               if p.is_dir() and not any(p.iterdir()):
                   (p / '.gitkeep').write_text('')
 
-          # inspect zips, extract beside them without deleting zip
           for zpath in DEST.rglob('*'):
               if zpath.is_file() and zpath.suffix.lower() == '.zip':
                   report['zips'].append(str(zpath))
-                  outdir = zpath.with_suffix('') 
                   outdir = Path(str(zpath) + '.extracted')
                   try:
                       outdir.mkdir(exist_ok=True)
