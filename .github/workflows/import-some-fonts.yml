@@ -15,13 +15,15 @@ jobs:
 
       - name: Download first font batch
         env:
-          API_KEY: AIzaSyC1qbk75NzWBvSaDh6KnsjjA9pIrP4lYIE
+          API_KEY: ${{ secrets.GDRIVE_API_KEY }}
         run: |
           python3 - <<'PY'
           import os, urllib.request
           from pathlib import Path
 
-          KEY = os.environ['API_KEY']
+          KEY = os.environ.get('API_KEY')
+          if not KEY:
+              raise SystemExit('GDRIVE_API_KEY GitHub Secret is not configured')
           HEADERS = {
               'User-Agent': 'Mozilla/5.0',
               'Referer': 'https://drive.google.com/',
