@@ -319,6 +319,11 @@ input {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.selection-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
 .selection-bar button {
   border: 0;
   background: #fff;
@@ -347,7 +352,10 @@ code { font-size: .95em; }
   .intro-card { border-radius: 22px; padding: 22px; }
   .phone-glyph { font-size: 60px; }
   .preview { font-size: 28px; }
-  .selection-bar { bottom: 10px; }
+  .selection-bar { bottom: 10px; align-items: stretch; flex-direction: column; }
+  .selection-bar span { max-width: 100%; }
+  .selection-actions { flex-direction: column; }
+  .selection-actions button { width: 100%; }
   .actions { flex-direction: column; }
 }
 
