@@ -241,6 +241,13 @@ input {
   line-height: 1.5;
   margin-bottom: 16px;
 }
+.windows-help {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 700;
+}
 .actions { display: flex; gap: 8px; }
 .actions a, .actions button {
   flex: 1;
@@ -341,6 +348,7 @@ code { font-size: .95em; }
   .phone-glyph { font-size: 60px; }
   .preview { font-size: 28px; }
   .selection-bar { bottom: 10px; }
+  .actions { flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
