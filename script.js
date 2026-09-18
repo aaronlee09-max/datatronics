@@ -99,7 +99,13 @@ const CATEGORY_ICONS = {
   "강원·횡성": "🐄",
   "강원·태백": "⛰️",
   "강원·하이원": "⛷️",
-  "한컴": "💻"
+  "한컴": "💻",
+  "MV Boli 계열": "✍️",
+  "Perpetua 계열": "📜",
+  "Hightower Text 계열": "📜",
+  "Constantia 계열": "📜",
+  "Californian FB 계열": "📜",
+  "Malgun Gothic 계열": "🪟"
 };
 const FONTORY_EXTRA_CATEGORY_ICONS = {
   "제주·지역특화": "🌴",
@@ -359,6 +365,12 @@ const CATEGORIES = [
   "강원·태백",
   "강원·하이원",
   "한컴",
+  "MV Boli 계열",
+  "Perpetua 계열",
+  "Hightower Text 계열",
+  "Constantia 계열",
+  "Californian FB 계열",
+  "Malgun Gothic 계열",
 ];
 
 const GITHUB_LFS_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
