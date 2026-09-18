@@ -32,6 +32,21 @@ const CATEGORIES = [
   "문화재·전통",
   "공공·환경",
   "브랜드·기업",
+  "안성탕면",
+  "프리젠테이션",
+  "함렛",
+  "페이퍼로지",
+  "KOTRA",
+  "온글잎",
+  "KERIS",
+  "김정철",
+  "KoPubWorld",
+  "순수바탕",
+  "표진고딕",
+  "상주",
+  "칠곡",
+  "고신고딕",
+  "코딩폰트",
   "코딩·개발",
   "영문·라틴",
   "모노스페이스",
@@ -39,7 +54,7 @@ const CATEGORIES = [
   "기호·딩벳"
 ];
 
-const GITHUB_LFS_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
+const GITHUB_LFS_BASE = "https://github.com/aaronlee09-max/datatronics/raw/refs/heads/main/";
 let fonts = [];
 const selected = new Set();
 let activeCategory = "전체";
