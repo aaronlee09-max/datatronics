@@ -2054,7 +2054,7 @@
     "name": "AGENCYB",
     "family": "DatatronicsPreview0206",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/AGENCYB.TTF",
     "size": 60656,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2064,7 +2064,7 @@
     "name": "AGENCYR",
     "family": "DatatronicsPreview0207",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/AGENCYR.TTF",
     "size": 58920,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2084,7 +2084,7 @@
     "name": "ALGER",
     "family": "DatatronicsPreview0209",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/ALGER.TTF",
     "size": 76588,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2174,7 +2174,7 @@
     "name": "ANTQUAB",
     "family": "DatatronicsPreview0218",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/ANTQUAB.TTF",
     "size": 151000,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2184,7 +2184,7 @@
     "name": "ANTQUABI",
     "family": "DatatronicsPreview0219",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/ANTQUABI.TTF",
     "size": 150416,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2194,7 +2194,7 @@
     "name": "ANTQUAI",
     "family": "DatatronicsPreview0220",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/ANTQUAI.TTF",
     "size": 149092,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2294,7 +2294,7 @@
     "name": "ARLRDBD",
     "family": "DatatronicsPreview0230",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/ARLRDBD.TTF",
     "size": 45260,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2304,7 +2304,7 @@
     "name": "AssacomFreeGothic",
     "family": "DatatronicsPreview0231",
     "style": "OTF",
-    "category": "영문·기타·레거시",
+    "category": "고딕·산세리프",
     "file": "fonts/AssacomFreeGothic.otf",
     "size": 440460,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2314,7 +2314,7 @@
     "name": "AssacomFreeGothic",
     "family": "DatatronicsPreview0232",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "고딕·산세리프",
     "file": "fonts/AssacomFreeGothic.ttf",
     "size": 1621968,
     "preview": "오늘도 예쁘게 기록해요"
@@ -2494,7 +2494,7 @@
     "name": "Batang",
     "family": "DatatronicsPreview0250",
     "style": "TTF",
-    "category": "영문·세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/Batang.ttf",
     "size": 3103608,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4274,7 +4274,7 @@
     "name": "CASTELAR",
     "family": "DatatronicsPreview0428",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/CASTELAR.TTF",
     "size": 48252,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4284,7 +4284,7 @@
     "name": "CENSCBK",
     "family": "DatatronicsPreview0429",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/CENSCBK.TTF",
     "size": 162380,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4304,7 +4304,7 @@
     "name": "CENTURY",
     "family": "DatatronicsPreview0431",
     "style": "TTF",
-    "category": "Classic Serif",
+    "category": "Microsoft",
     "file": "fonts/CENTURY.TTF",
     "size": 165248,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4414,7 +4414,7 @@
     "name": "CHILLER",
     "family": "DatatronicsPreview0442",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/CHILLER.TTF",
     "size": 96452,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4524,7 +4524,7 @@
     "name": "ChusaLove",
     "family": "DatatronicsPreview0453",
     "style": "TTF",
-    "category": "영문·스크립트·필기",
+    "category": "손글씨·캘리그래피",
     "file": "fonts/ChusaLove.ttf",
     "size": 16147808,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4534,7 +4534,7 @@
     "name": "ChusaLoveBold",
     "family": "DatatronicsPreview0454",
     "style": "TTF",
-    "category": "영문·스크립트·필기",
+    "category": "손글씨·캘리그래피",
     "file": "fonts/ChusaLoveBold.ttf",
     "size": 16474708,
     "preview": "오늘도 예쁘게 기록해요"
@@ -5094,7 +5094,7 @@
     "name": "DungGeunMo",
     "family": "DatatronicsPreview0510",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "픽셀·레트로",
     "file": "fonts/DungGeunMo.otf",
     "size": 1874100,
     "preview": "오늘도 예쁘게 기록해요"
@@ -5104,7 +5104,7 @@
     "name": "DungGeunMo",
     "family": "DatatronicsPreview0511",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "픽셀·레트로",
     "file": "fonts/DungGeunMo.ttf",
     "size": 7354268,
     "preview": "오늘도 예쁘게 기록해요"
@@ -6324,7 +6324,7 @@
     "name": "GOTHIC",
     "family": "DatatronicsPreview0633",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/GOTHIC.TTF",
     "size": 137568,
     "preview": "오늘도 예쁘게 기록해요"
@@ -6334,7 +6334,7 @@
     "name": "GOTHICB",
     "family": "DatatronicsPreview0634",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/GOTHICB.TTF",
     "size": 129676,
     "preview": "오늘도 예쁘게 기록해요"
@@ -6344,7 +6344,7 @@
     "name": "GOTHICBI",
     "family": "DatatronicsPreview0635",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/GOTHICBI.TTF",
     "size": 139084,
     "preview": "오늘도 예쁘게 기록해요"
@@ -6354,7 +6354,7 @@
     "name": "GOTHICI",
     "family": "DatatronicsPreview0636",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/GOTHICI.TTF",
     "size": 148520,
     "preview": "오늘도 예쁘게 기록해요"
@@ -8604,7 +8604,7 @@
     "name": "HAN-YONG-UN",
     "family": "DatatronicsPreview0861",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "독립운동",
     "file": "fonts/HAN-YONG-UN.ttf",
     "size": 6207824,
     "preview": "오늘도 예쁘게 기록해요"
@@ -8754,7 +8754,7 @@
     "name": "HANDotum",
     "family": "DatatronicsPreview0876",
     "style": "TTF",
-    "category": "영문·스크립트·필기",
+    "category": "고딕·산세리프",
     "file": "fonts/HANDotum.ttf",
     "size": 22252900,
     "preview": "오늘도 예쁘게 기록해요"
@@ -8764,7 +8764,7 @@
     "name": "HANDotumB",
     "family": "DatatronicsPreview0877",
     "style": "TTF",
-    "category": "영문·스크립트·필기",
+    "category": "고딕·산세리프",
     "file": "fonts/HANDotumB.ttf",
     "size": 31085224,
     "preview": "오늘도 예쁘게 기록해요"
@@ -8774,7 +8774,7 @@
     "name": "HANDotumExt",
     "family": "DatatronicsPreview0878",
     "style": "TTF",
-    "category": "영문·스크립트·필기",
+    "category": "고딕·산세리프",
     "file": "fonts/HANDotumExt.TTF",
     "size": 1717916,
     "preview": "오늘도 예쁘게 기록해요"
@@ -8864,7 +8864,7 @@
     "name": "HanSantteutDotum-Bold",
     "family": "DatatronicsPreview0887",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "고딕·산세리프",
     "file": "fonts/HanSantteutDotum-Bold.ttf",
     "size": 12513040,
     "preview": "오늘도 예쁘게 기록해요"
@@ -8874,7 +8874,7 @@
     "name": "HanSantteutDotum-Regular",
     "family": "DatatronicsPreview0888",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "고딕·산세리프",
     "file": "fonts/HanSantteutDotum-Regular.ttf",
     "size": 12179812,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9104,7 +9104,7 @@
     "name": "HTOWERT",
     "family": "DatatronicsPreview0911",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/HTOWERT.TTF",
     "size": 92736,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9114,7 +9114,7 @@
     "name": "HTOWERTI",
     "family": "DatatronicsPreview0912",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/HTOWERTI.TTF",
     "size": 74712,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9834,7 +9834,7 @@
     "name": "JejuGothic",
     "family": "DatatronicsPreview0984",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "제주·지역특화",
     "file": "fonts/JejuGothic.ttf",
     "size": 2460768,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9844,7 +9844,7 @@
     "name": "JejuGothicOTF",
     "family": "DatatronicsPreview0985",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "제주·지역특화",
     "file": "fonts/JejuGothicOTF.otf",
     "size": 1975028,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9854,7 +9854,7 @@
     "name": "JejuHallasan",
     "family": "DatatronicsPreview0986",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "제주·지역특화",
     "file": "fonts/JejuHallasan.ttf",
     "size": 6660012,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9864,7 +9864,7 @@
     "name": "JejuHallasanOTF",
     "family": "DatatronicsPreview0987",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "제주·지역특화",
     "file": "fonts/JejuHallasanOTF.otf",
     "size": 5579876,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9874,7 +9874,7 @@
     "name": "JejuMyeongjo",
     "family": "DatatronicsPreview0988",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "제주·지역특화",
     "file": "fonts/JejuMyeongjo.ttf",
     "size": 9587784,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9884,7 +9884,7 @@
     "name": "JejuMyeongjoOTF",
     "family": "DatatronicsPreview0989",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "제주·지역특화",
     "file": "fonts/JejuMyeongjoOTF.otf",
     "size": 7640648,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11494,7 +11494,7 @@
     "name": "LeelaUIb",
     "family": "DatatronicsPreview1150",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/LeelaUIb.ttf",
     "size": 327420,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11504,7 +11504,7 @@
     "name": "LeelawUI",
     "family": "DatatronicsPreview1151",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/LeelawUI.ttf",
     "size": 393764,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11514,7 +11514,7 @@
     "name": "LeelUIsl",
     "family": "DatatronicsPreview1152",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/LeelUIsl.ttf",
     "size": 386264,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11644,7 +11644,7 @@
     "name": "LTYPE",
     "family": "DatatronicsPreview1165",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/LTYPE.TTF",
     "size": 55984,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11654,7 +11654,7 @@
     "name": "LTYPEB",
     "family": "DatatronicsPreview1166",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/LTYPEB.TTF",
     "size": 52868,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11664,7 +11664,7 @@
     "name": "LTYPEBO",
     "family": "DatatronicsPreview1167",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/LTYPEBO.TTF",
     "size": 54620,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11674,7 +11674,7 @@
     "name": "LTYPEO",
     "family": "DatatronicsPreview1168",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/LTYPEO.TTF",
     "size": 65412,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11814,7 +11814,7 @@
     "name": "MAGNETOB",
     "family": "DatatronicsPreview1182",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/MAGNETOB.TTF",
     "size": 65284,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11834,7 +11834,7 @@
     "name": "MAKGEOLLI",
     "family": "DatatronicsPreview1184",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "경기·포천",
     "file": "fonts/MAKGEOLLI.ttf",
     "size": 6483212,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11844,7 +11844,7 @@
     "name": "MalangmalangB",
     "family": "DatatronicsPreview1185",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "귀여운·캐주얼",
     "file": "fonts/MalangmalangB.ttf",
     "size": 7095112,
     "preview": "오늘도 예쁘게 기록해요"
@@ -11854,7 +11854,7 @@
     "name": "MalangmalangR",
     "family": "DatatronicsPreview1186",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "귀여운·캐주얼",
     "file": "fonts/MalangmalangR.ttf",
     "size": 7396036,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12074,7 +12074,7 @@
     "name": "MATURASC",
     "family": "DatatronicsPreview1208",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/MATURASC.TTF",
     "size": 51296,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12084,7 +12084,7 @@
     "name": "micross",
     "family": "DatatronicsPreview1209",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/micross.ttf",
     "size": 888228,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12094,7 +12094,7 @@
     "name": "mingliub",
     "family": "DatatronicsPreview1210",
     "style": "TTC",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/mingliub.ttc",
     "size": 37112128,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12314,7 +12314,7 @@
     "name": "mmrtext",
     "family": "DatatronicsPreview1232",
     "style": "TTF",
-    "category": "영문·세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/mmrtext.ttf",
     "size": 354796,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12324,7 +12324,7 @@
     "name": "mmrtextb",
     "family": "DatatronicsPreview1233",
     "style": "TTF",
-    "category": "영문·세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/mmrtextb.ttf",
     "size": 336660,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12374,7 +12374,7 @@
     "name": "monbaiti",
     "family": "DatatronicsPreview1238",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/monbaiti.ttf",
     "size": 289052,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12384,7 +12384,7 @@
     "name": "msgothic",
     "family": "DatatronicsPreview1239",
     "style": "TTC",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/msgothic.ttc",
     "size": 8990160,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12454,7 +12454,7 @@
     "name": "msyi",
     "family": "DatatronicsPreview1246",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/msyi.ttf",
     "size": 301180,
     "preview": "오늘도 예쁘게 기록해요"
@@ -12464,7 +12464,7 @@
     "name": "MTCORSVA",
     "family": "DatatronicsPreview1247",
     "style": "TTF",
-    "category": "영문·디스플레이·기타",
+    "category": "Microsoft",
     "file": "fonts/MTCORSVA.TTF",
     "size": 157360,
     "preview": "오늘도 예쁘게 기록해요"
@@ -13374,7 +13374,7 @@
     "name": "NIAGENG",
     "family": "DatatronicsPreview1338",
     "style": "TTF",
-    "category": "영문·디스플레이·기타",
+    "category": "Microsoft",
     "file": "fonts/NIAGENG.TTF",
     "size": 95904,
     "preview": "오늘도 예쁘게 기록해요"
@@ -13384,7 +13384,7 @@
     "name": "NIAGSOL",
     "family": "DatatronicsPreview1339",
     "style": "TTF",
-    "category": "영문·디스플레이·기타",
+    "category": "Microsoft",
     "file": "fonts/NIAGSOL.TTF",
     "size": 74012,
     "preview": "오늘도 예쁘게 기록해요"
@@ -13404,7 +13404,7 @@
     "name": "NoonnuBasicGothicRegular",
     "family": "DatatronicsPreview1341",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "고딕·산세리프",
     "file": "fonts/NoonnuBasicGothicRegular.otf",
     "size": 406824,
     "preview": "오늘도 예쁘게 기록해요"
@@ -13414,7 +13414,7 @@
     "name": "NoonnuBasicGothicRegular",
     "family": "DatatronicsPreview1342",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "고딕·산세리프",
     "file": "fonts/NoonnuBasicGothicRegular.ttf",
     "size": 1178108,
     "preview": "오늘도 예쁘게 기록해요"
@@ -13834,7 +13834,7 @@
     "name": "OSeongandHanEum-Bold",
     "family": "DatatronicsPreview1384",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "경기·포천",
     "file": "fonts/OSeongandHanEum-Bold.ttf",
     "size": 1653328,
     "preview": "오늘도 예쁘게 기록해요"
@@ -13844,7 +13844,7 @@
     "name": "OSeongandHanEum-Regular",
     "family": "DatatronicsPreview1385",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "경기·포천",
     "file": "fonts/OSeongandHanEum-Regular.ttf",
     "size": 2084304,
     "preview": "오늘도 예쁘게 기록해요"
@@ -13854,7 +13854,7 @@
     "name": "OUTLOOK",
     "family": "DatatronicsPreview1386",
     "style": "TTF",
-    "category": "영문·디스플레이·기타",
+    "category": "Microsoft",
     "file": "fonts/OUTLOOK.TTF",
     "size": 17672,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14024,7 +14024,7 @@
     "name": "PALSCRI",
     "family": "DatatronicsPreview1403",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/PALSCRI.TTF",
     "size": 51404,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14214,7 +14214,7 @@
     "name": "PAPYRUS",
     "family": "DatatronicsPreview1422",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/PAPYRUS.TTF",
     "size": 163476,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14224,7 +14224,7 @@
     "name": "PARCHM",
     "family": "DatatronicsPreview1423",
     "style": "TTF",
-    "category": "영문·디스플레이·기타",
+    "category": "Microsoft",
     "file": "fonts/PARCHM.TTF",
     "size": 151256,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14314,7 +14314,7 @@
     "name": "PLAYBILL",
     "family": "DatatronicsPreview1432",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/PLAYBILL.TTF",
     "size": 46164,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14324,7 +14324,7 @@
     "name": "POORICH",
     "family": "DatatronicsPreview1433",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/POORICH.TTF",
     "size": 76588,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14334,7 +14334,7 @@
     "name": "PRISTINA",
     "family": "DatatronicsPreview1434",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/PRISTINA.TTF",
     "size": 82680,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14504,7 +14504,7 @@
     "name": "RAGE",
     "family": "DatatronicsPreview1451",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/RAGE.TTF",
     "size": 132600,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14514,7 +14514,7 @@
     "name": "RAVIE",
     "family": "DatatronicsPreview1452",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/RAVIE.TTF",
     "size": 74416,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14524,7 +14524,7 @@
     "name": "REFSAN",
     "family": "DatatronicsPreview1453",
     "style": "TTF",
-    "category": "영문·산세리프·고딕",
+    "category": "Microsoft",
     "file": "fonts/REFSAN.TTF",
     "size": 220172,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14534,7 +14534,7 @@
     "name": "REFSPCL",
     "family": "DatatronicsPreview1454",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/REFSPCL.TTF",
     "size": 53288,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14544,7 +14544,7 @@
     "name": "RIDIBatang",
     "family": "DatatronicsPreview1455",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "명조·세리프",
     "file": "fonts/RIDIBatang.otf",
     "size": 1453448,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14554,7 +14554,7 @@
     "name": "RIDIBatang",
     "family": "DatatronicsPreview1456",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "명조·세리프",
     "file": "fonts/RIDIBatang.ttf",
     "size": 5681196,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14584,7 +14584,7 @@
     "name": "ROCK",
     "family": "DatatronicsPreview1459",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/ROCK.TTF",
     "size": 72272,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14594,7 +14594,7 @@
     "name": "ROCKB",
     "family": "DatatronicsPreview1460",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/ROCKB.TTF",
     "size": 68780,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14604,7 +14604,7 @@
     "name": "ROCKBI",
     "family": "DatatronicsPreview1461",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/ROCKBI.TTF",
     "size": 73700,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14614,7 +14614,7 @@
     "name": "ROCKEB",
     "family": "DatatronicsPreview1462",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/ROCKEB.TTF",
     "size": 49168,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14624,7 +14624,7 @@
     "name": "ROCKI",
     "family": "DatatronicsPreview1463",
     "style": "TTF",
-    "category": "영문·세리프·클래식",
+    "category": "Microsoft",
     "file": "fonts/ROCKI.TTF",
     "size": 76756,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14644,7 +14644,7 @@
     "name": "SacheonHangGong-Regular",
     "family": "DatatronicsPreview1465",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "경남·사천",
     "file": "fonts/SacheonHangGong-Regular.ttf",
     "size": 1959260,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14654,7 +14654,7 @@
     "name": "SacheonHangGongOTF-Regular",
     "family": "DatatronicsPreview1466",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "경남·사천",
     "file": "fonts/SacheonHangGongOTF-Regular.otf",
     "size": 716044,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14664,7 +14664,7 @@
     "name": "SacheonUju-Regular",
     "family": "DatatronicsPreview1467",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "경남·사천",
     "file": "fonts/SacheonUju-Regular.ttf",
     "size": 1821080,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14674,7 +14674,7 @@
     "name": "SacheonUjuOTF-Regular",
     "family": "DatatronicsPreview1468",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "경남·사천",
     "file": "fonts/SacheonUjuOTF-Regular.otf",
     "size": 484836,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14964,7 +14964,7 @@
     "name": "seguibl",
     "family": "DatatronicsPreview1497",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguibl.ttf",
     "size": 317164,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14974,7 +14974,7 @@
     "name": "seguibli",
     "family": "DatatronicsPreview1498",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguibli.ttf",
     "size": 348744,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14984,7 +14984,7 @@
     "name": "seguiemj",
     "family": "DatatronicsPreview1499",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguiemj.ttf",
     "size": 12450664,
     "preview": "오늘도 예쁘게 기록해요"
@@ -14994,7 +14994,7 @@
     "name": "seguihis",
     "family": "DatatronicsPreview1500",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguihis.ttf",
     "size": 1622060,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15004,7 +15004,7 @@
     "name": "seguili",
     "family": "DatatronicsPreview1501",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguili.ttf",
     "size": 457008,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15014,7 +15014,7 @@
     "name": "seguisb",
     "family": "DatatronicsPreview1502",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguisb.ttf",
     "size": 991376,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15024,7 +15024,7 @@
     "name": "seguisbi",
     "family": "DatatronicsPreview1503",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguisbi.ttf",
     "size": 454696,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15034,7 +15034,7 @@
     "name": "seguisli",
     "family": "DatatronicsPreview1504",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguisli.ttf",
     "size": 434400,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15044,7 +15044,7 @@
     "name": "seguisym",
     "family": "DatatronicsPreview1505",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/seguisym.ttf",
     "size": 2514056,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15054,7 +15054,7 @@
     "name": "SegUIVar",
     "family": "DatatronicsPreview1506",
     "style": "TTF",
-    "category": "영문·산세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/SegUIVar.ttf",
     "size": 1851000,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15394,7 +15394,7 @@
     "name": "SNAP____",
     "family": "DatatronicsPreview1540",
     "style": "TTF",
-    "category": "영문·디스플레이·기타",
+    "category": "Microsoft",
     "file": "fonts/SNAP____.TTF",
     "size": 63196,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15754,7 +15754,7 @@
     "name": "SuseongBatang",
     "family": "DatatronicsPreview1576",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "대구·수성",
     "file": "fonts/SuseongBatang.ttf",
     "size": 3525084,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15764,7 +15764,7 @@
     "name": "SuseongDotum",
     "family": "DatatronicsPreview1577",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "대구·수성",
     "file": "fonts/SuseongDotum.ttf",
     "size": 1812552,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15774,7 +15774,7 @@
     "name": "SuseongHyejeong",
     "family": "DatatronicsPreview1578",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "대구·수성",
     "file": "fonts/SuseongHyejeong.ttf",
     "size": 5367232,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15784,7 +15784,7 @@
     "name": "sylfaen",
     "family": "DatatronicsPreview1579",
     "style": "TTF",
-    "category": "영문·세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/sylfaen.ttf",
     "size": 260108,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15864,7 +15864,7 @@
     "name": "taile",
     "family": "DatatronicsPreview1587",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/taile.ttf",
     "size": 67568,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15874,7 +15874,7 @@
     "name": "taileb",
     "family": "DatatronicsPreview1588",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/taileb.ttf",
     "size": 58532,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15884,7 +15884,7 @@
     "name": "TCB_____",
     "family": "DatatronicsPreview1589",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/TCB_____.TTF",
     "size": 74656,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15894,7 +15894,7 @@
     "name": "TCBI____",
     "family": "DatatronicsPreview1590",
     "style": "TTF",
-    "category": "영문·기타·레거시",
+    "category": "Microsoft",
     "file": "fonts/TCBI____.TTF",
     "size": 73856,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15904,7 +15904,7 @@
     "name": "TCCB____",
     "family": "DatatronicsPreview1591",
     "style": "TTF",
-    "category": "영문·세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/TCCB____.TTF",
     "size": 66020,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15914,7 +15914,7 @@
     "name": "TCCEB",
     "family": "DatatronicsPreview1592",
     "style": "TTF",
-    "category": "영문·세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/TCCEB.TTF",
     "size": 74708,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15924,7 +15924,7 @@
     "name": "TCCM____",
     "family": "DatatronicsPreview1593",
     "style": "TTF",
-    "category": "영문·세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/TCCM____.TTF",
     "size": 66804,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15934,7 +15934,7 @@
     "name": "TCM_____",
     "family": "DatatronicsPreview1594",
     "style": "TTF",
-    "category": "영문·세리프·기타",
+    "category": "Microsoft",
     "file": "fonts/TCM_____.TTF",
     "size": 76252,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15954,7 +15954,7 @@
     "name": "TEMPSITC",
     "family": "DatatronicsPreview1596",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/TEMPSITC.TTF",
     "size": 76100,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16174,7 +16174,7 @@
     "name": "VINERITC",
     "family": "DatatronicsPreview1618",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/VINERITC.TTF",
     "size": 104372,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16184,7 +16184,7 @@
     "name": "VIVALDII",
     "family": "DatatronicsPreview1619",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/VIVALDII.TTF",
     "size": 66696,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16194,7 +16194,7 @@
     "name": "VLADIMIR",
     "family": "DatatronicsPreview1620",
     "style": "TTF",
-    "category": "영문·디스플레이·장식",
+    "category": "Microsoft",
     "file": "fonts/VLADIMIR.TTF",
     "size": 54308,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16554,7 +16554,7 @@
     "name": "YeojuCeramic TTF",
     "family": "DatatronicsPreview1656",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "경기·여주",
     "file": "fonts/YeojuCeramic TTF.ttf",
     "size": 1958040,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16564,7 +16564,7 @@
     "name": "YeojuCeramic",
     "family": "DatatronicsPreview1657",
     "style": "OTF",
-    "category": "영문·한글/지역",
+    "category": "경기·여주",
     "file": "fonts/YeojuCeramic.otf",
     "size": 662308,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16674,7 +16674,7 @@
     "name": "YOON-DONG-JU1",
     "family": "DatatronicsPreview1668",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "독립운동",
     "file": "fonts/YOON-DONG-JU1.ttf",
     "size": 4122984,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16684,7 +16684,7 @@
     "name": "YOON-DONG-JU2",
     "family": "DatatronicsPreview1669",
     "style": "TTF",
-    "category": "영문·한글/지역",
+    "category": "독립운동",
     "file": "fonts/YOON-DONG-JU2.ttf",
     "size": 4292088,
     "preview": "오늘도 예쁘게 기록해요"
