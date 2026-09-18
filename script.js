@@ -167,8 +167,27 @@ const FONTORY_FAMILY_ICONS = {
 };
 Object.assign(CATEGORY_ICONS, FONTORY_FAMILY_ICONS);
 
+const ENGLISH_LATIN_FAMILY_CATEGORIES = new Set([
+  "770 발사체","Asta Sans","Agency FB","Arial 계열","Bahnschrift","Baskerville 계열",
+  "Bell MT 계열","Berlin Sans 계열","Bodoni 계열","Book Antiqua 계열","Bookman 계열",
+  "Calibri 계열","Calisto MT 계열","Candara 계열","Centaur 계열","Century 계열",
+  "Century Gothic 계열","Corbel 계열","Courier 계열","Dubai","Ebrima",
+  "Franklin/Fraktur 계열","Gadugi","Garamond 계열","Gill Sans 계열","Goudy 계열",
+  "Interop","Klei","Leelawadee 계열","Lucida Bright 계열","Lucida Fax 계열",
+  "Lucida Typewriter 계열","Microsoft Sans Serif","Min Sans","Nirmala UI 계열","Orbit",
+  "STUNNING","Scholastic 계열","Segoe 계열","Segoe Print 계열","Segoe Script 계열",
+  "Segoe UI 계열","Sylfaen","Tahoma 계열","Times 계열","Trebuchet MS 계열",
+  "Verdana 계열","Wanted Sans","구름·산세리프","구름·코딩","눈누·기본고딕",
+  "아사콤·고딕","자연산스","초군·치킨스크래치","Pretendard","IBM Plex","Noto",
+  "SUIT·SUITE","Google Fonts"
+]);
+
 const CATEGORY_GROUPS = {
-  "영문·라틴": (category) => category.startsWith("영문·") || ["Classic Serif","Impact","Google Fonts","고딕·산세리프","프리젠테이션"].includes(category) || category === "Microsoft" || category.startsWith("Microsoft·"),
+  "영문·라틴": (category) =>
+    category.startsWith("영문·") ||
+    ENGLISH_LATIN_FAMILY_CATEGORIES.has(category) ||
+    category === "Microsoft" ||
+    category.startsWith("Microsoft·"),
   "나눔폰트": (category) => category === "나눔폰트" || category.startsWith("나눔"),
   "학교안심": (category) => category === "학교안심" || category.startsWith("학교안심 "),
   "배달의민족": (category) => category === "배달의민족" || category.startsWith("배민 "),
@@ -421,10 +440,12 @@ function categoryCount(category) {
 }
 
 function renderCategories() {
-  categoryBar.innerHTML = CATEGORIES.map((cat) => {
-    const n = categoryCount(cat);
-    return `<button class="chip ${activeCategory === cat ? "active" : ""}" type="button" data-cat="${escapeAttr(cat)}">${CATEGORY_ICONS[cat] || "•"} ${escapeHtml(cat)} ${n}</button>`;
-  }).join("");
+  categoryBar.innerHTML = CATEGORIES
+    .map((cat) => ({ cat, n: categoryCount(cat) }))
+    .filter(({ cat, n }) => cat === "전체" || n > 0)
+    .map(({ cat, n }) => {
+      return `<button class="chip ${activeCategory === cat ? "active" : ""}" type="button" data-cat="${escapeAttr(cat)}">${CATEGORY_ICONS[cat] || "•"} ${escapeHtml(cat)} ${n}</button>`;
+    }).join("");
   categoryBar.querySelectorAll("[data-cat]").forEach((btn) => {
     btn.addEventListener("click", () => {
       activeCategory = btn.dataset.cat;
