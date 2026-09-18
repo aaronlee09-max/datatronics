@@ -7,7 +7,8 @@ const CATEGORIES = [
   "배달의민족",
   "카페24",
   "KCC",
-  "카카오",
+  "카카오 작은글씨",
+  "카카오 큰글씨",
   "G마켓",
   "Spoqa",
   "Tmoney",
@@ -24,9 +25,6 @@ const CATEGORIES = [
   "픽셀·레트로",
   "기호·딩벳",
 ]
-
-const GITHUB_LFS_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
-let fonts = [];
 const selected = new Set();
 let activeCategory = "전체";
 const loadedFaces = new Set();
