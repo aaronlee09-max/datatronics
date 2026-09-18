@@ -95,8 +95,17 @@ const CATEGORY_ICONS = {
   "강원·하이원": "⛷️",
   "한컴": "💻"
 };
+const FONTORY_EXTRA_CATEGORY_ICONS = {
+  "제주·지역특화": "🌴",
+  "경기·여주": "🏺",
+  "경기·포천": "🏯",
+  "경남·사천": "✈️",
+  "대구·수성": "🌳",
+};
+Object.assign(CATEGORY_ICONS, FONTORY_EXTRA_CATEGORY_ICONS);
+
 const CATEGORY_GROUPS = {
-  "영문·라틴": (category) => category.startsWith("영문·") || category === "Classic Serif" || category === "Impact",
+  "영문·라틴": (category) => category.startsWith("영문·") || ["Classic Serif","Impact","Microsoft","Google Fonts","고딕·산세리프","프리젠테이션"].includes(category),
   "나눔폰트": (category) => category === "나눔폰트" || category.startsWith("나눔"),
   "학교안심": (category) => category === "학교안심" || category.startsWith("학교안심 "),
   "배달의민족": (category) => category === "배달의민족" || category.startsWith("배민 "),
@@ -128,8 +137,12 @@ const CATEGORIES = [
   "제목·디스플레이",
   "서울",
   "경기·고양",
+  "경기·여주",
+  "경기·포천",
   "경남·고성",
+  "경남·사천",
   "광주",
+  "제주·지역특화",
   "전북·완주",
   "전북·전주",
   "강원·원주",
@@ -191,6 +204,7 @@ const CATEGORIES = [
   "서울·은평",
   "서울·서초",
   "대구·달서",
+  "대구·수성",
   "한글재민",
   "경남·김해",
   "충북·진천",
