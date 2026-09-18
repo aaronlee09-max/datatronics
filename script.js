@@ -7,13 +7,13 @@ const CATEGORIES = [
   "귀여운·캐주얼",
   "제목·디스플레이",
   "지역·문화",
-  "독립서체",
+  "독립·역사서체",
   "배달의민족",
   "영문·라틴",
-  "픽셀·모노스페이스",
+  "모노스페이스",
+  "픽셀·레트로",
   "기호·딩벳",
   "장식·개성",
-  "기타",
 ];
 
 const GITHUB_LFS_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
