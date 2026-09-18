@@ -54,7 +54,7 @@ const CATEGORIES = [
   "기호·딩벳"
 ];
 
-const GITHUB_LFS_BASE = "https://github.com/aaronlee09-max/datatronics/raw/refs/heads/main/";
+const GITHUB_LFS_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
 let fonts = [];
 const selected = new Set();
 let activeCategory = "전체";
