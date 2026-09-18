@@ -1,20 +1,29 @@
 const CATEGORIES = [
   "전체",
+  "독립운동",
+  "나눔폰트",
+  "1984대화나눔",
+  "학교안심",
+  "배달의민족",
+  "카페24",
+  "KCC",
+  "카카오",
+  "G마켓",
+  "Spoqa",
+  "Tmoney",
+  "Microsoft",
   "한국 기본·본문",
   "고딕·산세리프",
   "명조·세리프",
   "손글씨·캘리그래피",
   "귀여운·캐주얼",
   "제목·디스플레이",
-  "지역·문화",
-  "독립운동 나눔",
-  "배달의민족",
+  "지역·공공",
   "영문·라틴",
   "모노스페이스",
   "픽셀·레트로",
   "기호·딩벳",
-  "장식·개성",
-];
+]
 
 const GITHUB_LFS_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
 let fonts = [];
