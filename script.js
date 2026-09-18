@@ -95,8 +95,20 @@ const CATEGORY_ICONS = {
   "강원·하이원": "⛷️",
   "한컴": "💻"
 };
+const CATEGORY_GROUPS = {
+  "영문·라틴": (category) => category.startsWith("영문·") || category === "Classic Serif" || category === "Impact",
+  "나눔폰트": (category) => category === "나눔폰트" || category.startsWith("나눔"),
+  "학교안심": (category) => category === "학교안심" || category.startsWith("학교안심 "),
+  "배달의민족": (category) => category === "배달의민족" || category.startsWith("배민 "),
+  "카페24": (category) => category === "카페24" || category.startsWith("카페24 "),
+  "KCC": (category) => category === "KCC" || category.startsWith("KCC "),
+  "Microsoft": (category) => category === "Microsoft",
+  "Google Fonts": (category) => category === "Google Fonts",
+};
+
 const CATEGORIES = [
   "전체",
+  "영문·라틴",
   "독립운동",
   "나눔폰트",
   "1984대화나눔",
@@ -262,9 +274,19 @@ function windowsDownloadLabel(font) {
   return windowsInstallable(font) ? "🪟 Windows 다운로드" : "Windows 다운로드";
 }
 
+function categoryMatches(font, category) {
+  if (category === "전체") return true;
+  const group = CATEGORY_GROUPS[category];
+  return group ? group(String(font.category || "")) : font.category === category;
+}
+
+function categoryCount(category) {
+  return fonts.filter((font) => categoryMatches(font, category)).length;
+}
+
 function renderCategories() {
   categoryBar.innerHTML = CATEGORIES.map((cat) => {
-    const n = cat === "전체" ? fonts.length : fonts.filter((f) => f.category === cat).length;
+    const n = categoryCount(cat);
     return `<button class="chip ${activeCategory === cat ? "active" : ""}" type="button" data-cat="${escapeAttr(cat)}">${CATEGORY_ICONS[cat] || "•"} ${escapeHtml(cat)} ${n}</button>`;
   }).join("");
   categoryBar.querySelectorAll("[data-cat]").forEach((btn) => {
@@ -285,10 +307,7 @@ function matchesQuery(font, q) {
 function render() {
   renderCategories();
   const q = search.value.trim().toLowerCase();
-  const filtered = fonts.filter((f) => {
-    const catOk = activeCategory === "전체" || f.category === activeCategory;
-    return catOk && matchesQuery(f, q);
-  });
+  const filtered = fonts.filter((f) => categoryMatches(f, activeCategory) && matchesQuery(f, q));
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   page = Math.min(page, pages);
   const list = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
