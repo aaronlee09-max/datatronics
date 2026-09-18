@@ -111,7 +111,7 @@ const FONTORY_EXTRA_CATEGORY_ICONS = {
 Object.assign(CATEGORY_ICONS, FONTORY_EXTRA_CATEGORY_ICONS);
 
 const CATEGORY_GROUPS = {
-  "영문·라틴": (category) => category.startsWith("영문·") || ["Classic Serif","Impact","Microsoft","Google Fonts","고딕·산세리프","프리젠테이션"].includes(category),
+  "영문·라틴": (category) => category.startsWith("영문·") || ["Classic Serif","Impact","Google Fonts","고딕·산세리프","프리젠테이션"].includes(category) || category === "Microsoft" || category.startsWith("Microsoft·"),
   "나눔폰트": (category) => category === "나눔폰트" || category.startsWith("나눔"),
   "학교안심": (category) => category === "학교안심" || category.startsWith("학교안심 "),
   "배달의민족": (category) => category === "배달의민족" || category.startsWith("배민 "),
