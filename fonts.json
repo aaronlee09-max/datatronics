@@ -3974,7 +3974,7 @@
     "name": "Candara",
     "family": "DatatronicsPreview0398",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/Candara.ttf",
     "size": 242012,
     "preview": "오늘도 예쁘게 기록해요"
@@ -3984,7 +3984,7 @@
     "name": "Candarab",
     "family": "DatatronicsPreview0399",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/Candarab.ttf",
     "size": 250772,
     "preview": "오늘도 예쁘게 기록해요"
@@ -3994,7 +3994,7 @@
     "name": "Candarai",
     "family": "DatatronicsPreview0400",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/Candarai.ttf",
     "size": 251156,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4004,7 +4004,7 @@
     "name": "Candaral",
     "family": "DatatronicsPreview0401",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/Candaral.ttf",
     "size": 252124,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4014,7 +4014,7 @@
     "name": "Candarali",
     "family": "DatatronicsPreview0402",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/Candarali.ttf",
     "size": 189388,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4024,7 +4024,7 @@
     "name": "Candaraz",
     "family": "DatatronicsPreview0403",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/Candaraz.ttf",
     "size": 254676,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4304,7 +4304,7 @@
     "name": "CENTURY",
     "family": "DatatronicsPreview0431",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Classic Serif",
     "file": "fonts/CENTURY.TTF",
     "size": 165248,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4704,7 +4704,7 @@
     "name": "corbel",
     "family": "DatatronicsPreview0471",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/corbel.ttf",
     "size": 277168,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4714,7 +4714,7 @@
     "name": "corbelb",
     "family": "DatatronicsPreview0472",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/corbelb.ttf",
     "size": 290908,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4724,7 +4724,7 @@
     "name": "corbeli",
     "family": "DatatronicsPreview0473",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/corbeli.ttf",
     "size": 284690,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4734,7 +4734,7 @@
     "name": "corbell",
     "family": "DatatronicsPreview0474",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/corbell.ttf",
     "size": 172256,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4744,7 +4744,7 @@
     "name": "corbelli",
     "family": "DatatronicsPreview0475",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/corbelli.ttf",
     "size": 169228,
     "preview": "오늘도 예쁘게 기록해요"
@@ -4754,7 +4754,7 @@
     "name": "corbelz",
     "family": "DatatronicsPreview0476",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/corbelz.ttf",
     "size": 294692,
     "preview": "오늘도 예쁘게 기록해요"
@@ -9184,7 +9184,7 @@
     "name": "impact",
     "family": "DatatronicsPreview0919",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Impact",
     "file": "fonts/impact.ttf",
     "size": 206784,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15844,7 +15844,7 @@
     "name": "tahoma",
     "family": "DatatronicsPreview1585",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/tahoma.ttf",
     "size": 948860,
     "preview": "오늘도 예쁘게 기록해요"
@@ -15854,7 +15854,7 @@
     "name": "tahomabd",
     "family": "DatatronicsPreview1586",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/tahomabd.ttf",
     "size": 877632,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16124,7 +16124,7 @@
     "name": "verdana",
     "family": "DatatronicsPreview1613",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/verdana.ttf",
     "size": 243304,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16134,7 +16134,7 @@
     "name": "verdanab",
     "family": "DatatronicsPreview1614",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/verdanab.ttf",
     "size": 211260,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16144,7 +16144,7 @@
     "name": "verdanai",
     "family": "DatatronicsPreview1615",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/verdanai.ttf",
     "size": 223268,
     "preview": "오늘도 예쁘게 기록해요"
@@ -16154,7 +16154,7 @@
     "name": "verdanaz",
     "family": "DatatronicsPreview1616",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/verdanaz.ttf",
     "size": 229800,
     "preview": "오늘도 예쁘게 기록해요"
