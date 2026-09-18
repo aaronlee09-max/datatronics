@@ -3794,7 +3794,7 @@
     "name": "calibri",
     "family": "DatatronicsPreview0380",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/calibri.ttf",
     "size": 1681220,
     "preview": "오늘도 예쁘게 기록해요"
@@ -3804,7 +3804,7 @@
     "name": "calibrib",
     "family": "DatatronicsPreview0381",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/calibrib.ttf",
     "size": 1647428,
     "preview": "오늘도 예쁘게 기록해요"
@@ -3814,7 +3814,7 @@
     "name": "calibrii",
     "family": "DatatronicsPreview0382",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/calibrii.ttf",
     "size": 1228564,
     "preview": "오늘도 예쁘게 기록해요"
@@ -3824,7 +3824,7 @@
     "name": "calibril",
     "family": "DatatronicsPreview0383",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/calibril.ttf",
     "size": 1471248,
     "preview": "오늘도 예쁘게 기록해요"
@@ -3834,7 +3834,7 @@
     "name": "calibrili",
     "family": "DatatronicsPreview0384",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/calibrili.ttf",
     "size": 1092612,
     "preview": "오늘도 예쁘게 기록해요"
@@ -3844,7 +3844,7 @@
     "name": "calibriz",
     "family": "DatatronicsPreview0385",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "Microsoft",
     "file": "fonts/calibriz.ttf",
     "size": 1190004,
     "preview": "오늘도 예쁘게 기록해요"
@@ -5234,7 +5234,7 @@
     "name": "EliceDXNeolli-Bold",
     "family": "DatatronicsPreview0524",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "브랜드·기업",
     "file": "fonts/EliceDXNeolli-Bold.ttf",
     "size": 2027908,
     "preview": "오늘도 예쁘게 기록해요"
@@ -5244,7 +5244,7 @@
     "name": "EliceDXNeolli-Light",
     "family": "DatatronicsPreview0525",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "브랜드·기업",
     "file": "fonts/EliceDXNeolli-Light.ttf",
     "size": 1995012,
     "preview": "오늘도 예쁘게 기록해요"
@@ -5254,7 +5254,7 @@
     "name": "EliceDXNeolli-Medium",
     "family": "DatatronicsPreview0526",
     "style": "TTF",
-    "category": "영문·라틴",
+    "category": "브랜드·기업",
     "file": "fonts/EliceDXNeolli-Medium.ttf",
     "size": 2031256,
     "preview": "오늘도 예쁘게 기록해요"
@@ -5264,7 +5264,7 @@
     "name": "EliceDXNeolliOTF-Bold",
     "family": "DatatronicsPreview0527",
     "style": "OTF",
-    "category": "영문·라틴",
+    "category": "브랜드·기업",
     "file": "fonts/EliceDXNeolliOTF-Bold.otf",
     "size": 652376,
     "preview": "오늘도 예쁘게 기록해요"
@@ -5274,7 +5274,7 @@
     "name": "EliceDXNeolliOTF-Light",
     "family": "DatatronicsPreview0528",
     "style": "OTF",
-    "category": "영문·라틴",
+    "category": "브랜드·기업",
     "file": "fonts/EliceDXNeolliOTF-Light.otf",
     "size": 593324,
     "preview": "오늘도 예쁘게 기록해요"
@@ -5284,7 +5284,7 @@
     "name": "EliceDXNeolliOTF-Medium",
     "family": "DatatronicsPreview0529",
     "style": "OTF",
-    "category": "영문·라틴",
+    "category": "브랜드·기업",
     "file": "fonts/EliceDXNeolliOTF-Medium.otf",
     "size": 648760,
     "preview": "오늘도 예쁘게 기록해요"
