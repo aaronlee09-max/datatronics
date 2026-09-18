@@ -55,6 +55,10 @@ const CATEGORIES = [
 ];
 
 const GITHUB_LFS_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
+const FONT_ASSET_BASES = [
+  GITHUB_LFS_BASE,
+  "https://raw.githubusercontent.com/aaronlee09-max/datatronics/main/",
+];
 let fonts = [];
 const selected = new Set();
 let activeCategory = "전체";
