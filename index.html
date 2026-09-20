@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#f5f5f7">
   <meta name="description" content="iPhone과 Windows에서 사용할 폰트를 찾고 골라 담는 글꼴 라이브러리">
   <title>Fontory · 글꼴 보관소</title>
-  <link rel="stylesheet" href="./styles.css?v=20260920-2">
+  <link rel="stylesheet" href="./styles.css?v=20260920-passkey">
 </head>
 <body>
   <div class="app-shell">
@@ -23,7 +23,6 @@
       </div>
       <div id="categoryBar" class="category-bar" role="tablist" aria-label="카테고리"></div>
     </header>
-
     <main>
       <section class="intro-card">
         <div>
@@ -33,9 +32,7 @@
         </div>
         <div class="phone-glyph" aria-hidden="true">Aa</div>
       </section>
-
       <div id="statusBanner" class="status-banner" hidden></div>
-
       <div class="section-head">
         <h2>Fonts</h2>
         <span id="count">0 fonts</span>
@@ -44,27 +41,25 @@
       <p id="empty" class="empty" hidden>검색 결과가 없습니다.</p>
       <nav id="pagination" class="pagination" aria-label="폰트 목록 페이지"></nav>
     </main>
-
     <div id="selectionBar" class="selection-bar" hidden>
       <div>
         <strong>내 폰트 바구니</strong>
         <span id="selectedNames"></span>
       </div>
       <div class="selection-actions">
-        <button id="downloadWindows" type="button" disabled onclick="downloadSelectedWindows()">🪟 Windows 골라 다운로드</button>
+        <button id="downloadWindows" type="button" disabled onclick="downloadSelectedWindows()">Windows 골라 다운로드</button>
         <button id="makeProfile" type="button" disabled onclick="makeMobileConfig()">iPhone 구성 만들기</button>
       </div>
     </div>
-
     <footer>
       <p>Fontory · datatronics</p>
       <p class="small">폰트의 저작권과 라이선스는 각 제작자에게 있습니다. 라이선스가 확인되지 않은 파일을 무료라고 표시하지 않습니다.</p>
       <p class="small">iPhone 구성 프로파일은 Apple <code>com.apple.font</code> 규격으로 생성합니다. 실제 기기 설치 여부는 테스트 필요 상태입니다.</p>
     </footer>
   </div>
-  <script src="./auth.js?v=20260920-2"></script>
+  <script src="./auth.js?v=20260920-passkey"></script>
   <script src="./script.js?v=20260920"></script>
   <script src="./fontory-runtime-fix.js?v=20260920"></script>
-<script src="./fontory-asset-fix.js?v=20260920"></script>
+  <script src="./fontory-asset-fix.js?v=20260920"></script>
 </body>
 </html>
