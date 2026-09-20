@@ -1,5 +1,8 @@
 (()=> {
   const USERS = {
+    "76671c0f8ca2aa9f898af7d22da44e1136ceea025348147859f59b9bc905a": {
+      role: "admin"
+    },
     "414cb10fdc75ee2a9853bbcf8c93c8cf3888de2e66c6a84307e1ff914ef3ffa8": {
       role: "user"
     },
@@ -12,6 +15,7 @@
   };
 
   const PASSWORDS = {
+    "6280ab472481a292f4391e28f6f3c42c329dad577fd4afda33b2720f4a18b7f0": true,
     "40d354f5efb6114fab5a8df72caa4f836f527ad3b1d255a51dcb9f6836ae687a": true,
     "41d1fbe61da30ec3532e430faee074a6a7174332c6a07b623765a776a530bb34": true,
     "548a492529d0fa2943de0362cbc497bb252bada198526523a26739abe298d110": true
