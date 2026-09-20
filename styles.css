@@ -439,6 +439,12 @@ body.auth-locked .app-shell { visibility: hidden; }
   font-weight:900;
   cursor:pointer;
 }
+.auth-card .auth-passkey {
+  background:#2c2c2e;
+  color:#f5f5f7;
+  border:1px solid #48484a;
+}
+.auth-card .auth-passkey:hover { background:#38383a; }
 #authError { min-height:18px; margin-top:10px; color:#ff453a; font-size:12px; }
 .auth-card small { display:block; margin-top:20px; color:#636366; font-size:10px; }
 .auth-logout {
