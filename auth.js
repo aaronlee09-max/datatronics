@@ -21,8 +21,8 @@
   };
   const todayKst = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
   const dailyCode = async () => {
-    const digest = await hash("fontory-daily-v1|" + todayKst() + "|softronics.run.place");
-    return String(parseInt(digest.slice(0, 8), 16) % 1000000).padStart(6, "0");
+    const [year, month, day] = todayKst().split("-");
+    return year.slice(-2) + month + day;
   };
   const session = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || "null"); } catch { return null; } };
   const rpId = () => location.hostname;
@@ -152,7 +152,7 @@
 
   function askDailyCode(account) {
     sessionStorage.setItem(PENDING_KEY, JSON.stringify(account));
-    authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>한국 시간 기준으로 매일 바뀌는 6자리 코드를 입력하세요. ' + todayKst() + '</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>관리자 계정은 로그인 후 오늘 코드를 확인할 수 있습니다.</small>');
+    authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>오늘 날짜를 6자리로 입력하세요. 예: 2026년 9월 21일이면 260921</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>한국 시간 기준 낤짜 형식 YYMMDD 입니다.</small>');
     document.querySelector("#dailyCodeInput").focus();
     document.querySelector("#backLogin").addEventListener("click", () => {
       sessionStorage.removeItem(PENDING_KEY);
@@ -161,10 +161,10 @@
     document.querySelector("#dailyForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       setError("");
-      const typed = document.querySelector("#dailyCodeInput").value.trim();
+      const typed = document.querySelector("#dailyCodeInput").value.replace(/\D/g, "");
       const expected = await dailyCode();
       if (typed !== expected) {
-        setError("오늘 코드가 올바르지 않습니다.");
+        setError("오늘 코드가 올바르지 않습니다. 날짜 6자리를 입력하세요.");
         return;
       }
       sessionStorage.removeItem(PENDING_KEY);
@@ -225,7 +225,7 @@
       codeBtn.className = "auth-daily-code";
       codeBtn.textContent = "오늘 코드";
       codeBtn.addEventListener("click", async () => {
-        alert("오늘(" + todayKst() + ") 인증 코드는 " + (await dailyCode()) + " 입니다.");
+        alert("오늘 코드는 " + (await dailyCode()) + " 입니다.");
       });
       topbar.appendChild(codeBtn);
     }
