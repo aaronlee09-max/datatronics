@@ -152,7 +152,7 @@
 
   function askDailyCode(account) {
     sessionStorage.setItem(PENDING_KEY, JSON.stringify(account));
-    authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>오늘 날짜를 6자리로 입력하세요. 예: 2026년 9월 21일이면 260921</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>한국 시간 기준 낤짜 형식 YYMMDD 입니다.</small>');
+    authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>한국 시간 오늘 날짜 6자리를 입력하세요. 오늘이면 260921</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>형식은 YYMMDD 입니다. 예: 2026년 9월 21일 = 260921</small>');
     document.querySelector("#dailyCodeInput").focus();
     document.querySelector("#backLogin").addEventListener("click", () => {
       sessionStorage.removeItem(PENDING_KEY);
