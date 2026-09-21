@@ -2,6 +2,12 @@
   const AUTH = "fontory-auth-v3";
   const PENDING = "fontory-auth-pending";
   const FLAG = "fontory-passkey-ok";
+
+  try {
+    const cur = JSON.parse(sessionStorage.getItem(AUTH) || "null");
+    if (cur && cur.username === "passkey") sessionStorage.removeItem(AUTH);
+  } catch {}
+
   const todayKst = () => new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit"
   }).format(new Date());
@@ -15,32 +21,26 @@
     };
   }
 
-  function enter(account) {
+  function skipOnlyDailyForm() {
+    if (sessionStorage.getItem(FLAG) !== "1") return;
+    if (!document.querySelector("#dailyForm")) return;
+    let pending = null;
+    try { pending = JSON.parse(sessionStorage.getItem(PENDING) || "null"); } catch {}
+    if (!pending || pending.method !== "passkey") {
+      sessionStorage.removeItem(FLAG);
+      return;
+    }
     sessionStorage.removeItem(PENDING);
     sessionStorage.removeItem(FLAG);
     sessionStorage.setItem(AUTH, JSON.stringify({
-      username: account.username || "passkey",
-      role: account.role || "user",
+      username: pending.username,
+      role: pending.role || "user",
       method: "passkey",
       date: todayKst(),
       authenticatedAt: Date.now()
     }));
-    const box = document.querySelector("#fontoryAuth");
-    if (box) box.remove();
-    document.body.classList.remove("auth-locked");
     location.reload();
   }
 
-  function skipCodeScreen() {
-    if (sessionStorage.getItem(FLAG) !== "1") return;
-    const box = document.querySelector("#fontoryAuth");
-    if (!box) return;
-    if (!/오늘 코드|DAILY CODE/.test(box.textContent || "")) return;
-    let pending = null;
-    try { pending = JSON.parse(sessionStorage.getItem(PENDING) || "null"); } catch {}
-    enter(pending && pending.username ? pending : { username: "passkey", role: "user", method: "passkey" });
-  }
-
-  new MutationObserver(skipCodeScreen).observe(document.documentElement, { childList: true, subtree: true });
-  setInterval(skipCodeScreen, 200);
+  new MutationObserver(skipOnlyDailyForm).observe(document.documentElement, { childList: true, subtree: true });
 })();
