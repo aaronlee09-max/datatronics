@@ -12,7 +12,7 @@
     "548a492529d0fa2943de0362cbc497bb252bada198526523a26739abe298d110": true
   };
   const ACCOUNTS = window.FONTORY_ACCOUNTS || {};
-  const KEY = "fontory-auth-v3";
+  const KEY = "fontory-auth-v4";
   const PASSKEY_KEY = "fontory-passkeys-v1";
   const PENDING_KEY = "fontory-auth-pending";
   const MANAGED_KEY = "fontory-managed-accounts-v1";
@@ -68,7 +68,7 @@
   saveManaged(loadManaged());
   const setError = (text) => { const error = document.querySelector("#authError"); if (error) error.textContent = text || ""; };
   const randomBytes = (size) => crypto.getRandomValues(new Uint8Array(size));
-  const escapeAuth = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&", "<": "<", ">": ">", '"': """, "'": "&#39;" }[c]));
+  const escapeAuth = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   async function resolveAccount(user, password) {
     const [userHash, passwordHash] = await Promise.all([hash(user), hash(password)]);
     const managed = loadManaged().find((item) => item.userHash === userHash);
@@ -189,8 +189,9 @@
     });
   }
   function askDailyCode(account) {
+    if (account && account.method === "passkey") { finishLogin(account); return; }
     sessionStorage.setItem(PENDING_KEY, JSON.stringify(account));
-    authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>한국 시간 오늘 날짜 6자리를 입력하세요. 형식은 YYMMDD 입니다.</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>예: 2026년 9월 21일 = 260921</small>');
+    authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>한국 시간 오늘 날짜 6자리를 입력하세요. 형식은 YYMMDD 입니다.</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>예: 2026년 9월 22일 = 260922</small>');
     document.querySelector("#dailyCodeInput").focus();
     document.querySelector("#backLogin").addEventListener("click", () => {
       sessionStorage.removeItem(PENDING_KEY);
@@ -209,7 +210,7 @@
     });
   }
   function mountLogin() {
-    authShell('<div class="auth-mark">FONTORY · PRIVATE ACCESS</div><h1>글꼴 보관소</h1><p>등록된 계정으로 접속하세요. 패스키는 코드 없이 바로 들어갑니다.</p><form id="authForm"><label>아이디<input id="authUser" autocomplete="username" required></label><label>비밀번호<input id="authPass" type="password" autocomplete="current-password" required></label><button type="submit">계정 로그인</button><button id="passkeyButton" class="auth-passkey" type="button">패스키로 접속</button><div id="authError" role="alert"></div></form><small>패스키가 없으면 계정 로그인 → 오늘 코드 → 오른쪽 위 패스키 만들기 순서로 진행하세요.</small>');
+    authShell('<div class="auth-mark">FONTORY · PRIVATE ACCESS</div><h1>글꼴 보관소</h1><p>등록된 계정으로 접속하세요. 패스키는 코드 없이 바로 들어갑니다.</p><form id="authForm"><label>아이디<input id="authUser" autocomplete="username" required></label><label>비밀번호<input id="authPass" type="password" autocomplete="current-password" required></label><button type="submit">계정 로그인</button><button id="passkeyButton" class="auth-passkey" type="button">패스키로 접속</button><div id="authError" role="alert"></div></form><small>아이디와 비밀번호로 들어가면 오늘 코드가 필요합니다. 패스키는 코드 없이 들어갑니다.</small>');
     document.querySelector("#authUser").focus();
     document.querySelector("#authForm").addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -286,7 +287,7 @@
         try {
           const current = loadManaged().find((item) => item.username === name);
           await upsert(name, password, current ? current.role : (name === "admin" ? "admin" : "user"), current ? current.disabled : false);
-          alert("비밀번호를 바꿈습니다.");
+          alert("비밀번호를 바꿨습니다.");
           showAdminPanel(account);
         } catch (error) { alert(error.message || "바꾸지 못했습니다."); }
       });
@@ -379,7 +380,7 @@
     const start = () => {
       try {
         const pending = JSON.parse(sessionStorage.getItem(PENDING_KEY) || "null");
-        if (pending && pending.username && pending.role) { askDailyCode(pending); return; }
+        if (pending && pending.username && pending.role && pending.method !== "passkey") { askDailyCode(pending); return; }
       } catch {}
       mountLogin();
     };
