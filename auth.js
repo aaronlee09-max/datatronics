@@ -11,10 +11,10 @@
     "41d1fbe61da30ec3532e430faee074a6a7174332c6a07b623765a776a530bb34": true,
     "548a492529d0fa2943de0362cbc497bb252bada198526523a26739abe298d110": true
   };
+  const ACCOUNTS = window.FONTORY_ACCOUNTS || {};
   const KEY = "fontory-auth-v3";
   const PASSKEY_KEY = "fontory-passkeys-v1";
   const PENDING_KEY = "fontory-auth-pending";
-
   const hash = async (value) => {
     const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
     return [...new Uint8Array(bytes)].map((x) => x.toString(16).padStart(2, "0")).join("");
@@ -53,7 +53,16 @@
   };
   const setError = (text) => { const error = document.querySelector("#authError"); if (error) error.textContent = text || ""; };
   const randomBytes = (size) => crypto.getRandomValues(new Uint8Array(size));
-
+  async function resolveAccount(user, password) {
+    const [userHash, passwordHash] = await Promise.all([hash(user), hash(password)]);
+    if (ACCOUNTS[userHash] && ACCOUNTS[userHash].pass === passwordHash) {
+      return { username: user, role: ACCOUNTS[userHash].role, method: "password" };
+    }
+    if (USERS[userHash] && PASSWORDS[passwordHash]) {
+      return { username: user, role: USERS[userHash].role, method: "password" };
+    }
+    return null;
+  }
   function authShell(inner) {
     document.body.classList.add("auth-locked");
     document.querySelector("#fontoryAuth")?.remove();
@@ -62,7 +71,6 @@
     box.innerHTML = "<div class=\"auth-card\">" + inner + "</div>";
     document.body.appendChild(box);
   }
-
   async function createPasskey(account) {
     if (!webauthnOk()) throw new Error("이 브라우저에서는 패스키를 만들 수 없습니다. HTTPS와 최신 브라우저가 필요합니다.");
     const exclude = loadPasskeys().filter((item) => item.username === account.username).map((item) => ({ type: "public-key", id: fromB64(item.credentialId) }));
@@ -92,7 +100,6 @@
     savePasskeys(items);
     return items[items.length - 1];
   }
-
   async function loginWithPasskey() {
     if (!webauthnOk()) throw new Error("이 브라우저에서는 패스키 로그인을 사용할 수 없습니다.");
     const items = loadPasskeys();
@@ -115,7 +122,6 @@
     if (!match) throw new Error("이 기기의 패스키를 이 사이트 계정과 연결할 수 없습니다.");
     return match;
   }
-
   function showPasskeyPanel(account) {
     document.querySelector("#fontoryPasskeyPanel")?.remove();
     const items = loadPasskeys().filter((item) => item.username === account.username);
@@ -149,10 +155,9 @@
       });
     });
   }
-
   function askDailyCode(account) {
     sessionStorage.setItem(PENDING_KEY, JSON.stringify(account));
-    authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>한국 시간 오늘 날짜 6자리를 입력하세요. 오늘이면 260921</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>형식은 YYMMDD 입니다. 예: 2026년 9월 21일 = 260921</small>');
+    authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>한국 시간 오늘 날짜 6자리를 입력하세요. 형식은 YYMMDD 입니다.</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>예: 2026년 9월 21일 = 260921</small>');
     document.querySelector("#dailyCodeInput").focus();
     document.querySelector("#backLogin").addEventListener("click", () => {
       sessionStorage.removeItem(PENDING_KEY);
@@ -178,18 +183,17 @@
       unlock(account);
     });
   }
-
   function mountLogin() {
-    authShell('<div class="auth-mark">FONTORY · PRIVATE ACCESS</div><h1>글꼴 보관소</h1><p>계정으로 접속한 뒤 패스키를 새로 만들 수 있습니다. 접속 후에는 오늘 코드도 확인합니다.</p><form id="authForm"><label>아이디<input id="authUser" autocomplete="username" required></label><label>비밀번호<input id="authPass" type="password" autocomplete="current-password" required></label><button type="submit">계정 로그인</button><button id="passkeyButton" class="auth-passkey" type="button">패스키로 접속</button><div id="authError" role="alert"></div></form><small>패스키가 없으면 계정 로그인 → 오늘 코드 → 오른쪽 위 패스키 만들기 순서로 진행하세요.</small>');
+    authShell('<div class="auth-mark">FONTORY · PRIVATE ACCESS</div><h1>글꼴 보관소</h1><p>등록된 계정으로 접속하세요. 접속 후 오늘 날짜 코드와 패스키를 사용할 수 있습니다.</p><form id="authForm"><label>아이디<input id="authUser" autocomplete="username" required></label><label>비밀번호<input id="authPass" type="password" autocomplete="current-password" required></label><button type="submit">계정 로그인</button><button id="passkeyButton" class="auth-passkey" type="button">패스키로 접속</button><div id="authError" role="alert"></div></form><small>패스키가 없으면 계정 로그인 → 오늘 코드 → 오른쪽 위 패스키 만들기 순서로 진행하세요.</small>');
     document.querySelector("#authUser").focus();
     document.querySelector("#authForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       setError("");
       const user = document.querySelector("#authUser").value.trim();
       const password = document.querySelector("#authPass").value;
-      const [userHash, passwordHash] = await Promise.all([hash(user), hash(password)]);
-      if (USERS[userHash] && PASSWORDS[passwordHash]) {
-        askDailyCode({ username: user, role: USERS[userHash].role, method: "password" });
+      const account = await resolveAccount(user, password);
+      if (account) {
+        askDailyCode(account);
         return;
       }
       setError("아이디 또는 비밀번호가 올바르지 않습니다.");
@@ -209,7 +213,6 @@
       }
     });
   }
-
   async function unlock(account) {
     document.body.classList.remove("auth-locked");
     document.querySelector("#fontoryAuth")?.remove();
@@ -246,7 +249,6 @@
     });
     topbar.appendChild(logout);
   }
-
   const current = session();
   if (current && current.role && current.date === todayKst()) {
     const account = { username: current.username || "account", role: current.role, method: current.method };
