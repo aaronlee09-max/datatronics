@@ -238,7 +238,7 @@
   }
   function showAdminPanel(account) {
     document.querySelector("#fontoryAdminPanel")?.remove();
-    const known = ["admin", "htxoh", "shxle"];
+    const known = Array.isArray(window.FONTORY_ACCOUNT_INDEX) ? window.FONTORY_ACCOUNT_INDEX.map((item) => item && item.username).filter(Boolean) : ["admin", "htxoh", "shxle"];
     const managed = loadManaged();
     const names = Array.from(new Set(known.concat(managed.map((item) => item.username)))).filter(Boolean);
     const rows = names.map((name) => {
