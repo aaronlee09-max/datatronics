@@ -28,14 +28,4 @@
   const grid=document.querySelector("#fontGrid");
   if(grid) new MutationObserver(scan).observe(grid,{childList:true,subtree:true});
   scan();
-  const win=document.querySelector("#downloadWindows");
-  if(win){
-    win.removeAttribute("disabled");
-    win.addEventListener("click",()=>{try{window.downloadSelectedWindows&&window.downloadSelectedWindows();}catch(e){console.error(e);}},true);
-  }
-  const bar=document.querySelector("#selectionBar");
-  if(bar && win){
-    new MutationObserver(()=>{if(!bar.hidden) win.disabled=false;}).observe(bar,{attributes:true,attributeFilter:["hidden"]});
-    new MutationObserver(()=>{if(!bar.hidden) win.disabled=false;}).observe(win,{attributes:true,attributeFilter:["disabled"]});
-  }
 })();
