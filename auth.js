@@ -69,7 +69,31 @@
   const setError = (text) => { const error = document.querySelector("#authError"); if (error) error.textContent = text || ""; };
   const randomBytes = (size) => crypto.getRandomValues(new Uint8Array(size));
   const escapeAuth = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const CENTRAL_API = "https://crafty-spicy-currency--aaronshleekr.replit.app";
+  async function centralLogin(user, password) {
+    try {
+      const response = await fetch(CENTRAL_API + "/api/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: user, password })
+      });
+      if (!response.ok) return null;
+      const data = await response.json();
+      if (!data || !data.user) return null;
+      return { username: data.user.username || user, role: "admin", method: "server" };
+    } catch {
+      return null;
+    }
+  }
+  async function centralLogout() {
+    try {
+      await fetch(CENTRAL_API + "/api/auth/logout", { method: "POST", credentials: "include" });
+    } catch {}
+  }
   async function resolveAccount(user, password) {
+    const central = await centralLogin(user, password);
+    if (central) return central;
     const [userHash, passwordHash] = await Promise.all([hash(user), hash(password)]);
     const managed = loadManaged().find((item) => item.userHash === userHash);
     if (managed) {
@@ -236,7 +260,86 @@
       }
     });
   }
+  async function showCentralAdminPanel(account) {
+    document.querySelector("#fontoryAdminPanel")?.remove();
+    try {
+      const response = await fetch(CENTRAL_API + "/api/accounts", { credentials: "include" });
+      if (!response.ok) throw new Error("중앙 계정 관리 서버에 연결할 수 없습니다.");
+      const data = await response.json();
+      const accounts = Array.isArray(data.accounts) ? data.accounts : [];
+      const rows = accounts.map((item) => {
+        const status = item.disabled ? "중지" : (item.passwordConfigured === false ? "비밀번호 설정 필요" : "활성");
+        return '<tr><td><code>' + escapeAuth(item.username) + '</code></td><td>관리자</td><td>' + status + '</td><td class="admin-actions">' +
+          '<button type="button" data-edit="' + escapeAuth(item.username) + '">비번변경</button>' +
+          (item.username === "admin" ? "" : '<button type="button" data-off="' + escapeAuth(item.username) + '">' + (item.disabled ? "켜기" : "중지") + "</button><button type="button" data-del="" + escapeAuth(item.username) + "">삭제</button>") +
+          "</td></tr>";
+      }).join("");
+      const panel = document.createElement("div");
+      panel.id = "fontoryAdminPanel";
+      panel.innerHTML = '<div class="admin-card"><strong>중앙 계정 관리</strong><p>Replit 중앙 DB에 저장되므로 다른 기기에서도 같은 계정 목록을 사용합니다.</p>' +
+        '<form id="adminAddForm" class="admin-form"><input id="newUser" placeholder="아이디" required autocomplete="off"><input id="newPass" placeholder="비밀번호" required autocomplete="new-password"><button type="submit">계정 추가</button></form>' +
+        '<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>아이디</th><th>역할</th><th>상태</th><th>관리</th></tr></thead><tbody>' + rows + "</tbody></table></div>" +
+        '<div class="admin-foot"><small>모든 계정은 관리자 모드입니다.</small><button type="button" id="closeAdminBtn" class="passkey-close">닫기</button></div></div>';
+      document.body.appendChild(panel);
+      panel.querySelector("#closeAdminBtn").addEventListener("click", () => panel.remove());
+      panel.querySelector("#adminAddForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const username = panel.querySelector("#newUser").value.trim();
+        const password = panel.querySelector("#newPass").value;
+        const r = await fetch(CENTRAL_API + "/api/accounts", {
+          method: "POST", credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        if (!r.ok) { alert((await r.json().catch(() => ({}))).error || "계정을 추가하지 못했습니다."); return; }
+        alert("중앙 DB에 저장했습니다.");
+        showCentralAdminPanel(account);
+      });
+      panel.querySelectorAll("[data-edit]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const password = prompt(button.dataset.edit + " 계정의 새 비밀번호");
+          if (!password) return;
+          const r = await fetch(CENTRAL_API + "/api/accounts/" + encodeURIComponent(button.dataset.edit), {
+            method: "PATCH", credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password })
+          });
+          if (!r.ok) { alert((await r.json().catch(() => ({}))).error || "비밀번호를 변경하지 못했습니다."); return; }
+          alert("변경했습니다.");
+          showCentralAdminPanel(account);
+        });
+      });
+      panel.querySelectorAll("[data-off]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const r = await fetch(CENTRAL_API + "/api/accounts/" + encodeURIComponent(button.dataset.off) + "/disable", {
+            method: "POST", credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ disabled: button.textContent === "켜기" ? false : true })
+          });
+          if (!r.ok) { alert((await r.json().catch(() => ({}))).error || "상태를 변경하지 못했습니다."); return; }
+          showCentralAdminPanel(account);
+        });
+      });
+      panel.querySelectorAll("[data-del]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          if (!confirm(button.dataset.del + " 계정을 삭제할까요?")) return;
+          const r = await fetch(CENTRAL_API + "/api/accounts/" + encodeURIComponent(button.dataset.del), {
+            method: "DELETE", credentials: "include"
+          });
+          if (!r.ok) { alert((await r.json().catch(() => ({}))).error || "삭제하지 못했습니다."); return; }
+          showCentralAdminPanel(account);
+        });
+      });
+    } catch (error) {
+      alert(error.message || "중앙 계정 관리 서버에 연결하지 못했습니다.");
+    }
+  }
+
   function showAdminPanel(account) {
+    if (account && account.method === "server") {
+      showCentralAdminPanel(account);
+      return;
+    }
     document.querySelector("#fontoryAdminPanel")?.remove();
     const known = Array.isArray(window.FONTORY_ACCOUNT_INDEX) ? window.FONTORY_ACCOUNT_INDEX.map((item) => item && item.username).filter(Boolean) : ["admin", "htxoh", "shxle"];
     const managed = loadManaged();
@@ -363,7 +466,8 @@
     logout.type = "button";
     logout.className = "auth-logout";
     logout.textContent = account.role === "admin" ? "관리자 · 로그아웃" : "로그아웃";
-    logout.addEventListener("click", () => {
+    logout.addEventListener("click", async () => {
+      await centralLogout();
       sessionStorage.removeItem(KEY);
       sessionStorage.removeItem(PENDING_KEY);
       location.reload();
