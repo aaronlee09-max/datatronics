@@ -271,7 +271,7 @@
         const status = item.disabled ? "중지" : (item.passwordConfigured === false ? "비밀번호 설정 필요" : "활성");
         return '<tr><td><code>' + escapeAuth(item.username) + '</code></td><td>관리자</td><td>' + status + '</td><td class="admin-actions">' +
           '<button type="button" data-edit="' + escapeAuth(item.username) + '">비번변경</button>' +
-          (item.username === "admin" ? "" : '<button type="button" data-off="' + escapeAuth(item.username) + '">' + (item.disabled ? "켜기" : "중지") + "</button><button type="button" data-del="" + escapeAuth(item.username) + "">삭제</button>") +
+          (item.username === "admin" ? "" : '<button type="button" data-off="' + escapeAuth(item.username) + '">' + (item.disabled ? "켜기" : "중지") + '</button><button type="button" data-del="' + escapeAuth(item.username) + '">삭제</button>') +
           "</td></tr>";
       }).join("");
       const panel = document.createElement("div");
