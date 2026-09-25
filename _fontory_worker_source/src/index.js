@@ -87,6 +87,9 @@ function isValidUsername(u) {
 function isValidPassword(p) {
   return typeof p === "string" && p.length >= 8 && p.length <= 256;
 }
+function isValidEmail(email) {
+  return typeof email === "string" && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
 // ---------------- 라우트 핸들러 ----------------
 
@@ -204,7 +207,17 @@ async function handleMe(request, env) {
   const auth = await requireSession(request, env);
   if (!auth) return unauthorized(env);
   const { account } = auth;
-  return json(env, { username: account.username, role: account.role, status: account.status });
+  return json(env, { username: account.username, role: account.role, status: account.status, email: account.email || null });
+}
+
+async function handleUpdateOwnEmail(request, env) {
+  const auth = await requireSession(request, env);
+  if (!auth) return unauthorized(env);
+  const body = await request.json().catch(() => ({}));
+  const email = typeof body.email === "string" ? body.email.trim() : "";
+  if (email && !isValidEmail(email)) return badRequest(env, "이메일 형식이 올바르지 않습니다.");
+  await db.updateAccountEmail(env.DB, auth.account.id, email || null);
+  return json(env, { ok: true, email: email || null });
 }
 
 async function requireAdmin(request, env) {
@@ -335,6 +348,7 @@ export default {
       if (pathname === "/api/auth/mfa/verify" && request.method === "POST") return await handleMfaVerify(request, env);
       if (pathname === "/api/auth/logout" && request.method === "POST") return await handleLogout(request, env);
       if (pathname === "/api/auth/me" && request.method === "GET") return await handleMe(request, env);
+      if (pathname === "/api/account/email" && request.method === "PATCH") return await handleUpdateOwnEmail(request, env);
 
       if (pathname === "/api/accounts" && request.method === "GET") return await handleListAccounts(request, env);
       if (pathname === "/api/accounts" && request.method === "POST") return await handleCreateAccount(request, env);

@@ -15,7 +15,7 @@ export async function getAccountById(db, id) {
 export async function listAccounts(db) {
   const { results } = await db
     .prepare(
-      "SELECT username, role, status, disabled, mfa_enabled, created_at, updated_at FROM accounts ORDER BY username"
+      "SELECT username, role, status, disabled, mfa_enabled, email, created_at, updated_at FROM accounts ORDER BY username"
     )
     .all();
   return results; // password_hash는 의도적으로 SELECT하지 않음
@@ -46,6 +46,13 @@ export async function updatePasswordHash(db, username, passwordHash) {
   return db
     .prepare("UPDATE accounts SET password_hash = ?, updated_at = ? WHERE username = ?")
     .bind(passwordHash, now(), username)
+    .run();
+}
+
+export async function updateAccountEmail(db, accountId, email) {
+  return db
+    .prepare("UPDATE accounts SET email = ?, updated_at = ? WHERE id = ?")
+    .bind(email || null, now(), accountId)
     .run();
 }
 
