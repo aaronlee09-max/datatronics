@@ -39,7 +39,10 @@
   const escapeAuth = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   async function centralFetch(path, options = {}) {
-    return fetch(CENTRAL_API + path, { credentials: "include", ...options });
+    const current = session();
+    const headers = new Headers(options.headers || {});
+    if (current?.token) headers.set("Authorization", "Bearer " + current.token);
+    return fetch(CENTRAL_API + path, { credentials: "include", ...options, headers });
   }
   async function centralMe() {
     const response = await centralFetch("/api/auth/me");
@@ -53,13 +56,13 @@
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || "아이디 또는 비밀번호가 올바르지 않습니다.");
     if (data.mfaRequired && data.pendingToken) return { username, role: "admin", method: "server", mfaRequired: true, pendingToken: data.pendingToken };
-    return data.username ? { username: data.username, role: data.role || "user", status: data.status, method: "server" } : null;
+    return data.username ? { username: data.username, role: data.role || "user", status: data.status, token: data.token, method: "server" } : null;
   }
   async function verifyCentralMfa(pendingToken, code) {
     const response = await centralFetch("/api/auth/mfa/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pendingToken, code }) });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || "인증 코드가 올바르지 않습니다.");
-    return { username: data.username || "admin", role: data.role || "admin", status: data.status, method: "server" };
+    return { username: data.username || "admin", role: data.role || "admin", status: data.status, token: data.token, method: "server" };
   }
   async function centralLogout() { try { await centralFetch("/api/auth/logout", { method: "POST" }); } catch {} }
   async function showEmailPanel(account) {
@@ -98,7 +101,7 @@
     if (USERS[userHash] && PASSWORDS[passwordHash]) return { username: user, role: USERS[userHash].role, method: "password" };
     return null;
   }
-  function finishLogin(account) { sessionStorage.removeItem(PENDING_KEY); sessionStorage.setItem(KEY, JSON.stringify({ username: account.username, role: account.role, status: account.status, method: account.method, date: todayKst(), authenticatedAt: Date.now() })); unlock(account); }
+  function finishLogin(account) { const previous = session(); sessionStorage.removeItem(PENDING_KEY); sessionStorage.setItem(KEY, JSON.stringify({ username: account.username, role: account.role, status: account.status, token: account.token || previous?.token, method: account.method, date: todayKst(), authenticatedAt: Date.now() })); unlock(account); }
   function authShell(inner) { document.body.classList.add("auth-locked"); document.querySelector("#fontoryAuth")?.remove(); const box = document.createElement("div"); box.id = "fontoryAuth"; box.innerHTML = "<div class=\"auth-card\">" + inner + "</div>"; document.body.appendChild(box); }
 
   async function createPasskey(account) {

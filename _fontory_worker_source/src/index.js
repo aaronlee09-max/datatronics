@@ -19,7 +19,7 @@ function cors(env, extraHeaders = {}) {
     "Access-Control-Allow-Origin": env.ALLOWED_ORIGIN,
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE,OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Vary": "Origin",
     ...extraHeaders,
   };
@@ -71,7 +71,9 @@ function getCookie(request, name) {
 }
 
 async function requireSession(request, env) {
-  const token = getCookie(request, SESSION_COOKIE);
+  const authHeader = request.headers.get("Authorization") || "";
+  const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : null;
+  const token = bearer || getCookie(request, SESSION_COOKIE);
   if (!token) return null;
   const tokenHash = await sha256Hex(token);
   const session = await db.getValidSessionByTokenHash(env.DB, tokenHash);
@@ -160,7 +162,7 @@ async function issueSession(env, account) {
   await db.createSession(env.DB, account.id, tokenHash, ttl);
   return json(
     env,
-    { username: account.username, role: account.role, status: account.status },
+    { username: account.username, role: account.role, status: account.status, token },
     200,
     { "Set-Cookie": setCookie(SESSION_COOKIE, token, ttl * 60) }
   );
