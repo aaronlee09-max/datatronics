@@ -42,16 +42,18 @@
     return fetch(CENTRAL_API + path, { credentials: "include", ...options });
   }
   async function centralMe() {
-    try { const response = await centralFetch("/api/auth/me"); if (!response.ok) return null; return await response.json(); } catch { return null; }
+    const response = await centralFetch("/api/auth/me");
+    if (response.status === 401) return null;
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "중앙 인증 서버에 연결할 수 없습니다.");
+    return data;
   }
   async function centralLogin(username, password) {
-    try {
-      const response = await centralFetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, password }) });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) return null;
-      if (data.mfaRequired && data.pendingToken) return { username, role: "admin", method: "server", mfaRequired: true, pendingToken: data.pendingToken };
-      return data.username ? { username: data.username, role: data.role || "user", status: data.status, method: "server" } : null;
-    } catch { return null; }
+    const response = await centralFetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, password }) });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "아이디 또는 비밀번호가 올바르지 않습니다.");
+    if (data.mfaRequired && data.pendingToken) return { username, role: "admin", method: "server", mfaRequired: true, pendingToken: data.pendingToken };
+    return data.username ? { username: data.username, role: data.role || "user", status: data.status, method: "server" } : null;
   }
   async function verifyCentralMfa(pendingToken, code) {
     const response = await centralFetch("/api/auth/mfa/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pendingToken, code }) });
@@ -94,7 +96,7 @@
   }
   function askDailyCode(account) { sessionStorage.setItem(PENDING_KEY, JSON.stringify(account)); authShell('<div class="auth-mark">DAILY CODE</div><h1>오늘 코드 인증</h1><p>한국 시간 오늘 날짜 6자리를 입력하세요. 형식은 YYMMDD 입니다.</p><form id="dailyForm"><label>오늘 코드<input id="dailyCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">확인</button><button id="backLogin" class="auth-passkey" type="button">계정 로그인으로</button><div id="authError" role="alert"></div></form><small>예: 2026년 9월 22일 = 260922</small>'); document.querySelector("#dailyCodeInput").focus(); document.querySelector("#backLogin").addEventListener("click", () => { sessionStorage.removeItem(PENDING_KEY); mountLogin(); }); document.querySelector("#dailyForm").addEventListener("submit", async (event) => { event.preventDefault(); const typed = document.querySelector("#dailyCodeInput").value.replace(/\D/g, ""); if (typed !== await dailyCode()) return setError("오늘 코드가 올바르지 않습니다. 날짜 6자리를 입력하세요."); finishLogin(account); }); }
   function askMfa(account) { sessionStorage.setItem(PENDING_KEY, JSON.stringify(account)); authShell('<div class="auth-mark">FONTORY · EMAIL 2FA</div><h1>이메일 인증</h1><p>등록된 이메일로 보낸 6자리 인증 코드를 입력하세요.</p><form id="mfaForm"><label>인증 코드<input id="mfaCodeInput" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label><button type="submit">최종 로그인</button><button id="backLogin" class="auth-passkey" type="button">로그인 화면으로</button><div id="authError" role="alert"></div></form>'); document.querySelector("#mfaCodeInput").focus(); document.querySelector("#backLogin").addEventListener("click", () => { sessionStorage.removeItem(PENDING_KEY); mountLogin(); }); document.querySelector("#mfaForm").addEventListener("submit", async (event) => { event.preventDefault(); setError(""); try { const result = await verifyCentralMfa(account.pendingToken, document.querySelector("#mfaCodeInput").value.trim()); finishLogin(result); } catch (error) { setError(error.message || "인증에 실패했습니다."); } }); }
-  function mountLogin() { authShell('<div class="auth-mark">FONTORY · PRIVATE ACCESS</div><h1>글꼴 보관소</h1><p>등록된 중앙 계정으로 접속하세요. 기존 기기 패스키도 계속 사용할 수 있습니다.</p><form id="authForm"><label>아이디<input id="authUser" autocomplete="username" required></label><label>비밀번호<input id="authPass" type="password" autocomplete="current-password" required></label><button type="submit">계정 로그인</button><button id="passkeyButton" class="auth-passkey" type="button">패스키로 접속</button><div id="authError" role="alert"></div></form><small>관리자 계정은 이메일 2FA를 거친 뒤 로그인됩니다. 패스키 로그인은 기존대로 이 기기에서 사용할 수 있습니다.</small>'); document.querySelector("#authUser").focus(); document.querySelector("#authForm").addEventListener("submit", async (event) => { event.preventDefault(); setError(""); const user = document.querySelector("#authUser").value.trim(); const password = document.querySelector("#authPass").value; const central = await centralLogin(user, password); if (central) { if (central.mfaRequired) askMfa(central); else finishLogin(central); return; } const local = await resolveLocal(user, password); if (local) askDailyCode(local); else setError("아이디 또는 비밀번호가 올바르지 않습니다."); }); document.querySelector("#passkeyButton").addEventListener("click", async () => { setError(""); const button = document.querySelector("#passkeyButton"); button.disabled = true; button.textContent = "패스키 확인 중…"; try { const match = await loginWithPasskey(); finishLogin({ username: match.username, role: match.role, method: "passkey" }); } catch (error) { setError(error.message || "패스키로 접속하지 못했습니다."); button.disabled = false; button.textContent = "패스키로 접속"; } }); }
+  function mountLogin() { authShell('<div class="auth-mark">FONTORY · PRIVATE ACCESS</div><h1>글꼴 보관소</h1><p>등록된 중앙 계정으로 접속하세요. 기존 기기 패스키도 계속 사용할 수 있습니다.</p><form id="authForm"><label>아이디<input id="authUser" autocomplete="username" required></label><label>비밀번호<input id="authPass" type="password" autocomplete="current-password" required></label><button type="submit">계정 로그인</button><button id="passkeyButton" class="auth-passkey" type="button">패스키로 접속</button><div id="authError" role="alert"></div></form><small>관리자 계정은 이메일 2FA를 거친 뒤 로그인됩니다. 패스키 로그인은 기존대로 이 기기에서 사용할 수 있습니다.</small>'); document.querySelector("#authUser").focus(); document.querySelector("#authForm").addEventListener("submit", async (event) => { event.preventDefault(); setError(""); const user = document.querySelector("#authUser").value.trim(); const password = document.querySelector("#authPass").value; try { const central = await centralLogin(user, password); if (central) { if (central.mfaRequired) askMfa(central); else finishLogin(central); return; } setError("중앙 인증 서버에서 계정을 확인하지 못했습니다."); } catch (error) { setError(error.message || "중앙 인증 서버에 연결할 수 없습니다."); } }); document.querySelector("#passkeyButton").addEventListener("click", async () => { setError(""); const button = document.querySelector("#passkeyButton"); button.disabled = true; button.textContent = "패스키 확인 중…"; try { const match = await loginWithPasskey(); finishLogin({ username: match.username, role: match.role, method: "passkey" }); } catch (error) { setError(error.message || "패스키로 접속하지 못했습니다."); button.disabled = false; button.textContent = "패스키로 접속"; } }); }
 
   async function showCentralAdminPanel(account) {
     document.querySelector("#fontoryAdminPanel")?.remove(); try {
@@ -113,7 +115,7 @@
 
   async function startAuth() {
     const central = await centralMe(); if (central) { finishLogin({ username: central.username, role: central.role, status: central.status, method: "server" }); return; }
-    const current = session(); if (current && current.role && current.date === todayKst()) { unlock({ username: current.username || "account", role: current.role, method: current.method }); return; }
+    const current = session(); if (current && current.method === "passkey" && current.role && current.date === todayKst()) { unlock({ username: current.username || "account", role: current.role, method: current.method }); return; }
     sessionStorage.removeItem(KEY); let pending = null; try { pending = JSON.parse(sessionStorage.getItem(PENDING_KEY) || "null"); } catch {} if (pending?.mfaRequired && pending.pendingToken) askMfa(pending); else if (pending?.username && pending.role && pending.method !== "passkey") askDailyCode(pending); else mountLogin();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", startAuth, { once: true }); else startAuth();
