@@ -11,7 +11,7 @@ import { sendMfaCodeEmail } from "./mail.js";
 const SESSION_COOKIE = "fontory_session";
 const LOCK_THRESHOLD = 5; // 5회 실패 시 잠금
 const LOCK_MINUTES = 15;
-const MFA_MAX_PER_WINDOW = 5; // 15분당 최대 재발송 횟수
+const MFA_MAX_PER_WINDOW = 1; // 15분당 1회만 발송하여 중복 메일 방지
 const MFA_RATE_WINDOW_MS = 15 * 60_000;
 
 function cors(env, extraHeaders = {}) {
