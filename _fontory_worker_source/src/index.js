@@ -119,9 +119,9 @@ async function handleLogin(request, env) {
   }
   await db.resetFailedLogins(env.DB, account.id);
 
-  const mfaRequired =
-    account.mfa_enabled === 1 ||
-    (account.role === "admin" && String(env.MFA_REQUIRED_FOR_ADMIN).toLowerCase() === "true");
+  // 이메일을 등록하기 전에는 초기 로그인에 2FA를 요구하지 않는다.
+  // 사용자가 이메일을 저장한 순간부터 모든 계정에 이메일 2FA를 적용한다.
+  const mfaRequired = Boolean(account.email);
 
   if (mfaRequired) {
     if (!account.email) {
@@ -220,6 +220,29 @@ async function handleUpdateOwnEmail(request, env) {
   if (email && !isValidEmail(email)) return badRequest(env, "이메일 형식이 올바르지 않습니다.");
   await db.updateAccountEmail(env.DB, auth.account.id, email || null);
   return json(env, { ok: true, email: email || null });
+}
+
+async function handleAdminUpdateEmail(request, env, username) {
+  const { error } = await requireAdmin(request, env);
+  if (error) return error;
+  const body = await request.json().catch(() => ({}));
+  const email = typeof body.email === "string" ? body.email.trim() : "";
+  if (email && !isValidEmail(email)) return badRequest(env, "이메일 형식이 올바르지 않습니다.");
+  const account = await db.getAccountByUsername(env.DB, username);
+  if (!account) return notFound(env, "계정을 찾을 수 없습니다.");
+  await db.updateAccountEmail(env.DB, account.id, email || null);
+  return json(env, { ok: true, username, email: email || null });
+}
+
+async function handleChangeOwnPassword(request, env) {
+  const auth = await requireSession(request, env);
+  if (!auth) return unauthorized(env);
+  const body = await request.json().catch(() => ({}));
+  const { password } = body;
+  if (!isValidPassword(password)) return badRequest(env, "비밀번호는 8자 이상이어야 합니다.");
+  const passwordHash = await hashPassword(password);
+  await db.updatePasswordHashById(env.DB, auth.account.id, passwordHash);
+  return json(env, { ok: true });
 }
 
 async function requireAdmin(request, env) {
@@ -351,6 +374,7 @@ export default {
       if (pathname === "/api/auth/logout" && request.method === "POST") return await handleLogout(request, env);
       if (pathname === "/api/auth/me" && request.method === "GET") return await handleMe(request, env);
       if (pathname === "/api/account/email" && request.method === "PATCH") return await handleUpdateOwnEmail(request, env);
+      if (pathname === "/api/account/password" && request.method === "PATCH") return await handleChangeOwnPassword(request, env);
 
       if (pathname === "/api/accounts" && request.method === "GET") return await handleListAccounts(request, env);
       if (pathname === "/api/accounts" && request.method === "POST") return await handleCreateAccount(request, env);
@@ -358,6 +382,9 @@ export default {
       let m;
       if ((m = pathname.match(/^\/api\/accounts\/([^/]+)\/password$/)) && request.method === "PATCH") {
         return await handleChangePassword(request, env, decodeURIComponent(m[1]));
+      }
+      if ((m = pathname.match(/^\/api\/accounts\/([^/]+)\/email$/)) && request.method === "PATCH") {
+        return await handleAdminUpdateEmail(request, env, decodeURIComponent(m[1]));
       }
       if ((m = pathname.match(/^\/api\/accounts\/([^/]+)\/disable$/)) && request.method === "POST") {
         return await handleDisableAccount(request, env, decodeURIComponent(m[1]));
