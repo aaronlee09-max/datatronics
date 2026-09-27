@@ -15,6 +15,9 @@
 .admin-foot small{color:var(--muted);font-size:11px;line-height:1.4}
 @media (max-width:720px){.admin-form{grid-template-columns:1fr}}
 .auth-email-manage{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer}
+.auth-password-manage{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer}
+#fontoryPasswordPanel{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.55)}
+#fontoryPasswordReminder{position:fixed;left:16px;right:16px;bottom:16px;z-index:100001;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);box-shadow:var(--shadow);font-size:12px}#fontoryPasswordReminder strong{font-size:13px}#fontoryPasswordReminder span{color:var(--muted);flex:1;min-width:220px}#fontoryPasswordReminder button{border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:var(--bg);color:var(--ink);font-weight:700;cursor:pointer}
 #fontoryEmailPanel{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.55)}
 .email-card{width:min(420px,100%);padding:24px;border-radius:24px;background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
 .email-card strong{display:block;font-size:18px;margin-bottom:6px}.email-card p{color:var(--muted);font-size:14px;line-height:1.5}

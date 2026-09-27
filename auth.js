@@ -16,6 +16,8 @@
   const PASSKEY_KEY = "fontory-passkeys-v1";
   const PENDING_KEY = "fontory-auth-pending";
   const MANAGED_KEY = "fontory-managed-accounts-v1";
+  const PASSWORD_REMINDER_KEY = "fontory-password-reminder-v1";
+  const PASSWORD_REMINDER_DAYS = 30;
   const CENTRAL_API = "https://fontory-api.fontory.workers.dev";
 
   const hash = async (value) => {
@@ -56,13 +58,13 @@
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || "아이디 또는 비밀번호가 올바르지 않습니다.");
     if (data.mfaRequired && data.pendingToken) return { username, role: "admin", method: "server", mfaRequired: true, pendingToken: data.pendingToken };
-    return data.username ? { username: data.username, role: data.role || "user", status: data.status, token: data.token, method: "server" } : null;
+    return data.username ? { username: data.username, role: data.role || "user", status: data.status, passwordUpdatedAt: data.passwordUpdatedAt, token: data.token, method: "server" } : null;
   }
   async function verifyCentralMfa(pendingToken, code) {
     const response = await centralFetch("/api/auth/mfa/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pendingToken, code }) });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || "인증 코드가 올바르지 않습니다.");
-    return { username: data.username || "admin", role: data.role || "admin", status: data.status, token: data.token, method: "server" };
+    return { username: data.username || "admin", role: data.role || "admin", status: data.status, passwordUpdatedAt: data.passwordUpdatedAt, token: data.token, method: "server" };
   }
   async function centralLogout() { try { await centralFetch("/api/auth/logout", { method: "POST" }); } catch {} }
   async function showEmailPanel(account) {
@@ -101,7 +103,8 @@
     if (USERS[userHash] && PASSWORDS[passwordHash]) return { username: user, role: USERS[userHash].role, method: "password" };
     return null;
   }
-  function finishLogin(account) { const previous = session(); sessionStorage.removeItem(PENDING_KEY); sessionStorage.setItem(KEY, JSON.stringify({ username: account.username, role: account.role, status: account.status, token: account.token || previous?.token, method: account.method, date: todayKst(), authenticatedAt: Date.now() })); unlock(account); }
+  function showPasswordReminder(account) { if (account?.method !== "server") return; const wait = PASSWORD_REMINDER_DAYS * 24 * 60 * 60 * 1000; let dismissed = 0; try { dismissed = Number(localStorage.getItem(PASSWORD_REMINDER_KEY + ":" + account.username) || 0); } catch {} if (dismissed && Date.now() - dismissed < wait) return; document.querySelector("#fontoryPasswordReminder")?.remove(); const banner = document.createElement("div"); banner.id = "fontoryPasswordReminder"; banner.innerHTML = '<strong>비밀번호를 변경하시겠습니까?</strong><span>변경하지 않아도 로그인할 수 있습니다.</span><button type="button" id="remindLaterBtn">30일 후 다시</button><button type="button" id="closeReminderBtn" aria-label="닫기">닫기</button>'; document.body.appendChild(banner); banner.querySelector("#remindLaterBtn").addEventListener("click", () => { localStorage.setItem(PASSWORD_REMINDER_KEY + ":" + account.username, String(Date.now())); banner.remove(); }); banner.querySelector("#closeReminderBtn").addEventListener("click", () => banner.remove()); }
+  function finishLogin(account) { const previous = session(); sessionStorage.removeItem(PENDING_KEY); sessionStorage.setItem(KEY, JSON.stringify({ username: account.username, role: account.role, status: account.status, passwordUpdatedAt: account.passwordUpdatedAt || previous?.passwordUpdatedAt, token: account.token || previous?.token, method: account.method, date: todayKst(), authenticatedAt: Date.now() })); unlock(account); setTimeout(() => showPasswordReminder(account), 0); }
   function authShell(inner) { document.body.classList.add("auth-locked"); document.querySelector("#fontoryAuth")?.remove(); const box = document.createElement("div"); box.id = "fontoryAuth"; box.innerHTML = "<div class=\"auth-card\">" + inner + "</div>"; document.body.appendChild(box); }
 
   async function createPasskey(account) {
@@ -146,7 +149,7 @@
   async function unlock(account) { document.body.classList.remove("auth-locked"); document.querySelector("#fontoryAuth")?.remove(); document.querySelector("#fontoryPasskeyPanel")?.remove(); document.querySelector("#fontoryEmailPanel")?.remove(); document.querySelector(".auth-logout")?.remove(); document.querySelector(".auth-passkey-manage")?.remove(); document.querySelector(".auth-email-manage")?.remove(); document.querySelector(".auth-daily-code")?.remove(); document.querySelector(".auth-admin-manage")?.remove(); document.querySelector("#fontoryAdminPanel")?.remove(); const topbar = document.querySelector(".topbar"); if (!topbar) return; if (account.method === "server") { const emailBtn = document.createElement("button"); emailBtn.type = "button"; emailBtn.className = "auth-email-manage"; emailBtn.textContent = "이메일 설정"; emailBtn.addEventListener("click", () => showEmailPanel(account)); topbar.appendChild(emailBtn); } if (account.role === "admin" && account.method === "server") { const adminBtn = document.createElement("button"); adminBtn.type = "button"; adminBtn.className = "auth-admin-manage"; adminBtn.textContent = "계정 관리"; adminBtn.addEventListener("click", () => showAdminPanel(account)); topbar.appendChild(adminBtn); } const passkeyBtn = document.createElement("button"); passkeyBtn.type = "button"; passkeyBtn.className = "auth-passkey-manage"; passkeyBtn.textContent = "패스키 만들기"; passkeyBtn.addEventListener("click", () => showPasskeyPanel(account)); topbar.appendChild(passkeyBtn); const logout = document.createElement("button"); logout.type = "button"; logout.className = "auth-logout"; logout.textContent = account.role === "admin" ? "관리자 · 로그아웃" : "로그아웃"; logout.addEventListener("click", async () => { if (account.method === "server") await centralLogout(); sessionStorage.removeItem(KEY); sessionStorage.removeItem(PENDING_KEY); location.reload(); }); topbar.appendChild(logout); }
 
   async function startAuth() {
-    const central = await centralMe(); if (central) { finishLogin({ username: central.username, role: central.role, status: central.status, method: "server" }); return; }
+    const central = await centralMe(); if (central) { finishLogin({ username: central.username, role: central.role, status: central.status, passwordUpdatedAt: central.passwordUpdatedAt, method: "server" }); return; }
     const current = session(); if (current && current.method === "passkey" && current.role && current.date === todayKst()) { unlock({ username: current.username || "account", role: current.role, method: current.method }); return; }
     sessionStorage.removeItem(KEY); let pending = null; try { pending = JSON.parse(sessionStorage.getItem(PENDING_KEY) || "null"); } catch {} if (pending?.mfaRequired && pending.pendingToken) askMfa(pending); else if (pending?.username && pending.role && pending.method !== "passkey") askDailyCode(pending); else mountLogin();
   }

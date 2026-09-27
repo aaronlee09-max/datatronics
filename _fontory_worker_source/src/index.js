@@ -162,7 +162,7 @@ async function issueSession(env, account) {
   await db.createSession(env.DB, account.id, tokenHash, ttl);
   return json(
     env,
-    { username: account.username, role: account.role, status: account.status, token },
+    { username: account.username, role: account.role, status: account.status, passwordUpdatedAt: account.updated_at, token },
     200,
     { "Set-Cookie": setCookie(SESSION_COOKIE, token, ttl * 60) }
   );
@@ -209,7 +209,7 @@ async function handleMe(request, env) {
   const auth = await requireSession(request, env);
   if (!auth) return unauthorized(env);
   const { account } = auth;
-  return json(env, { username: account.username, role: account.role, status: account.status, email: account.email || null });
+  return json(env, { username: account.username, role: account.role, status: account.status, email: account.email || null, passwordUpdatedAt: account.updated_at });
 }
 
 async function handleUpdateOwnEmail(request, env) {
