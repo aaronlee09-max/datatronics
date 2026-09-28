@@ -23,3 +23,5 @@
 .email-card strong{display:block;font-size:18px;margin-bottom:6px}.email-card p{color:var(--muted);font-size:14px;line-height:1.5}
 .email-card label{display:grid;gap:6px;font-size:12px;font-weight:800}.email-card input{border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:var(--bg);color:var(--ink);font:inherit}
 #emailError{min-height:20px;margin-top:8px;color:#d33;font-size:12px}.email-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.email-actions button{border:0;border-radius:12px;padding:11px 14px;background:var(--accent);color:#fff;font-weight:800;cursor:pointer}.email-actions .passkey-close{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.auth-preview-link { display: block; margin-top: 12px; color: #8e8e93; text-align: center; font-size: 12px; font-weight: 800; text-decoration: none; }
+.auth-preview-link:hover { color: #0071e3; text-decoration: underline; }

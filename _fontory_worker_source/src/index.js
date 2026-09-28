@@ -11,8 +11,8 @@ import { sendMfaCodeEmail } from "./mail.js";
 const SESSION_COOKIE = "fontory_session";
 const LOCK_THRESHOLD = 5; // 5회 실패 시 잠금
 const LOCK_MINUTES = 15;
-const MFA_MAX_PER_WINDOW = 1; // 15분당 1회만 발송하여 중복 메일 방지
-const MFA_RATE_WINDOW_MS = 15 * 60_000;
+const MFA_MAX_PER_WINDOW = 5; // 1시간당 최대 5회 발송
+const MFA_RATE_WINDOW_MS = 60 * 60_000;
 
 function cors(env, extraHeaders = {}) {
   return {
@@ -131,7 +131,7 @@ async function handleLogin(request, env) {
     const since = Date.now() - MFA_RATE_WINDOW_MS;
     const recent = await db.countRecentMfaCodes(env.DB, account.id, since);
     if (recent >= MFA_MAX_PER_WINDOW) {
-      return json(env, { error: "인증 코드 요청이 너무 많습니다. 잠시 후 다시 시도하세요." }, 429);
+      return json(env, { error: "인증 코드 전송은 1시간에 최대 5회까지 가능합니다. 잠시 후 다시 시도하세요." }, 429);
     }
     const code = randomMfaCode();
     const codeHash = await sha256Hex(code);

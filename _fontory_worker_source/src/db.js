@@ -49,6 +49,13 @@ export async function updatePasswordHash(db, username, passwordHash) {
     .run();
 }
 
+export async function updatePasswordHashById(db, accountId, passwordHash) {
+  return db
+    .prepare("UPDATE accounts SET password_hash = ?, updated_at = ? WHERE id = ?")
+    .bind(passwordHash, now(), accountId)
+    .run();
+}
+
 export async function updateAccountEmail(db, accountId, email) {
   return db
     .prepare("UPDATE accounts SET email = ?, updated_at = ? WHERE id = ?")
