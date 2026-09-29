@@ -376,7 +376,7 @@ input {
 .selection-bar button:disabled { opacity: .5; cursor: not-allowed; }
 
 footer {
-  padding: 42px 2px 0;
+  padding: 48px 2px 8px;
   color: var(--muted);
   font-size: 13px;
 }
@@ -384,26 +384,33 @@ footer {
 .auth-footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
-  margin-top: 14px;
+  gap: 12px;
+  margin-top: 18px;
   color: var(--muted);
   font-size: 12px;
 }
 .contact-block {
   display: grid;
-  gap: 4px;
-  min-width: min(100%, 260px);
+  gap: 6px;
+  min-width: min(100%, 280px);
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .04);
 }
 .contact-block strong {
   color: var(--ink);
-  font-size: 12px;
-  margin-bottom: 2px;
+  font-size: 11px;
+  letter-spacing: .08em;
+  margin-bottom: 3px;
 }
 .contact-block a {
   color: inherit;
   text-decoration: none;
   opacity: .78;
   overflow-wrap: anywhere;
+  line-height: 1.45;
 }
 .contact-block a:hover,
 .contact-block a:focus-visible {
@@ -426,6 +433,9 @@ code { font-size: .95em; }
   .selection-actions { flex-direction: column; }
   .selection-actions button { width: 100%; }
   .actions { flex-direction: column; }
+  .site-footer-links,
+  .auth-footer-links { display: grid; grid-template-columns: 1fr; }
+  .contact-block { min-width: 0; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
