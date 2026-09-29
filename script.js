@@ -1218,6 +1218,23 @@ function updateDownloadProgress(percent, text) {
   value.textContent = `${safe}%`;
   if (text) label.textContent = text;
 }
+let downloadMusic = null;
+let downloadMusicStopTimer = null;
+function startDownloadMusic() {
+  if (downloadMusic && !downloadMusic.paused) return;
+  if (!downloadMusic) {
+    downloadMusic = new Audio("./assets/fontory-download-music.mp3?v=20260929");
+    downloadMusic.preload = "auto";
+    downloadMusic.volume = 0.45;
+  }
+  downloadMusic.currentTime = 0;
+  downloadMusic.play().catch(() => {});
+  clearTimeout(downloadMusicStopTimer);
+  downloadMusicStopTimer = setTimeout(() => {
+    downloadMusic.pause();
+    downloadMusic.currentTime = 0;
+  }, 93_000);
+}
 function hideDownloadProgressSoon() {
   setTimeout(() => { const panel = document.querySelector("#downloadProgress"); if (panel) panel.hidden = true; }, 1800);
 }
@@ -1274,6 +1291,7 @@ async function downloadSelectedWindows() {
   const button = document.querySelector("#downloadWindows");
   const oldText = button.textContent;
   button.disabled = true;
+  startDownloadMusic();
   try {
     for (let index = 0; index < chosen.length; index++) {
       const font = chosen[index];
@@ -1301,6 +1319,7 @@ async function makeMobileConfig() {
 
   const payloads = [];
   const rejected = [];
+  startDownloadMusic();
   for (let index = 0; index < chosen.length; index++) {
     const font = chosen[index];
     try {
