@@ -1219,21 +1219,15 @@ function updateDownloadProgress(percent, text) {
   if (text) label.textContent = text;
 }
 let downloadMusic = null;
-let downloadMusicStopTimer = null;
 function startDownloadMusic() {
   if (downloadMusic && !downloadMusic.paused) return;
   if (!downloadMusic) {
-    downloadMusic = new Audio("./assets/fontory-download-music.mp3?v=20260929");
+    downloadMusic = new Audio("./assets/fontory-download-music.mp3?v=20260929-full");
     downloadMusic.preload = "auto";
     downloadMusic.volume = 0.45;
   }
   downloadMusic.currentTime = 0;
   downloadMusic.play().catch(() => {});
-  clearTimeout(downloadMusicStopTimer);
-  downloadMusicStopTimer = setTimeout(() => {
-    downloadMusic.pause();
-    downloadMusic.currentTime = 0;
-  }, 93_000);
 }
 function waitForSimulatedDownload() {
   return new Promise((resolve) => {
