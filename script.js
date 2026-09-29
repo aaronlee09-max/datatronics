@@ -1198,17 +1198,38 @@ async function loadFontFace(font) {
 
   try {
     const family = previewFamily(font);
-    const source = `url("${assetUrl(font)}") format("${fontFormat(font)}")`;
-    const face = new FontFace(family, source, {
-      style: "normal",
-      weight: "400",
-      display: "swap",
-    });
-    const loaded = await face.load();
-    document.fonts.add(loaded);
-    if (loaded.status !== "loaded") throw new Error("font face failed");
-    loadedFaces.add(key);
-    return true;
+    let lastError = null;
+
+    for (const base of FONT_ASSET_BASES) {
+      try {
+        const url = new URL(font.file, base).href;
+        const response = await fetch(url, {
+          mode: "cors",
+          credentials: "omit",
+          cache: "force-cache",
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const buffer = await response.arrayBuffer();
+        if (buffer.byteLength < 1024) throw new Error("invalid font data");
+
+        const face = new FontFace(family, buffer, {
+          style: "normal",
+          weight: "400",
+          display: "swap",
+        });
+        const loaded = await face.load();
+        if (loaded.status !== "loaded") throw new Error("font face failed");
+
+        document.fonts.add(loaded);
+        loadedFaces.add(key);
+        return true;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw lastError || new Error("font asset unavailable");
   } catch (error) {
     failedFaces.add(key);
     console.warn("Font preview failed:", font.name, error);
