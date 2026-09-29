@@ -420,23 +420,6 @@ footer {
   text-decoration: underline;
   opacity: 1;
 }
-.auth-music-button {
-  width: 100%;
-  margin-top: 8px;
-  padding: 9px 12px;
-  border: 1px solid var(--line);
-  border-radius: 11px;
-  background: color-mix(in srgb, var(--card) 86%, transparent);
-  color: var(--muted);
-  font: inherit;
-  font-size: 12px;
-  cursor: pointer;
-}
-.auth-music-button:hover,
-.auth-music-button:focus-visible {
-  color: var(--ink);
-  border-color: var(--accent);
-}
 .auth-card {
   max-height: calc(100vh - 28px);
   overflow-y: auto;

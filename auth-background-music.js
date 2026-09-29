@@ -44,8 +44,6 @@
       return audio.play();
     }).then(() => {
       starting = false;
-      const button = document.querySelector("[data-auth-music-play]");
-      if (button) button.textContent = "음악 재생 중 · 처음부터 다시 듣기";
     }).catch(() => {
       starting = false;
     });
@@ -56,12 +54,9 @@
   };
 
   window.addEventListener("fontory-auth-unlocked", stop);
-  document.addEventListener("click", (event) => {
-    if (event.target.closest("[data-auth-music-play]")) playFromBeginning();
-  });
-  ["pointerdown", "touchstart"].forEach((eventName) => {
+  ["pointerdown", "touchstart", "keydown"].forEach((eventName) => {
     document.addEventListener(eventName, (event) => {
-      if (event.target.closest("[data-auth-music-play]")) playFromBeginning();
+      if (event.target.closest("#fontoryAuth")) playFromBeginning();
     }, { passive: true });
   });
   new MutationObserver(sync).observe(document.body, { attributes: true, childList: true, subtree: true });
