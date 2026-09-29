@@ -1235,6 +1235,21 @@ function startDownloadMusic() {
     downloadMusic.currentTime = 0;
   }, 93_000);
 }
+function waitForSimulatedDownload() {
+  return new Promise((resolve) => {
+    const started = performance.now();
+    const duration = 90_000;
+    updateDownloadProgress(0, "다운로드 준비 중…");
+    const timer = setInterval(() => {
+      const percent = Math.min(100, ((performance.now() - started) / duration) * 100);
+      updateDownloadProgress(percent, percent >= 100 ? "파일을 저장하는 중…" : "다운로드 준비 중…");
+      if (percent >= 100) {
+        clearInterval(timer);
+        resolve();
+      }
+    }, 250);
+  });
+}
 function hideDownloadProgressSoon() {
   setTimeout(() => { const panel = document.querySelector("#downloadProgress"); if (panel) panel.hidden = true; }, 1800);
 }
@@ -1293,10 +1308,11 @@ async function downloadSelectedWindows() {
   button.disabled = true;
   startDownloadMusic();
   try {
+    await waitForSimulatedDownload();
     for (let index = 0; index < chosen.length; index++) {
       const font = chosen[index];
-      updateDownloadProgress((index / chosen.length) * 100, `${font.name} 다운로드 중…`);
-      const blob = await fetchFontBlob(font, (part) => updateDownloadProgress(((index + part) / chosen.length) * 100, `${font.name} 다운로드 중…`));
+      updateDownloadProgress(100, `${font.name} 파일을 저장하는 중…`);
+      const blob = await fetchFontBlob(font);
       const filename = font.file.split("/").pop() || `${font.name}.${fileExtension(font)}`;
       await downloadBlob(blob, filename);
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -1320,11 +1336,12 @@ async function makeMobileConfig() {
   const payloads = [];
   const rejected = [];
   startDownloadMusic();
+  await waitForSimulatedDownload();
   for (let index = 0; index < chosen.length; index++) {
     const font = chosen[index];
     try {
-      updateDownloadProgress((index / chosen.length) * 100, `${font.name} 준비 중…`);
-      const blob = await fetchFontBlob(font, (part) => updateDownloadProgress(((index + part) / chosen.length) * 100, `${font.name} 준비 중…`));
+      updateDownloadProgress(100, `${font.name} 파일을 저장하는 중…`);
+      const blob = await fetchFontBlob(font);
       if (blob.size > 8 * 1024 * 1024) {
         rejected.push(`${font.name} (8MB 초과)`);
         continue;
