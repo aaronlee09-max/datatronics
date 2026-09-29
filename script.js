@@ -1122,6 +1122,10 @@ function render() {
         <div class="preview ${previewState}" data-preview="ko">${escapeHtml(preview)}</div>
         <div class="preview-sub ${previewState}" data-preview="mix">가나다 ABC 123</div>
       </div>
+      <div class="try-font-panel" data-try-panel hidden>
+        <input class="try-font-input" type="text" value="${escapeAttr(preview)}" placeholder="원하는 문장을 입력하세요" aria-label="${escapeAttr(f.name)} 미리 써보기">
+        <div class="try-font-result">${escapeHtml(preview)}</div>
+      </div>
       <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "실제 폰트 파일을 적용해 미리봅니다.")}<br><span class="windows-help">${escapeHtml(windowsHelp)}</span></div>
       <div class="actions">
         ${f.file && windowsInstallable(f)
@@ -1129,6 +1133,7 @@ function render() {
           : f.file
             ? `<a class="download" href="${escapeAttr(assetUrl(f))}" target="_blank" rel="noopener">파일 열기</a>`
             : `<button class="download" type="button" disabled>파일 없음</button>`}
+        <button class="details try-font-toggle" type="button">미리 써보기</button>
         <button class="details" type="button" data-copy="${escapeAttr(f.name)}">이름 복사</button>
       </div>
     </article>`;
@@ -1163,6 +1168,21 @@ function render() {
         btn.textContent = "복사됨 ✓";
         setTimeout(() => { btn.textContent = old; }, 1000);
       } catch {}
+    });
+  });
+  grid.querySelectorAll(".try-font-toggle").forEach((btn) => {
+    const card = btn.closest(".font-card");
+    const panel = card?.querySelector("[data-try-panel]");
+    const input = panel?.querySelector(".try-font-input");
+    const result = panel?.querySelector(".try-font-result");
+    if (!panel || !input || !result) return;
+    btn.addEventListener("click", () => {
+      panel.hidden = !panel.hidden;
+      btn.textContent = panel.hidden ? "미리 써보기" : "미리 써보기 닫기";
+      if (!panel.hidden) input.focus();
+    });
+    input.addEventListener("input", () => {
+      result.textContent = input.value || "원하는 문장을 입력하세요";
     });
   });
 
@@ -1212,6 +1232,8 @@ function styleCards(font) {
         el.classList.remove("preview-failed");
         el.style.fontFamily = `"${family}", sans-serif`;
       });
+      const result = card.querySelector(".try-font-result");
+      if (result) result.style.fontFamily = `"${family}", sans-serif`;
     }
   });
 }

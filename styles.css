@@ -248,6 +248,11 @@ input {
   font-size: 13px !important;
   letter-spacing: 0 !important;
 }
+.try-font-panel { margin: 14px 0 2px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.try-font-panel[hidden] { display: none; }
+.try-font-input { width: 100%; border: 1px solid var(--line); border-radius: 9px; padding: 9px 10px; background: var(--card); color: var(--ink); font: inherit; font-size: 13px; outline: 0; }
+.try-font-input:focus { border-color: var(--accent); }
+.try-font-result { min-height: 38px; margin-top: 9px; color: var(--ink); font-size: 24px; line-height: 1.35; word-break: break-word; }
 .font-info {
   font-size: 13px;
   color: var(--muted);
