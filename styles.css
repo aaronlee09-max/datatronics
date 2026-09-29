@@ -489,7 +489,7 @@ body.auth-locked .app-shell { visibility: hidden; }
 }
 .auth-card .auth-passkey:hover { background:#38383a; }
 #authError { min-height:18px; margin-top:10px; color:#ff453a; font-size:12px; }
-.auth-card small { display:block; margin-top:20px; color:#636366; font-size:10px; }
+.auth-card small { display:block; margin-top:20px; color:#636366; font-size:10px; }\n.auth-credit { margin-top:16px; text-align:center; color:#636366; font-size:11px; font-weight:700; letter-spacing:.02em; }
 .auth-logout {
   margin-left:auto;
   border:1px solid var(--line);
