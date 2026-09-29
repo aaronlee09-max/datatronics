@@ -1,5 +1,10 @@
 body { min-height: 100vh; }
 .preview-shell { padding-bottom: 80px; }
+.preview-title { display: flex; flex-wrap: nowrap; align-items: baseline; gap: .2em; white-space: nowrap; font-size: clamp(36px, 12vw, 92px); letter-spacing: -.07em; }
+#previewTitleBrand { color: var(--ink); }
+#previewTitleWord { color: var(--accent); }
+.preview-title.typing-cursor::after { content: ""; display: inline-block; width: 3px; height: .82em; margin-left: .08em; vertical-align: -.03em; background: var(--accent); animation: preview-title-cursor .85s steps(1, end) infinite; }
+@keyframes preview-title-cursor { 50% { opacity: 0; } }
 .preview-top-actions { display: flex; align-items: center; gap: 10px; }
 .preview-login { display: inline-flex; align-items: center; min-height: 34px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); text-decoration: none; font-size: 12px; font-weight: 800; background: var(--card); }
 .preview-login:hover { border-color: var(--accent); }

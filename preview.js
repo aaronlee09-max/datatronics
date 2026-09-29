@@ -1,4 +1,35 @@
 (() => {
+  const titleBrand = document.querySelector("#previewTitleBrand");
+  const titleWord = document.querySelector("#previewTitleWord");
+  const title = document.querySelector("#previewTitle");
+  if (titleBrand && titleWord && title) {
+    const brand = "Fontory";
+    const word = "Preview.";
+    let index = 0;
+    let deleting = false;
+    title.classList.add("typing-cursor");
+    const typeTitle = () => {
+      const full = `${brand} ${word}`;
+      const visible = deleting ? full.slice(0, index) : full.slice(0, index);
+      const brandLength = Math.min(brand.length, visible.length);
+      titleBrand.textContent = visible.slice(0, brandLength);
+      titleWord.textContent = visible.length > brand.length ? ` ${visible.slice(brand.length + 1)}` : "";
+      if (!deleting && index < full.length) {
+        index += 1;
+        window.setTimeout(typeTitle, index === 1 ? 180 : 80);
+      } else if (!deleting) {
+        deleting = true;
+        window.setTimeout(typeTitle, 1800);
+      } else if (index > 0) {
+        index -= 1;
+        window.setTimeout(typeTitle, 45);
+      } else {
+        deleting = false;
+        window.setTimeout(typeTitle, 650);
+      }
+    };
+    typeTitle();
+  }
   const PAGE_SIZE = 24;
   const assetUrl = (font) => new URL(font.file, window.location.href).href;
   const ext = (font) => String(font.file || "").split(".").pop().toLowerCase();

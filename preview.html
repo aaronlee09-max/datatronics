@@ -7,7 +7,7 @@
   <meta name="description" content="Fontory 로그인 없이 폰트를 미리보는 프리뷰 페이지">
   <title>Fontory · 폰트 미리보기</title>
   <link rel="stylesheet" href="./styles.css?v=20260922-sync1">
-  <link rel="stylesheet" href="./preview.css?v=20260928-preview1">
+  <link rel="stylesheet" href="./preview.css?v=20260929-title-loop1">
 </head>
 <body>
   <div class="app-shell preview-shell">
@@ -19,7 +19,7 @@
           <a class="preview-login" href="./">로그인</a>
         </div>
       </div>
-      <h1>Fontory<br><span>Preview.</span></h1>
+      <h1 id="previewTitle" class="preview-title" aria-label="Fontory Preview."><span id="previewTitleBrand"></span><span id="previewTitleWord"></span></h1>
       <p>로그인 없이 폰트를 검색하고 실제 글꼴 모양을 미리볼 수 있습니다.</p>
       <div class="search-wrap">
         <span aria-hidden="true">⌕</span>
@@ -46,6 +46,6 @@
       <p class="small">프리뷰 페이지에서는 파일을 다운로드하지 않습니다.</p>
     </footer>
   </div>
-  <script src="./preview.js?v=20260928-preview1"></script>
+  <script src="./preview.js?v=20260929-title-loop1"></script>
 </body>
 </html>
