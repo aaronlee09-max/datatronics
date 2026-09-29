@@ -1,7 +1,6 @@
 (() => {
   const MUSIC_SRC = "./assets/fontory-download-music.mp3?v=20260929-single";
   let music = null;
-  let activeDownload = false;
 
   function ensureProgress() {
     let panel = document.querySelector("#fontorySingleDownloadProgress");
@@ -40,7 +39,7 @@
     } else {
       const safe = Math.max(0, Math.min(100, Math.round(percent)));
       meter.value = safe;
-      value.textContent = `${safe}%`;
+      value.textContent = safe + "%";
     }
     if (text) label.textContent = text;
   }
@@ -69,23 +68,7 @@
     music.currentTime = 0;
   }
 
-  function restoreAnchor(button, original) {
-    const restored = document.createElement("a");
-    restored.className = original.className;
-    restored.href = original.href;
-    restored.download = original.download;
-    restored.textContent = original.textContent;
-    restored.dataset.fontorySingleBound = "1";
-    restored.addEventListener("click", (event) => {
-      event.preventDefault();
-      downloadOne(restored);
-    });
-    button.replaceWith(restored);
-    return restored;
-  }
-
   async function downloadOne(anchor) {
-    if (activeDownload) return;
     if (typeof window.requireFontoryLogin === "function") {
       const unlocked = await window.requireFontoryLogin();
       if (!unlocked) return;
@@ -94,12 +77,6 @@
     const file = card?.dataset.file;
     if (!file) return;
 
-    const original = {
-      className: anchor.className,
-      href: anchor.href,
-      download: anchor.download,
-      textContent: anchor.textContent,
-    };
     const filename = file.split("/").pop() || "font-file";
     const font = {
       name: card?.querySelector(".font-name")?.textContent?.trim() || filename,
@@ -108,31 +85,41 @@
 
     const button = document.createElement("button");
     button.type = "button";
-    button.className = original.className;
+    button.className = anchor.className;
     button.textContent = "다운로드 중…";
-    button.disabled = true;
     anchor.replaceWith(button);
-    activeDownload = true;
-    startMusic();
+    button.disabled = true;
 
+    startMusic();
     try {
-      setProgress(0, `${font.name} 다운로드 준비 중…`, true);
+      setProgress(0, font.name + " 다운로드 준비 중…", true);
       const blob = await fetchFontBlob(font, (ratio) => {
-        if (ratio > 0) setProgress(ratio * 100, `${font.name} 다운로드 중…`);
-        else setProgress(0, `${font.name} 다운로드 중…`, true);
+        if (ratio > 0) {
+          setProgress(ratio * 100, font.name + " 다운로드 중…");
+        } else {
+          setProgress(0, font.name + " 다운로드 중…", true);
+        }
       });
-      setProgress(100, `${font.name} 저장 중…`);
+      setProgress(100, font.name + " 저장 중…");
       await downloadBlob(blob, filename);
-      setProgress(100, `${font.name} 다운로드 완료 ✓`);
-      restoreAnchor(button, original);
+      setProgress(100, font.name + " 다운로드 완료 ✓");
       hideProgress();
     } catch (error) {
       setProgress(0, error?.message || "다운로드에 실패했습니다.");
       setTimeout(() => {
-        if (button.isConnected) restoreAnchor(button, original);
+        const current = button;
+        const restored = document.createElement("a");
+        restored.className = anchor.className;
+        restored.href = anchor.href;
+        restored.download = anchor.download;
+        restored.textContent = anchor.textContent;
+        restored.addEventListener("click", (event) => {
+          event.preventDefault();
+          downloadOne(restored);
+        });
+        current.replaceWith(restored);
       }, 1500);
     } finally {
-      activeDownload = false;
       stopMusic();
     }
   }
@@ -184,6 +171,7 @@
       margin-top: 8px;
       accent-color: #0a84ff;
     }
+    .fontory-single-download-progress button { cursor: pointer; }
   `;
   document.head.appendChild(style);
 })();
