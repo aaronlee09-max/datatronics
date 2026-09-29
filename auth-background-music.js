@@ -75,6 +75,7 @@
   });
   ["pointerdown", "touchstart", "keydown"].forEach((eventName) => {
     document.addEventListener(eventName, (event) => {
+      if (userStarted) return;
       if (event.target.closest("#fontoryAuth")) playFromBeginning();
     }, { passive: true });
   });
