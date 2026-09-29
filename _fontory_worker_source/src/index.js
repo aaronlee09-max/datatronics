@@ -128,31 +128,81 @@ async function handleLogin(request, env) {
       // 이메일이 없으면 MFA를 강제할 수 없으므로 관리자에게 알리고 로그인 차단
       return json(env, { error: "MFA가 필요하지만 계정에 이메일이 등록되어 있지 않습니다. 관리자에게 문의하세요." }, 400);
     }
+    const pendingToken = randomToken(24);
+    const pendingHash = await sha256Hex(pendingToken);
+    await db.createMfaPending(env.DB, account.id, pendingHash, parseInt(env.MFA_TTL_MINUTES || "5", 10));
+
+    // 중앙 관리자는 이메일 발송 전에 이메일 MFA와 간편 코드 중 선택한다.
+    if (account.role === "admin") {
+      return json(env, { mfaRequired: true, mfaMethods: ["email", "daily"], username: account.username, role: account.role, pendingToken });
+    }
+
     const since = Date.now() - MFA_RATE_WINDOW_MS;
     const recent = await db.countRecentMfaCodes(env.DB, account.id, since);
-    if (account.role !== "admin" && recent >= MFA_MAX_PER_WINDOW) {
+    if (recent >= MFA_MAX_PER_WINDOW) {
       return json(env, { error: "일반 사용자의 인증 코드 전송은 15분에 1회까지 가능합니다. 잠시 후 다시 시도하세요." }, 429);
     }
     const code = randomMfaCode();
     const codeHash = await sha256Hex(code);
     await db.createMfaCode(env.DB, account.id, codeHash, parseInt(env.MFA_TTL_MINUTES || "5", 10));
 
-    const pendingToken = randomToken(24);
-    const pendingHash = await sha256Hex(pendingToken);
-    await db.createMfaPending(env.DB, account.id, pendingHash, parseInt(env.MFA_TTL_MINUTES || "5", 10));
-
     try {
       await sendMfaCodeEmail(env, account.email, code);
     } catch (e) {
-      // 내부 SMTP 오류 세부정보는 운영 응답에 노출하지 않는다.
       console.error("MFA email delivery failed:", e && e.message ? e.message : String(e));
       return json(env, { error: "인증 코드 이메일 발송에 실패했습니다." }, 502);
     }
 
-    return json(env, { mfaRequired: true, pendingToken });
+    return json(env, { mfaRequired: true, mfaMethods: ["email"], username: account.username, role: account.role, pendingToken });
   }
 
   return await issueSession(env, account);
+}
+
+function todayKstCode() {
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
+  return values.year.slice(-2) + values.month + values.day;
+}
+
+async function handleDailyVerify(request, env) {
+  const body = await request.json().catch(() => ({}));
+  const { pendingToken, code } = body;
+  if (typeof pendingToken !== "string" || typeof code !== "string") return badRequest(env, "요청 형식이 올바르지 않습니다.");
+  const pendingHash = await sha256Hex(pendingToken);
+  const pending = await db.getValidMfaPending(env.DB, pendingHash);
+  if (!pending) return unauthorized(env, "인증 요청이 만료되었거나 유효하지 않습니다.");
+  const account = await db.getAccountById(env.DB, pending.account_id);
+  if (!account || account.disabled || account.role !== "admin") return forbidden(env, "관리자 간편 코드를 사용할 수 없습니다.");
+  if (code.replace(/\D/g, "") !== todayKstCode()) return unauthorized(env, "간편 코드가 올바르지 않습니다.");
+  await db.deleteMfaPending(env.DB, pending.id);
+  return await issueSession(env, account);
+}
+
+async function handleMfaSend(request, env) {
+  const body = await request.json().catch(() => ({}));
+  const { pendingToken } = body;
+  if (typeof pendingToken !== "string") return badRequest(env, "요청 형식이 올바르지 않습니다.");
+  const pendingHash = await sha256Hex(pendingToken);
+  const pending = await db.getValidMfaPending(env.DB, pendingHash);
+  if (!pending) return unauthorized(env, "인증 요청이 만료되었거나 유효하지 않습니다.");
+  const account = await db.getAccountById(env.DB, pending.account_id);
+  if (!account || account.disabled || !account.email) return badRequest(env, "이메일 인증을 사용할 수 없는 계정입니다.");
+  const since = Date.now() - MFA_RATE_WINDOW_MS;
+  const recent = await db.countRecentMfaCodes(env.DB, account.id, since);
+  if (account.role !== "admin" && recent >= MFA_MAX_PER_WINDOW) {
+    return json(env, { error: "일반 사용자의 인증 코드 전송은 15분에 1회까지 가능합니다. 잠시 후 다시 시도하세요." }, 429);
+  }
+  const code = randomMfaCode();
+  const codeHash = await sha256Hex(code);
+  await db.createMfaCode(env.DB, account.id, codeHash, parseInt(env.MFA_TTL_MINUTES || "5", 10));
+  try {
+    await sendMfaCodeEmail(env, account.email, code);
+  } catch (e) {
+    console.error("MFA email delivery failed:", e && e.message ? e.message : String(e));
+    return json(env, { error: "인증 코드 이메일 발송에 실패했습니다." }, 502);
+  }
+  return json(env, { ok: true });
 }
 
 async function issueSession(env, account) {
@@ -370,6 +420,8 @@ export default {
 
     try {
       if (pathname === "/api/auth/login" && request.method === "POST") return await handleLogin(request, env);
+      if (pathname === "/api/auth/mfa/send" && request.method === "POST") return await handleMfaSend(request, env);
+      if (pathname === "/api/auth/mfa/daily" && request.method === "POST") return await handleDailyVerify(request, env);
       if (pathname === "/api/auth/mfa/verify" && request.method === "POST") return await handleMfaVerify(request, env);
       if (pathname === "/api/auth/logout" && request.method === "POST") return await handleLogout(request, env);
       if (pathname === "/api/auth/me" && request.method === "GET") return await handleMe(request, env);
