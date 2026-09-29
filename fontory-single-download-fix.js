@@ -69,6 +69,10 @@
   }
 
   async function downloadOne(anchor) {
+    if (typeof window.requireFontoryLogin === "function") {
+      const unlocked = await window.requireFontoryLogin();
+      if (!unlocked) return;
+    }
     const card = anchor.closest(".font-card");
     const file = card?.dataset.file;
     if (!file) return;
