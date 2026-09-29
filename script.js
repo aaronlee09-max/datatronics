@@ -1408,6 +1408,7 @@ function requireFontoryLogin() {
 }
 
 async function downloadSelectedWindows() {
+  if (!(await requireFontoryLogin())) return;
   const chosen = fonts.filter((f) => selected.has(fontId(f)) && windowsInstallable(f));
   if (!chosen.length) return;
 
