@@ -216,6 +216,7 @@ input {
   align-items: center;
 }
 .font-name { font-weight: 800; font-size: 17px; word-break: break-word; }
+.font-name-typing::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: -2px; background: var(--accent); animation: typing-cursor .85s steps(1, end) infinite; }
 .tag {
   font-size: 11px;
   color: var(--accent);

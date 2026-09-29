@@ -1047,7 +1047,46 @@ function matchesQuery(font, q) {
   const hay = `${font.name} ${font.family || ""} ${font.style || ""} ${font.category || ""}`.toLowerCase();
   return hay.includes(q);
 }
-
+function bindFontNameHoverTyping() {
+  grid.querySelectorAll(".font-name").forEach((node) => {
+    const original = node.textContent;
+    let timer = null;
+    let hovering = false;
+    let index = 0;
+    let deleting = false;
+    const tick = () => {
+      if (!hovering) return;
+      node.textContent = original.slice(0, index);
+      if (!deleting && index < original.length) {
+        index += 1;
+        timer = setTimeout(tick, index === 1 ? 120 : 48);
+      } else if (!deleting) {
+        deleting = true;
+        timer = setTimeout(tick, 900);
+      } else if (index > 0) {
+        index -= 1;
+        timer = setTimeout(tick, 32);
+      } else {
+        deleting = false;
+        timer = setTimeout(tick, 450);
+      }
+    };
+    node.addEventListener("mouseenter", () => {
+      hovering = true;
+      index = 0;
+      deleting = false;
+      node.classList.add("font-name-typing");
+      clearTimeout(timer);
+      tick();
+    });
+    node.addEventListener("mouseleave", () => {
+      hovering = false;
+      clearTimeout(timer);
+      node.textContent = original;
+      node.classList.remove("font-name-typing");
+    });
+  });
+}
 function render() {
   renderCategories();
   const q = search.value.trim().toLowerCase();
@@ -1095,6 +1134,7 @@ function render() {
     </article>`;
   }).join("");
 
+  bindFontNameHoverTyping();
   pagination.hidden = filtered.length <= PAGE_SIZE;
   pagination.innerHTML = pagination.hidden ? "" : `
     <button type="button" data-page="prev" ${page === 1 ? "disabled" : ""}>이전</button>
