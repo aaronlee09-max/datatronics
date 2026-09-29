@@ -5,7 +5,7 @@
   const familyFor=(path)=>"FontoryReal-"+btoa(unescape(encodeURIComponent(path))).replace(/[^a-zA-Z0-9]/g,"").slice(0,40);
   async function apply(card){
     const path=card.dataset.file; if(!path || !/\.(ttf|otf|woff|woff2)$/i.test(path)) return;
-    const els=card.querySelectorAll("[data-preview]"); if(!els.length) return;
+    const els=card.querySelectorAll("[data-preview]"); if(!els.length || els[0].style.fontFamily) return;
     const family=familyFor(path);
     try{
       if(!cache.has(path)){
