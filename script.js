@@ -1371,6 +1371,42 @@ async function fetchFontBlob(font, onProgress) {
   return blob;
 }
 
+function hasFontorySession() {
+  try {
+    const current = JSON.parse(sessionStorage.getItem("fontory-auth-v5") || "null");
+    return Boolean(current?.username && current?.date);
+  } catch {
+    return false;
+  }
+}
+
+function requireFontoryLogin() {
+  if (hasFontorySession()) return Promise.resolve(true);
+  const loginButton = document.querySelector(".auth-login");
+  if (!loginButton) {
+    alert("골라 다운로드 기능은 Fontory 로그인 후 사용할 수 있습니다.");
+    return Promise.resolve(false);
+  }
+
+  return new Promise((resolve) => {
+    let settled = false;
+    const cleanup = () => {
+      window.removeEventListener("fontory-auth-unlocked", onUnlocked);
+      clearTimeout(timer);
+    };
+    const finish = (value) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolve(value);
+    };
+    const onUnlocked = () => finish(hasFontorySession());
+    const timer = setTimeout(() => finish(false), 120000);
+    window.addEventListener("fontory-auth-unlocked", onUnlocked, { once: true });
+    loginButton.click();
+  });
+}
+
 async function downloadSelectedWindows() {
   const chosen = fonts.filter((f) => selected.has(fontId(f)) && windowsInstallable(f));
   if (!chosen.length) return;
@@ -1403,6 +1439,7 @@ async function downloadSelectedWindows() {
 }
 
 async function makeMobileConfig() {
+  if (!(await requireFontoryLogin())) return;
   const chosen = fonts.filter((f) => selected.has(fontId(f)) && canInstall(f));
   if (!chosen.length) return;
   if (chosen.length > 20) {
