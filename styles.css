@@ -384,6 +384,7 @@ footer {
 .auth-footer-links {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
   gap: 12px;
   margin-top: 18px;
   color: var(--muted);
@@ -410,6 +411,7 @@ footer {
   text-decoration: none;
   opacity: .78;
   overflow-wrap: anywhere;
+  word-break: break-word;
   line-height: 1.45;
 }
 .contact-block a:hover,
@@ -435,6 +437,11 @@ footer {
   color: var(--ink);
   border-color: var(--accent);
 }
+.auth-card {
+  max-height: calc(100vh - 28px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 .small { font-size: 11px; }
 code { font-size: .95em; }
 
@@ -453,6 +460,9 @@ code { font-size: .95em; }
   .site-footer-links,
   .auth-footer-links { display: grid; grid-template-columns: 1fr; }
   .contact-block { min-width: 0; }
+  footer { padding-top: 36px; }
+  #fontoryAuth { padding: 14px; }
+  .auth-card { width: 100%; padding: 22px 18px; border-radius: 22px; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
