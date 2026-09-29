@@ -58,7 +58,8 @@ h1 span { color: var(--accent); }
   margin: 0 0 24px;
 }
 .typing-greeting { min-height: 27px; margin: -2px 0 5px !important; color: var(--ink) !important; font-size: 18px !important; font-weight: 800; }
-.typing-greeting::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 4px; vertical-align: -2px; background: var(--accent); animation: typing-cursor .85s steps(1, end) infinite; }
+.auth-typing-greeting { min-height: 22px; margin: -4px 0 12px !important; color: var(--accent) !important; font-size: 16px !important; font-weight: 800; }
+.typing-greeting::after, .auth-typing-greeting::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 4px; vertical-align: -2px; background: var(--accent); animation: typing-cursor .85s steps(1, end) infinite; }
 @keyframes typing-cursor { 50% { opacity: 0; } }
 
 .search-wrap {
