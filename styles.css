@@ -17,6 +17,21 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+.ambient-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; isolation: isolate; }
+.ambient-layer::before { content: ""; position: absolute; inset: -20%; background: radial-gradient(circle at 12% 18%, rgba(0, 113, 227, .16), transparent 30%), radial-gradient(circle at 88% 14%, rgba(178, 92, 255, .13), transparent 27%), radial-gradient(circle at 70% 86%, rgba(0, 196, 180, .11), transparent 32%); filter: blur(22px); animation: ambient-breathe 16s ease-in-out infinite alternate; }
+.ambient-layer::after { content: ""; position: absolute; inset: 0; opacity: .22; background-image: linear-gradient(rgba(0, 113, 227, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 113, 227, .06) 1px, transparent 1px); background-size: 42px 42px; mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent); }
+.ambient-orb { position: absolute; display: block; width: 180px; height: 180px; border-radius: 50%; filter: blur(18px); opacity: .26; mix-blend-mode: multiply; animation: ambient-orb-float 19s ease-in-out infinite alternate; }
+.orb-one { top: 18%; left: -60px; background: #69b7ff; }
+.orb-two { top: 52%; right: -70px; width: 230px; height: 230px; background: #d18cff; animation-delay: -6s; }
+.orb-three { bottom: -80px; left: 38%; width: 210px; height: 210px; background: #62e0d4; animation-delay: -11s; }
+.ambient-glyph { position: absolute; left: var(--x); top: var(--y); z-index: 1; color: rgba(0, 113, 227, .15); font-family: Georgia, "Times New Roman", serif; font-size: var(--size); font-weight: 800; filter: blur(var(--blur)); transform: rotate(var(--rotate)); animation: ambient-glyph-float var(--duration) ease-in-out var(--delay) infinite alternate; }
+.app-shell { position: relative; z-index: 1; }
+@keyframes ambient-breathe { from { transform: scale(.96) rotate(-2deg); opacity: .72; } to { transform: scale(1.05) rotate(2deg); opacity: 1; } }
+@keyframes ambient-orb-float { from { transform: translate3d(-12px, 8px, 0) scale(.9); } to { transform: translate3d(26px, -24px, 0) scale(1.12); } }
+@keyframes ambient-glyph-float { from { transform: translate3d(-12px, 18px, 0) rotate(var(--rotate)); opacity: .22; } to { transform: translate3d(24px, -30px, 0) rotate(calc(var(--rotate) + 12deg)); opacity: .7; } }
+@media (prefers-reduced-motion: reduce) {
+  .ambient-layer::before, .ambient-orb, .ambient-glyph { animation: none; }
+}
 
 .app-shell {
   width: min(960px, 100%);
@@ -410,10 +425,15 @@ body.auth-locked .app-shell { visibility: hidden; }
   display: grid;
   place-items: center;
   padding: 24px;
-  background: #000;
+  overflow: hidden;
+  background: rgba(0, 0, 0, .72);
+  backdrop-filter: blur(10px);
   color: #f5f5f7;
 }
+#fontoryAuth::before { content: ""; position: absolute; inset: -20%; background: radial-gradient(circle at 18% 20%, rgba(0, 113, 227, .32), transparent 30%), radial-gradient(circle at 84% 74%, rgba(178, 92, 255, .24), transparent 28%); filter: blur(30px); animation: ambient-breathe 14s ease-in-out infinite alternate; pointer-events: none; }
 .auth-card {
+  position: relative;
+  z-index: 1;
   width: min(420px, 100%);
   padding: 32px;
   border: 1px solid #38383a;
