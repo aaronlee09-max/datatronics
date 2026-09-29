@@ -380,6 +380,25 @@ footer {
   color: var(--muted);
   font-size: 13px;
 }
+.site-footer-links,
+.auth-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.site-footer-links span,
+.auth-footer-links span {
+  opacity: .78;
+}
+.site-footer-links span + span::before,
+.auth-footer-links span + span::before {
+  content: "·";
+  margin-right: 14px;
+  opacity: .5;
+}
 .small { font-size: 11px; }
 code { font-size: .95em; }
 
