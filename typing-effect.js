@@ -5,11 +5,21 @@
     targets.forEach((target) => { target.dataset.typed = "true"; });
     const text = "안녕하세요, Fontory입니다.";
     let index = 0;
+    let deleting = false;
     const typeNext = () => {
       targets.forEach((target) => { target.textContent = text.slice(0, index); });
-      if (index < text.length) {
+      if (!deleting && index < text.length) {
         index += 1;
         window.setTimeout(typeNext, index === 1 ? 180 : 75);
+      } else if (!deleting) {
+        deleting = true;
+        window.setTimeout(typeNext, 1800);
+      } else if (index > 0) {
+        index -= 1;
+        window.setTimeout(typeNext, 42);
+      } else {
+        deleting = false;
+        window.setTimeout(typeNext, 650);
       }
     };
     typeNext();
