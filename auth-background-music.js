@@ -1,5 +1,5 @@
 (() => {
-  const source = "./assets/fontory-download-music.mp3?v=20260929-full";
+  const source = "./assets/fontory-download-music.mp3?v=20260929-padded1";
   const audio = new Audio(source);
   audio.preload = "auto";
   audio.loop = true;

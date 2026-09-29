@@ -1294,7 +1294,7 @@ function startDownloadMusic() {
 function waitForSimulatedDownload() {
   return new Promise((resolve) => {
     const started = performance.now();
-    const duration = 206_000; // 첨부한 전체 곡 길이: 3분 26초
+    const duration = 206_350; // 전체 곡 길이 + 시작 안전 여백: 약 3분 26초
     updateDownloadProgress(0, "다운로드 준비 중…");
     const timer = setInterval(() => {
       const percent = Math.min(100, ((performance.now() - started) / duration) * 100);
