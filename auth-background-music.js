@@ -10,6 +10,22 @@
   let active = false;
   let mutedFallback = false;
   let starting = false;
+  const waitUntilReady = () => {
+    if (audio.readyState >= 2) return Promise.resolve();
+    return new Promise((resolve) => {
+      let settled = false;
+      const done = () => {
+        if (settled) return;
+        settled = true;
+        audio.removeEventListener("loadeddata", done);
+        audio.removeEventListener("canplay", done);
+        resolve();
+      };
+      audio.addEventListener("loadeddata", done, { once: true });
+      audio.addEventListener("canplay", done, { once: true });
+      audio.load();
+    });
+  };
 
   const stop = () => {
     audio.pause();
@@ -22,7 +38,14 @@
   const start = () => {
     if (active || starting || !document.body.classList.contains("auth-locked")) return;
     starting = true;
-    audio.play().then(() => { active = true; starting = false; }).catch(() => {
+    waitUntilReady().then(() => {
+      if (!document.body.classList.contains("auth-locked")) return Promise.reject(new Error("login screen closed"));
+      return audio.play();
+    }).then(() => { active = true; starting = false; }).catch(() => {
+      if (!document.body.classList.contains("auth-locked")) {
+        starting = false;
+        return;
+      }
       // Safari/iOS can reject audible autoplay. Start silently in the background,
       // then restore sound on the first user gesture.
       mutedFallback = true;
