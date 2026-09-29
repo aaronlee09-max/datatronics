@@ -8,12 +8,14 @@
   audio.setAttribute("aria-hidden", "true");
   audio.volume = 0.28;
   let starting = false;
+  let userStarted = false;
 
   const stop = () => {
     audio.pause();
     audio.currentTime = 0;
     audio.muted = false;
     starting = false;
+    userStarted = false;
   };
 
   const waitUntilReady = () => {
@@ -36,6 +38,7 @@
   const playFromBeginning = () => {
     if (starting || !document.body.classList.contains("auth-locked")) return;
     starting = true;
+    userStarted = true;
     audio.pause();
     audio.currentTime = 0;
     audio.muted = false;
@@ -46,6 +49,7 @@
       starting = false;
     }).catch(() => {
       starting = false;
+      userStarted = false;
     });
   };
 
@@ -54,6 +58,21 @@
   };
 
   window.addEventListener("fontory-auth-unlocked", stop);
+  audio.addEventListener("ended", () => {
+    if (userStarted && document.body.classList.contains("auth-locked")) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
+  });
+  audio.addEventListener("pause", () => {
+    if (!userStarted || starting || !document.body.classList.contains("auth-locked")) return;
+    window.setTimeout(() => {
+      if (userStarted && !starting && document.body.classList.contains("auth-locked")) audio.play().catch(() => {});
+    }, 250);
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && userStarted && document.body.classList.contains("auth-locked")) audio.play().catch(() => {});
+  });
   ["pointerdown", "touchstart", "keydown"].forEach((eventName) => {
     document.addEventListener(eventName, (event) => {
       if (event.target.closest("#fontoryAuth")) playFromBeginning();
