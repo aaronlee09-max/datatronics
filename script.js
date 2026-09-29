@@ -1313,19 +1313,10 @@ function startDownloadMusic() {
   downloadMusic.play().catch(() => {});
 }
 function waitForSimulatedDownload() {
-  return new Promise((resolve) => {
-    const started = performance.now();
-    const duration = 206_350; // 전체 곡 길이 + 시작 안전 여백: 약 3분 26초
-    updateDownloadProgress(0, "다운로드 준비 중…");
-    const timer = setInterval(() => {
-      const percent = Math.min(100, ((performance.now() - started) / duration) * 100);
-      updateDownloadProgress(percent, percent >= 100 ? "파일을 저장하는 중…" : "다운로드 준비 중…");
-      if (percent >= 100) {
-        clearInterval(timer);
-        resolve();
-      }
-    }, 250);
-  });
+  // 실제 파일 다운로드가 시작되기 전에 일부러 대기시키지 않는다.
+  // 진행바는 fetchFontBlob()의 실제 수신 바이트를 기준으로 즉시 움직인다.
+  updateDownloadProgress(0, "다운로드 준비 중…");
+  return Promise.resolve();
 }
 function hideDownloadProgressSoon() {
   setTimeout(() => { const panel = document.querySelector("#downloadProgress"); if (panel) panel.hidden = true; }, 1800);
@@ -1423,13 +1414,17 @@ async function downloadSelectedWindows() {
   startDownloadMusic();
   try {
     await waitForSimulatedDownload();
-    for (let index = 0; index < chosen.length; index++) {
+    const total = chosen.length;
+    for (let index = 0; index < total; index++) {
       const font = chosen[index];
-      updateDownloadProgress(100, `${font.name} 파일을 저장하는 중…`);
-      const blob = await fetchFontBlob(font);
+      const basePercent = (index / total) * 100;
+      updateDownloadProgress(basePercent, `${index + 1}/${total} · ${font.name} 다운로드 중…`);
+      const blob = await fetchFontBlob(font, (ratio) => {
+        updateDownloadProgress(basePercent + (ratio * 100 / total), `${index + 1}/${total} · ${font.name} 다운로드 중…`);
+      });
       const filename = font.file.split("/").pop() || `${font.name}.${fileExtension(font)}`;
       await downloadBlob(blob, filename);
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      updateDownloadProgress(((index + 1) / total) * 100, `${index + 1}/${total} · 저장 완료`);
     }
     updateDownloadProgress(100, "다운로드가 완료되었습니다.");
     hideDownloadProgressSoon();
@@ -1452,11 +1447,14 @@ async function makeMobileConfig() {
   const rejected = [];
   startDownloadMusic();
   await waitForSimulatedDownload();
-  for (let index = 0; index < chosen.length; index++) {
+  const total = chosen.length;
+  for (let index = 0; index < total; index++) {
     const font = chosen[index];
     try {
-      updateDownloadProgress(100, `${font.name} 파일을 저장하는 중…`);
-      const blob = await fetchFontBlob(font);
+      updateDownloadProgress((index / total) * 100, `${index + 1}/${total} · ${font.name} 검증 중…`);
+      const blob = await fetchFontBlob(font, (ratio) => {
+        updateDownloadProgress((index / total) * 100 + (ratio * 100 / total), `${index + 1}/${total} · ${font.name} 검증 중…`);
+      });
       if (blob.size > 8 * 1024 * 1024) {
         rejected.push(`${font.name} (8MB 초과)`);
         continue;
