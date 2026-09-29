@@ -9,6 +9,7 @@
   audio.volume = 0.28;
   let active = false;
   let mutedFallback = false;
+  let starting = false;
 
   const stop = () => {
     audio.pause();
@@ -16,16 +17,17 @@
     audio.muted = false;
     mutedFallback = false;
     active = false;
+    starting = false;
   };
   const start = () => {
-    if (active || !document.body.classList.contains("auth-locked")) return;
-    audio.currentTime = 0;
-    audio.play().then(() => { active = true; }).catch(() => {
+    if (active || starting || !document.body.classList.contains("auth-locked")) return;
+    starting = true;
+    audio.play().then(() => { active = true; starting = false; }).catch(() => {
       // Safari/iOS can reject audible autoplay. Start silently in the background,
       // then restore sound on the first user gesture.
       mutedFallback = true;
       audio.muted = true;
-      audio.play().then(() => { active = true; }).catch(() => {});
+      audio.play().then(() => { active = true; starting = false; }).catch(() => { starting = false; });
     });
   };
   const unmuteAfterGesture = () => {
