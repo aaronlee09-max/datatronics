@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="description" content="Fontory 모바일 글꼴 라이브러리">
+<title>Fontory Mobile · 글꼴 보관소</title>
+<link rel="stylesheet" href="../styles.css?v=20260930-auth-stable1">
+<link rel="stylesheet" href="./styles.css?v=20260930-mobile1">
+<link rel="stylesheet" href="../passkey.css?v=20260925-session-token">
+</head>
+<body>
+<div class="app-shell">
+<header class="hero">
+<div class="topbar"><span class="eyebrow typing-fontory" data-typing-fontory aria-label="안녕하세요, Fontory Fonts 입니다."></span><button class="theme" id="themeBtn" type="button" aria-label="다크 모드 전환">◐</button></div>
+<h1 class="hero-typing-title"><span data-hero-typing aria-label="안녕하세요, Fontory Fonts 입니다."></span></h1>
+<p>폰트를 검색하고 미리본 뒤, iPhone 또는 Windows에서 사용할 글꼴을 골라 담아보세요.</p>
+<div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="폰트 이름 또는 카테고리 검색" autocomplete="off"></div>
+<div id="categoryBar" class="category-bar" role="tablist" aria-label="카테고리"></div>
+</header>
+<div id="globalPreviewBar" class="global-preview-bar" role="region" aria-label="전체 폰트 미리보기">
+<div class="global-preview-heading"><span class="global-preview-icon">Aa</span><div><strong>전체 폰트 미리보기</strong><small>입력한 문장이 모든 폰트에 적용됩니다.</small></div></div>
+<div class="global-preview-input-wrap"><span aria-hidden="true">✦</span><input id="globalPreviewInput" type="text" value="오늘도 예쁘게 기록해요" placeholder="원하는 문장을 입력해 보세요" autocomplete="off" maxlength="120"></div>
+</div>
+<main>
+<section class="intro-card"><div><span class="pill">FONTORY MOBILE</span><h2>폰트를<br>간편하게 골라보세요.</h2><p>모바일 화면에 맞게 카드와 버튼을 한 열로 정리했습니다.</p></div><div class="phone-glyph" aria-hidden="true">Aa</div></section>
+<div id="statusBanner" class="status-banner" hidden></div>
+<div class="section-head"><h2>Fonts</h2><span id="count">0 fonts</span></div>
+<section id="fontGrid" class="font-grid" aria-live="polite"></section>
+<p id="empty" class="empty" hidden>검색 결과가 없습니다.</p>
+<nav id="pagination" class="pagination" aria-label="폰트 목록 페이지"></nav>
+</main>
+<div id="selectionBar" class="selection-bar" hidden><div><strong>내 폰트 바구니</strong><span id="selectedNames"></span></div><div class="selection-actions"><button id="downloadWindows" type="button" disabled>Windows 골라 다운로드</button><button id="makeProfile" type="button" disabled>iPhone 구성 만들기</button></div></div>
+<div id="downloadProgress" class="download-progress" hidden aria-live="polite"><div class="download-progress-card"><div class="download-progress-preview-wrap"><div id="downloadProgressTitle" class="download-progress-title"></div><div id="downloadProgressFontName" class="download-progress-font-name"></div><p id="downloadProgressDescription" class="download-progress-description"></p></div><div class="download-progress-head"><span id="downloadProgressLabel">다운로드 준비 중…</span><span id="downloadProgressValue">0%</span></div><progress id="downloadProgressMeter" max="100" value="0"></progress></div></div>
+<footer><p>Fontory · datatronics</p><p class="small">폰트의 저작권과 라이선스는 각 제작자에게 있습니다.</p></footer>
+</div>
+<script src="../accounts-db.js?v=20260922-sync2"></script>
+<script src="../accounts-index.js?v=20260922-sync2"></script>
+<script src="../auth.js?v=20260930-user-greeting2"></script>
+<script src="../fontory-music.js?v=20260930-shared1"></script>
+<script src="../auth-background-music.js?v=20260930-login-loop2"></script>
+<script src="../script.js?v=20260930-global-preview2"></script>
+<script src="../typing-effect.js?v=20260930-user-greeting3"></script>
+<script src="../fontory-desc-typing.js?v=20260930-global-preview2"></script>
+<script src="../background-effects.js?v=20260929-ambient1"></script>
+<script src="../fontory-runtime-fix.js?v=20260921-admin2"></script>
+<script src="../fontory-asset-fix.js?v=20260920"></script>
+</body></html>
