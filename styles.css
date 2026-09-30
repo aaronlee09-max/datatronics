@@ -813,3 +813,75 @@ body.dark .category-bar .chip.active{
     max-height:60px !important;
   }
 }
+
+/* Final iPhone responsive layout */
+html,body{
+  max-width:100%;
+  overflow-x:hidden;
+}
+.app-shell{
+  width:100%;
+  max-width:960px;
+  min-width:0;
+}
+.hero,
+main,
+footer{
+  min-width:0;
+}
+.search-wrap,
+.global-preview-bar,
+.intro-card,
+.font-grid,
+.font-card{
+  max-width:100%;
+  min-width:0;
+}
+@media(max-width:620px){
+  .hero-typing-title{
+    width:100%;
+    max-width:100%;
+    font-size:clamp(28px,8.5vw,52px);
+    letter-spacing:-.065em;
+    line-height:1.05;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+  .hero-typing-title span{
+    white-space:nowrap;
+  }
+  .hero > p{
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+  .search-wrap{
+    width:100%;
+  }
+  .intro-card{
+    width:100%;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:16px;
+    padding:22px;
+  }
+  .intro-card p{
+    max-width:100%;
+  }
+  .phone-glyph{
+    align-self:flex-end;
+    font-size:56px;
+    padding-right:0;
+    line-height:.8;
+  }
+  .global-preview-bar{
+    width:100%;
+  }
+  .font-grid{
+    width:100%;
+    grid-template-columns:1fr;
+  }
+  .font-card{
+    width:100%;
+    overflow:hidden;
+  }
+}
