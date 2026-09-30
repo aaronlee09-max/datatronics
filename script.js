@@ -1459,7 +1459,6 @@ async function downloadSelectedWindows() {
       const blob = await fetchFontBlob(font);
       const filename = font.file.split("/").pop() || `${font.name}.${fileExtension(font)}`;
       await downloadBlob(blob, filename);
-      await new Promise((resolve) => setTimeout(resolve, 500));
     }
     updateDownloadProgress(100, "다운로드가 완료되었습니다.");
     hideDownloadProgressSoon();
