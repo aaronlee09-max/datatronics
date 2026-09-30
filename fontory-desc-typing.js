@@ -15,7 +15,7 @@
     ["제주", "제주특별자치도가 공개한 제주고딕·제주명조 계열이에요."],
     ["마포", "서울 마포구가 공개한 지역 글꼴이에요."],
     ["KCC", "한국저작권위원회가 공개한 기념·공공 글꼴 계열이에요."],
-    ["온글잎", "손글씨를 글꼴로 만드는 프로젝트에서 나온 글꼴이에요."],
+    ["온글잎", "손글씨를 글꼴로 만든 프로젝트에서 나온 글꼴이에요."],
     ["Spoqa", "스포카가 본고딕을 다듬어 만든 스포카 한 산스 계열이에요."],
     ["Noto", "세계 여러 문자를 담기 위해 만든 Noto 계열이에요."],
     ["Google Fonts", "구글 폰트에서 공개한 글꼴이에요."],
@@ -36,67 +36,55 @@
   ];
 
   let currentFont = null;
-  let currentFamily = "";
   let typingTimer = null;
-  let lastPreview = "";
 
   function cleanName(name) {
     return String(name || "이 글꼴").replace(/^\[폰트\]\s*/, "").replace(/\s*다운로드\s*$/, "").trim();
   }
 
   function getDescription(font) {
-    const hay = [font?.name, font?.family, font?.category, font?.style].filter(Boolean).join(" ");
-    const hit = BLURBS.find(item => hay.includes(item[0]));
+    const hay = [font && font.name, font && font.family, font && font.category, font && font.style].filter(Boolean).join(" ");
+    const hit = BLURBS.find(function(item) { return hay.indexOf(item[0]) !== -1; });
     return hit ? hit[1] : "이 글꼴의 특징과 유래를 살펴보며 다운로드하고 있어요.";
   }
 
   function getPreview(font) {
-    return String(font?.preview || "오늘도 예쁘게 기록해요").trim();
+    return String((font && font.preview) || "오늘도 예쁘게 기록해요").trim();
   }
 
   function fontFromCard(card) {
     if (!card) return null;
     const file = card.dataset.file || "";
     const list = typeof fonts !== "undefined" && Array.isArray(fonts) ? fonts : [];
-    const found = list.find(item => item?.file === file);
+    const found = list.find(function(item) { return item && item.file === file; });
     return found || {
-      name: card.querySelector(".font-name")?.textContent?.trim() || file.split("/").pop() || "글꼴",
-      file,
-      category: card.querySelector(".tag")?.textContent || ""
+      name: (card.querySelector(".font-name") && card.querySelector(".font-name").textContent.trim()) || file.split("/").pop() || "글꼴",
+      file: file,
+      family: card.dataset.family || "",
+      category: (card.querySelector(".tag") && card.querySelector(".tag").textContent) || ""
     };
   }
 
   function typePreview(text) {
     const target = document.querySelector("#downloadProgressTitle");
     if (!target || !text) return;
-    clearInterval(typingTimer);
-    lastPreview = text;
+    window.clearInterval(typingTimer);
     target.textContent = "";
     let index = 0;
-    typingTimer = setInterval(() => {
+    typingTimer = window.setInterval(function() {
       target.textContent = text.slice(0, ++index);
       if (index >= text.length) {
-        clearInterval(typingTimer);
+        window.clearInterval(typingTimer);
         typingTimer = null;
       }
     }, 48);
   }
 
-  async function useDownloadingFont(font) {
-    if (!font?.file) return;
-    try {
-      const family = "FontoryDownloading";
-      const url = new URL(font.file, location.href).href;
-      const face = new FontFace(family, `url(${JSON.stringify(url)})`, { display: "swap" });
-      const loaded = await face.load();
-      document.fonts.add(loaded);
-      currentFamily = family;
-      const title = document.querySelector("#downloadProgressTitle");
-      if (title) title.style.fontFamily = `"${family}", sans-serif`;
-    } catch (error) {
-      currentFamily = "";
-      console.warn("Download font preview failed:", error);
-    }
+  function applyCardPreviewFont(font) {
+    const title = document.querySelector("#downloadProgressTitle");
+    if (!title) return;
+    const family = (font && (font.family || font.name)) || "";
+    title.style.fontFamily = family ? '"' + family + '", sans-serif' : "inherit";
   }
 
   function announce(font) {
@@ -105,42 +93,24 @@
     const panel = document.querySelector("#downloadProgress");
     const name = document.querySelector("#downloadProgressFontName");
     const description = document.querySelector("#downloadProgressDescription");
-    const title = document.querySelector("#downloadProgressTitle");
-
     if (panel) panel.hidden = false;
     if (name) name.textContent = cleanName(font.name);
     if (description) description.textContent = getDescription(font);
-    if (title) {
-      title.style.fontFamily = "inherit";
-      typePreview(getPreview(font));
-    }
-    useDownloadingFont(font);
+    applyCardPreviewFont(font);
+    typePreview(getPreview(font));
   }
 
-  function hookProgressMessage() {
-    if (typeof window.typeDownloadProgressMessage !== "function") return;
-    window.typeDownloadProgressMessage = function() {
-      if (currentFont) {
-        const preview = getPreview(currentFont);
-        if (preview !== lastPreview) typePreview(preview);
-      }
-    };
-  }
-
-  document.addEventListener("click", event => {
-    const btn = event.target.closest?.("button[data-single-download], a.download, #downloadWindows, #makeProfile");
+  document.addEventListener("click", function(event) {
+    const btn = event.target.closest && event.target.closest("button[data-single-download], a.download, #downloadWindows, #makeProfile");
     if (!btn) return;
-    let font = fontFromCard(btn.closest(".font-card"));
+    var font = fontFromCard(btn.closest(".font-card"));
     if (!font && (btn.id === "downloadWindows" || btn.id === "makeProfile")) {
-      const list = typeof fonts !== "undefined" && Array.isArray(fonts) ? fonts : [];
-      const chosen = typeof selected !== "undefined" && selected instanceof Set
-        ? list.filter(item => selected.has(item?.id || item?.file))
+      var list = typeof fonts !== "undefined" && Array.isArray(fonts) ? fonts : [];
+      var chosen = typeof selected !== "undefined" && selected instanceof Set
+        ? list.filter(function(item) { return selected.has(item && (item.id || item.file)); })
         : [];
       font = chosen[0] || null;
     }
     if (font) announce(font);
   }, true);
-
-  hookProgressMessage();
-  setInterval(hookProgressMessage, 500);
 })();
