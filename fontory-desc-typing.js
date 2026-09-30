@@ -49,7 +49,9 @@
   }
 
   function getPreview(font) {
-    return "가나다 ABC 123";
+    const input = document.querySelector("#globalPreviewInput");
+    const value = input && input.value.trim();
+    return value || "가나다 ABC 123";
   }
 
   function fontFromCard(card) {
@@ -104,6 +106,11 @@
   }
 
   window.fontorySetDownloadFont = announce;
+  window.fontoryUpdateDownloadPreview = function() {
+    if (!currentFont) return;
+    typePreview(getPreview(currentFont));
+    applyCardPreviewFont(currentFont);
+  };
 
   document.addEventListener("click", function(event) {
     const btn = event.target.closest && event.target.closest("button[data-single-download], a.download, #downloadWindows, #makeProfile");
