@@ -1636,6 +1636,22 @@ function escapeXml(value) { return String(value).replace(/[&<>"']/g, (c) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;",
 }[c])); }
 
+document.addEventListener("input", (event) => {
+  const input = event.target.closest?.("#globalPreviewInput");
+  if (!input) return;
+  globalPreviewText = input.value;
+  document.querySelectorAll("[data-preview]").forEach((el) => {
+    el.textContent = globalPreviewText || "가나다 ABC 123";
+  });
+  document.querySelectorAll(".try-font-input").forEach((el) => {
+    el.value = globalPreviewText;
+  });
+  document.querySelectorAll(".try-font-result").forEach((el) => {
+    el.textContent = globalPreviewText || "원하는 문장을 입력하세요";
+  });
+  window.fontoryUpdateDownloadPreview?.();
+}, true);
+
 search.addEventListener("input", () => { page = 1; render(); });
 document.querySelector("#themeBtn").addEventListener("click", () => {
   document.body.classList.toggle("dark");
