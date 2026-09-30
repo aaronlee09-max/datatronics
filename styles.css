@@ -715,3 +715,16 @@ body.dark .category-bar .chip.active{
   position:relative;
   z-index:110;
 }
+
+
+/* Stop the floating global preview before the category tabs */
+.category-bar{
+  position:relative;
+  z-index:120;
+}
+.global-preview-bar{
+  top:12px;
+}
+@media(max-width:620px){
+  .global-preview-bar{top:7px}
+}
