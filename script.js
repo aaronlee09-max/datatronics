@@ -1686,35 +1686,3 @@ async function init() {
 }
 
 init();
-
-
-/* Fontory floating preview boundary */
-(() => {
-  const setup = () => {
-    const bar = document.querySelector("#globalPreviewBar");
-    const category = document.querySelector("#categoryBar");
-    if (!bar || !category || bar.dataset.boundaryReady === "true") return;
-    bar.dataset.boundaryReady = "true";
-
-    const update = () => {
-      const categoryRect = category.getBoundingClientRect();
-      const baseTop = window.innerWidth <= 620 ? 7 : 12;
-      const gap = 8;
-      const maxTop = Math.max(baseTop, categoryRect.bottom + gap);
-      const height = bar.getBoundingClientRect().height;
-      const viewportLimit = window.innerHeight - height - 12;
-      const top = Math.min(maxTop, Math.max(baseTop, viewportLimit));
-      bar.style.top = `${top}px`;
-    };
-
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    update();
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setup, { once: true });
-  } else {
-    setup();
-  }
-})();
