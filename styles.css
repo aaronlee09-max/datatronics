@@ -884,3 +884,108 @@ body.dark .category-bar .chip.active{
 .device-desktop main{
   min-width:0;
 }
+
+/* Mobile device layout: keep every control reachable */
+.device-mobile .app-shell{
+  width:100%;
+  max-width:none;
+  padding-left:18px;
+  padding-right:18px;
+}
+.device-mobile .hero{
+  width:100%;
+  padding-top:18px;
+}
+.device-mobile .topbar{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  width:100%;
+  overflow:visible;
+}
+.device-mobile .topbar > .typing-fontory{
+  flex:1 1 100%;
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:clip;
+  white-space:nowrap;
+  font-size:12px;
+}
+.device-mobile .topbar > button{
+  flex:0 0 auto;
+}
+.device-mobile .hero-typing-title{
+  width:100%;
+  max-width:100%;
+  margin:14px 0 24px;
+  font-size:clamp(20px,7.05vw,30px);
+  line-height:1;
+  letter-spacing:-.07em;
+  white-space:nowrap;
+  overflow:visible;
+}
+.device-mobile .hero-typing-title span{
+  white-space:nowrap;
+}
+.device-mobile .hero > p{
+  width:100%;
+  font-size:16px;
+  line-height:1.55;
+  margin-bottom:22px;
+}
+.device-mobile .search-wrap{
+  width:100%;
+  max-width:none;
+}
+.device-mobile .category-bar{
+  width:100%;
+  max-width:none;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.device-mobile .global-preview-bar{
+  width:100%;
+  max-width:none;
+}
+.device-mobile .intro-card{
+  width:100%;
+  max-width:none;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  padding:22px;
+  gap:20px;
+}
+.device-mobile .intro-card > div:first-child{
+  width:100%;
+}
+.device-mobile .intro-card p{
+  width:100%;
+  max-width:none;
+  overflow-wrap:anywhere;
+}
+.device-mobile .phone-glyph{
+  width:100%;
+  align-self:auto;
+  text-align:right;
+  font-size:64px;
+  line-height:.75;
+  margin-top:2px;
+}
+.device-mobile .section-head{
+  width:100%;
+}
+.device-mobile .font-grid{
+  width:100%;
+  max-width:none;
+  grid-template-columns:minmax(0,1fr);
+}
+.device-mobile .font-card{
+  width:100%;
+  max-width:none;
+  min-width:0;
+}
