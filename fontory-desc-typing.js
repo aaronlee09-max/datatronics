@@ -130,7 +130,14 @@
   document.addEventListener("click", event => {
     const btn = event.target.closest?.("button[data-single-download], a.download, #downloadWindows, #makeProfile");
     if (!btn) return;
-    const font = fontFromCard(btn.closest(".font-card"));
+    let font = fontFromCard(btn.closest(".font-card"));
+    if (!font && (btn.id === "downloadWindows" || btn.id === "makeProfile")) {
+      const list = typeof fonts !== "undefined" && Array.isArray(fonts) ? fonts : [];
+      const chosen = typeof selected !== "undefined" && selected instanceof Set
+        ? list.filter(item => selected.has(item?.id || item?.file))
+        : [];
+      font = chosen[0] || null;
+    }
     if (font) announce(font);
   }, true);
 
