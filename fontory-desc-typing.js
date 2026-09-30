@@ -3,7 +3,7 @@
     ["나눔고딕", "2008년 한글날 네이버가 공개한 나눔 시리즈의 첫 고딕이에요."],
     ["나눔명조", "네이버 나눔 시리즈의 책 글용 명조예요."],
     ["나눔스퀘어", "네이버가 공개한 가로형 고딕이에요."],
-    ["나눔", "2008년 한글날 이후 네이버가 공개한 무료 글꼴이에요."],
+    ["나눔", "2008년 한글날 이후 네이버가 공개한 나눔 계열 글꼴이에요."],
     ["학교안심", "KERIS가 학교에서 사용할 수 있도록 만든 교육용 글꼴이에요."],
     ["KERIS", "한국교육학술정보원이 교육 현장용으로 만든 글꼴이에요."],
     ["을지로", "배달의민족이 서울 을지로 간판에서 영감을 받아 만든 글꼴이에요."],
@@ -45,11 +45,11 @@
   function getDescription(font) {
     const hay = [font && font.name, font && font.family, font && font.category, font && font.style].filter(Boolean).join(" ");
     const hit = BLURBS.find(function(item) { return hay.indexOf(item[0]) !== -1; });
-    return hit ? hit[1] : "이 글꼴의 특징과 유래를 살펴보며 다운로드하고 있어요.";
+    return hit ? hit[1] : "공개 글꼴입니다.";
   }
 
   function getPreview(font) {
-    return String((font && font.preview) || "오늘도 예쁘게 기록해요").trim();
+    return "가나다 ABC 123";
   }
 
   function fontFromCard(card) {
