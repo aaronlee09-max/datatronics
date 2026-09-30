@@ -82,3 +82,39 @@
     startFontory();
   });
 })();
+
+
+(() => {
+  let heroTimer = null;
+  const startHero = () => {
+    const targets = [...document.querySelectorAll("[data-hero-typing]")];
+    if (!targets.length) return;
+    if (heroTimer) clearTimeout(heroTimer);
+    const text = "안녕하세요, Fontory Fonts 입니다.";
+    let index = 0;
+    let deleting = false;
+    const typeNext = () => {
+      targets.forEach((target) => { target.textContent = text.slice(0, index); });
+      if (!deleting && index < text.length) {
+        index += 1;
+        heroTimer = window.setTimeout(typeNext, index === 1 ? 180 : 75);
+      } else if (!deleting) {
+        deleting = true;
+        heroTimer = window.setTimeout(typeNext, 2200);
+      } else if (index > 0) {
+        index -= 1;
+        heroTimer = window.setTimeout(typeNext, 42);
+      } else {
+        deleting = false;
+        heroTimer = window.setTimeout(typeNext, 650);
+      }
+    };
+    typeNext();
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startHero, { once: true });
+  } else {
+    startHero();
+  }
+  window.addEventListener("fontory-auth-unlocked", startHero);
+})();
