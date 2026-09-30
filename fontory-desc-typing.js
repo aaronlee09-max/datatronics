@@ -57,7 +57,7 @@
   function fontFromCard(card) {
     if (!card) return null;
     const file = card.dataset.file || "";
-    const list = Array.isArray(window.fonts) ? window.fonts : [];
+    const list = typeof fonts !== "undefined" && Array.isArray(fonts) ? fonts : [];
     const found = list.find(item => item?.file === file);
     return found || {
       name: card.querySelector(".font-name")?.textContent?.trim() || file.split("/").pop() || "글꼴",
