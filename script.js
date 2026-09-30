@@ -1188,6 +1188,7 @@ function render() {
       grid.querySelectorAll("[data-preview]").forEach((el) => { el.textContent = globalPreviewText || "가나다 ABC 123"; });
       grid.querySelectorAll(".try-font-input").forEach((input) => { input.value = globalPreviewText; });
       grid.querySelectorAll(".try-font-result").forEach((result) => { result.textContent = globalPreviewText || "원하는 문장을 입력하세요"; });
+      window.fontoryUpdateDownloadPreview?.();
     };
   }
 
