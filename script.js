@@ -1275,6 +1275,20 @@ function updateBuilder() {
   windowsBtn.disabled = chosenWindows.length === 0;
 }
 
+let progressTypingTimer = null;
+let progressTypingText = "";
+function typeDownloadProgressMessage(text) {
+  const target = document.querySelector("#downloadProgressTitle");
+  if (!target || !text || text === progressTypingText) return;
+  progressTypingText = text;
+  clearInterval(progressTypingTimer);
+  target.textContent = "";
+  let index = 0;
+  progressTypingTimer = setInterval(() => {
+    target.textContent = text.slice(0, ++index);
+    if (index >= text.length) clearInterval(progressTypingTimer);
+  }, 42);
+}
 function updateDownloadProgress(percent, text) {
   const panel = document.querySelector("#downloadProgress");
   const meter = document.querySelector("#downloadProgressMeter");
@@ -1286,6 +1300,7 @@ function updateDownloadProgress(percent, text) {
   meter.value = safe;
   value.textContent = `${safe}%`;
   if (text) label.textContent = text;
+  typeDownloadProgressMessage(text || "다운로드를 준비하고 있어요");
 }
 let downloadMusic = null;
 let downloadBusy = false;

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#f5f5f7">
   <meta name="description" content="iPhone과 Windows에서 사용할 폰트를 찾고 골라 담는 글꼴 라이브러리">
   <title>Fontory · 글꼴 보관소</title>
-  <link rel="stylesheet" href="./styles.css?v=20260930-progress-panel1">
+  <link rel="stylesheet" href="./styles.css?v=20260930-fullscreen-progress1">
   <link rel="stylesheet" href="./passkey.css?v=20260925-session-token">
 </head>
 <body>
@@ -54,8 +54,11 @@
       </div>
     </div>
     <div id="downloadProgress" class="download-progress" hidden aria-live="polite">
-      <div class="download-progress-head"><span id="downloadProgressLabel">다운로드 준비 중…</span><span id="downloadProgressValue">0%</span></div>
-      <progress id="downloadProgressMeter" max="100" value="0"></progress>
+      <div class="download-progress-card">
+        <strong id="downloadProgressTitle" class="download-progress-title">다운로드를 준비하고 있어요</strong>
+        <div class="download-progress-head"><span id="downloadProgressLabel">다운로드 준비 중…</span><span id="downloadProgressValue">0%</span></div>
+        <progress id="downloadProgressMeter" max="100" value="0"></progress>
+      </div>
     </div>
     <footer>
       <p>Fontory · datatronics</p>
@@ -66,7 +69,7 @@
   <script src="./accounts-index.js?v=20260922-sync2"></script>
   <script src="./auth.js?v=20260929-clean-top1"></script>
   <script src="./auth-background-music.js?v=20260929-resume1"></script>
-  <script src="./script.js?v=20260930-individual-button1"></script>
+  <script src="./script.js?v=20260930-fullscreen-progress1"></script>
   <script src="./typing-effect.js?v=20260929-typing-loop2"></script>
   <script src="./background-effects.js?v=20260929-ambient1"></script>
   <script src="./fontory-runtime-fix.js?v=20260921-admin2"></script>
