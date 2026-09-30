@@ -3,7 +3,7 @@
     const targets = [...document.querySelectorAll("[data-typing-greeting]")].filter((target) => target.dataset.typed !== "true");
     if (!targets.length) return;
     targets.forEach((target) => { target.dataset.typed = "true"; });
-    const text = "로그인하고 Fontory의 다양한 혜택을 만나보세요.";
+    const text = "로그인하고 Fontory에서 더 다양한 폰트를 만나보세요.";
     let index = 0;
     let deleting = false;
     const typeNext = () => {
