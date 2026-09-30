@@ -708,3 +708,10 @@ body.dark .category-bar .chip.active{
     border-radius:16px;
   }
 }
+
+
+/* Keep account controls above the floating preview bar */
+.topbar{
+  position:relative;
+  z-index:110;
+}
