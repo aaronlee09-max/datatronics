@@ -1339,10 +1339,16 @@ function releaseDownloadLock() {
   } catch {}
   downloadLockToken = null;
 }
-function startDownloadMusic() {
+async function startDownloadMusic() {
   if (downloadMusic && !downloadMusic.paused) return;
-  if (!downloadMusic) {
-    downloadMusic = new Audio("./assets/fontory-download-music.mp3?v=20260929-padded1");
+  const source = await (window.fontoryGetMusicUrl?.() || Promise.resolve("./assets/fontory-download-music.mp3?v=20260929-padded1"));
+  if (!downloadMusic || downloadMusic.dataset.fontorySource !== source) {
+    if (downloadMusic) {
+      downloadMusic.pause();
+      downloadMusic.src = "";
+    }
+    downloadMusic = new Audio(source);
+    downloadMusic.dataset.fontorySource = source;
     downloadMusic.preload = "auto";
     downloadMusic.volume = 0.45;
   }
