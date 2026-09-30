@@ -19,6 +19,20 @@
     audio.volume = 0.28;
     ready = false;
     audio.addEventListener("loadeddata", () => { ready = true; }, { once: true });
+    audio.addEventListener("ended", () => {
+      if (userStarted && document.body.classList.contains("auth-locked")) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+    });
+    audio.addEventListener("pause", () => {
+      if (!userStarted || starting || !document.body.classList.contains("auth-locked")) return;
+      window.setTimeout(() => {
+        if (userStarted && !starting && document.body.classList.contains("auth-locked") && audio) {
+          audio.play().catch(() => {});
+        }
+      }, 250);
+    });
     return audio;
   };
   let starting = false;
@@ -52,7 +66,7 @@
   };
 
   const playFromBeginning = () => {
-    if (starting || !document.body.classList.contains("auth-locked")) return;
+    if (starting || userStarted || !document.body.classList.contains("auth-locked")) return;
     starting = true;
     userStarted = true;
     ensureAudio().then(() => {
@@ -76,18 +90,6 @@
   };
 
   window.addEventListener("fontory-auth-unlocked", stop);
-  audio?.addEventListener("ended", () => {
-    if (userStarted && document.body.classList.contains("auth-locked")) {
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
-    }
-  });
-  audio?.addEventListener("pause", () => {
-    if (!userStarted || starting || !document.body.classList.contains("auth-locked")) return;
-    window.setTimeout(() => {
-      if (userStarted && !starting && document.body.classList.contains("auth-locked")) audio.play().catch(() => {});
-    }, 250);
-  });
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden && userStarted && document.body.classList.contains("auth-locked") && audio) audio.play().catch(() => {});
   });
