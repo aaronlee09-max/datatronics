@@ -814,74 +814,73 @@ body.dark .category-bar .chip.active{
   }
 }
 
-/* Final iPhone responsive layout */
-html,body{
+/* Device-aware layout: mobile and desktop are selected by the actual device */
+.device-mobile,
+.device-mobile body{
   max-width:100%;
   overflow-x:hidden;
 }
-.app-shell{
+.device-mobile .app-shell{
   width:100%;
-  max-width:960px;
+  max-width:none;
   min-width:0;
 }
-.hero,
-main,
-footer{
-  min-width:0;
-}
-.search-wrap,
-.global-preview-bar,
-.intro-card,
-.font-grid,
-.font-card{
+.device-mobile .hero,
+.device-mobile main,
+.device-mobile footer,
+.device-mobile .search-wrap,
+.device-mobile .global-preview-bar,
+.device-mobile .intro-card,
+.device-mobile .font-grid,
+.device-mobile .font-card{
   max-width:100%;
   min-width:0;
 }
-@media(max-width:620px){
-  .hero-typing-title{
-    width:100%;
-    max-width:100%;
-    font-size:clamp(28px,8.5vw,52px);
-    letter-spacing:-.065em;
-    line-height:1.05;
-    white-space:nowrap;
-    overflow:hidden;
-  }
-  .hero-typing-title span{
-    white-space:nowrap;
-  }
-  .hero > p{
-    max-width:100%;
-    overflow-wrap:anywhere;
-  }
-  .search-wrap{
-    width:100%;
-  }
-  .intro-card{
-    width:100%;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:16px;
-    padding:22px;
-  }
-  .intro-card p{
-    max-width:100%;
-  }
-  .phone-glyph{
-    align-self:flex-end;
-    font-size:56px;
-    padding-right:0;
-    line-height:.8;
-  }
-  .global-preview-bar{
-    width:100%;
-  }
-  .font-grid{
-    width:100%;
-    grid-template-columns:1fr;
-  }
-  .font-card{
-    width:100%;
-    overflow:hidden;
-  }
+.device-mobile .hero-typing-title{
+  width:100%;
+  max-width:100%;
+  font-size:clamp(28px,8.5vw,52px);
+  letter-spacing:-.065em;
+  line-height:1.05;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.device-mobile .hero-typing-title span{white-space:nowrap}
+.device-mobile .hero > p{
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+.device-mobile .search-wrap{width:100%}
+.device-mobile .intro-card{
+  width:100%;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:16px;
+  padding:22px;
+}
+.device-mobile .intro-card p{max-width:100%}
+.device-mobile .phone-glyph{
+  align-self:flex-end;
+  font-size:56px;
+  padding-right:0;
+  line-height:.8;
+}
+.device-mobile .global-preview-bar{width:100%}
+.device-mobile .font-grid{
+  width:100%;
+  grid-template-columns:1fr;
+}
+.device-mobile .font-card{
+  width:100%;
+  overflow:hidden;
+}
+
+/* Desktop devices keep the full PC layout even when the browser window is narrow. */
+.device-desktop .app-shell{
+  width:min(100%,960px);
+  min-width:0;
+}
+.device-desktop .hero,
+.device-desktop main{
+  min-width:0;
 }
