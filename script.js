@@ -1129,7 +1129,7 @@ function render() {
       <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "실제 폰트 파일을 적용해 미리봅니다.")}<br><span class="windows-help">${escapeHtml(windowsHelp)}</span></div>
       <div class="actions">
         ${f.file && windowsInstallable(f)
-          ? `<a class="download" href="${escapeAttr(assetUrl(f))}" download="${escapeAttr(f.file.split("/").pop() || f.name)}">${windowsDownloadLabel(f)}</a>`
+          ? `<button class="download" type="button" data-single-download="${escapeAttr(id)}">${windowsDownloadLabel(f)}</button>`
           : f.file
             ? `<a class="download" href="${escapeAttr(assetUrl(f))}" target="_blank" rel="noopener">파일 열기</a>`
             : `<button class="download" type="button" disabled>파일 없음</button>`}
@@ -1158,6 +1158,13 @@ function render() {
       if (box.checked) selected.add(box.dataset.id);
       else selected.delete(box.dataset.id);
       render();
+    });
+  });
+  grid.querySelectorAll("[data-single-download]").forEach((btn) => {
+    const font = list.find((item) => fontId(item) === btn.dataset.singleDownload);
+    if (!font) return;
+    btn.addEventListener("click", () => {
+      downloadSingleFont(font, btn).catch((error) => alert(error.message));
     });
   });
   grid.querySelectorAll("[data-copy]").forEach((btn) => {
@@ -1284,7 +1291,7 @@ let downloadMusic = null;
 function startDownloadMusic() {
   if (downloadMusic && !downloadMusic.paused) return;
   if (!downloadMusic) {
-    downloadMusic = new Audio("./assets/fontory-download-music.mp3?v=20260929-full");
+    downloadMusic = new Audio("./assets/fontory-download-music.mp3?v=20260929-padded1");
     downloadMusic.preload = "auto";
     downloadMusic.volume = 0.45;
   }
@@ -1350,6 +1357,24 @@ async function fetchFontBlob(font, onProgress) {
   return blob;
 }
 
+async function downloadSingleFont(font, button) {
+  if (!font || !button || button.disabled) return;
+  const oldText = button.textContent;
+  button.disabled = true;
+  startDownloadMusic();
+  try {
+    await waitForSimulatedDownload();
+    updateDownloadProgress(100, `${font.name} 파일을 저장하는 중…`);
+    const blob = await fetchFontBlob(font);
+    const filename = font.file.split("/").pop() || `${font.name}.${fileExtension(font)}`;
+    await downloadBlob(blob, filename);
+    updateDownloadProgress(100, "다운로드가 완료되었습니다.");
+    hideDownloadProgressSoon();
+  } finally {
+    button.disabled = false;
+    button.textContent = oldText;
+  }
+}
 async function downloadSelectedWindows() {
   const chosen = fonts.filter((f) => selected.has(fontId(f)) && windowsInstallable(f));
   if (!chosen.length) return;
