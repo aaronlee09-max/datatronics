@@ -1,3 +1,6 @@
+const DEFAULT_GLOBAL_PREVIEW_TEXT = "오늘도 예쁘게 기록해요";
+let globalPreviewText = DEFAULT_GLOBAL_PREVIEW_TEXT;
+
 const CATEGORY_ICONS = {
   "전체": "✦",
   "독립운동": "🇰🇷",
@@ -1100,7 +1103,7 @@ function render() {
 
   grid.innerHTML = list.map((f) => {
     const id = fontId(f);
-    const preview = f.preview || "오늘도 예쁘게 기록해요";
+    const preview = globalPreviewText || "오늘도 예쁘게 기록해요";
     const face = f.family || f.name;
     const ext = fileExtension(f);
     const previewState = failedFaces.has(f.file) ? "preview-failed" : "";
@@ -1120,11 +1123,11 @@ function render() {
       </div>
       <div class="preview-stack">
         <div class="preview ${previewState}" data-preview="ko">${escapeHtml(preview)}</div>
-        <div class="preview-sub ${previewState}" data-preview="mix">가나다 ABC 123</div>
+        <div class="preview-sub ${previewState}" data-preview="mix">${escapeHtml(globalPreviewText || "가나다 ABC 123")}</div>
       </div>
       <div class="try-font-panel" data-try-panel hidden>
-        <input class="try-font-input" type="text" value="${escapeAttr(preview)}" placeholder="원하는 문장을 입력하세요" aria-label="${escapeAttr(f.name)} 미리 써보기">
-        <div class="try-font-result">${escapeHtml(preview)}</div>
+        <input class="try-font-input" type="text" value="${escapeAttr(globalPreviewText || preview)}" placeholder="원하는 문장을 입력하세요" aria-label="${escapeAttr(f.name)} 미리 써보기">
+        <div class="try-font-result">${escapeHtml(globalPreviewText || preview)}</div>
       </div>
       <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "실제 폰트 파일을 적용해 미리봅니다.")}<br><span class="windows-help">${escapeHtml(windowsHelp)}</span></div>
       <div class="actions">
@@ -1177,6 +1180,17 @@ function render() {
       } catch {}
     });
   });
+  const globalInput = document.querySelector("#globalPreviewInput");
+  if (globalInput) {
+    globalInput.value = globalPreviewText;
+    globalInput.oninput = () => {
+      globalPreviewText = globalInput.value;
+      grid.querySelectorAll("[data-preview]").forEach((el) => { el.textContent = globalPreviewText || "가나다 ABC 123"; });
+      grid.querySelectorAll(".try-font-input").forEach((input) => { input.value = globalPreviewText; });
+      grid.querySelectorAll(".try-font-result").forEach((result) => { result.textContent = globalPreviewText || "원하는 문장을 입력하세요"; });
+    };
+  }
+
   grid.querySelectorAll(".try-font-toggle").forEach((btn) => {
     const card = btn.closest(".font-card");
     const panel = card?.querySelector("[data-try-panel]");
