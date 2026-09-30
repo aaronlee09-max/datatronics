@@ -33,47 +33,26 @@
 
 
 (() => {
-  const startFontory = () => {
-    const targets = [...document.querySelectorAll("[data-typing-fontory]")].filter((target) => target.dataset.typedFontory !== "true");
-    if (!targets.length) return;
-    targets.forEach((target) => { target.dataset.typedFontory = "true"; });
-    const text = "안녕하세요, Fontory Fonts 입니다.";
-    let index = 0;
-    const typeNext = () => {
-      targets.forEach((target) => { target.textContent = text.slice(0, index); });
-      if (index < text.length) {
-        index += 1;
-        window.setTimeout(typeNext, index === 1 ? 180 : 75);
-      } else {
-        window.setTimeout(() => {
-          index = 0;
-          typeNext();
-        }, 2200);
-      }
-    };
-    typeNext();
+  let runId = 0;
+  const getGreeting = () => {
+    try {
+      const session = JSON.parse(sessionStorage.getItem("fontory-auth-v5") || "null");
+      if (session?.role === "admin") return "우주지구대통령님, 좋은 하루 보내세요.";
+      if (session?.username) return session.username + "님, 오늘도 좋은 하루 보내세요.";
+    } catch {}
+    return "안녕하세요, Fontory Fonts 입니다.";
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", startFontory, { once: true });
-  } else {
-    startFontory();
-  }
-  if (document.body) {
-    new MutationObserver(startFontory).observe(document.body, { childList: true, subtree: true });
-  }
-})();
-
-
-(() => {
-  const startHero = () => {
-    const targets = [...document.querySelectorAll("[data-hero-typing]")].filter((target) => target.dataset.typedHero !== "true");
+  const startFontory = () => {
+    const targets = [...document.querySelectorAll("[data-typing-fontory]")];
     if (!targets.length) return;
-    targets.forEach((target) => { target.dataset.typedHero = "true"; });
-    const text = "안녕하세요, Fontory Fonts 입니다.";
+    const text = getGreeting();
+    const myRun = ++runId;
     let index = 0;
     let deleting = false;
+
     const typeNext = () => {
+      if (myRun !== runId) return;
       targets.forEach((target) => { target.textContent = text.slice(0, index); });
       if (!deleting && index < text.length) {
         index += 1;
@@ -91,7 +70,11 @@
     };
     typeNext();
   };
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", startHero, { once: true });
-  else startHero();
-  if (document.body) new MutationObserver(startHero).observe(document.body, { childList: true, subtree: true });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startFontory, { once: true });
+  } else {
+    startFontory();
+  }
+  window.addEventListener("fontory-auth-unlocked", startFontory);
 })();
