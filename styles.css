@@ -688,3 +688,23 @@ body.dark .category-bar .chip.active{
   .category-bar{padding:0 5px;min-height:44px}
   .category-bar .chip{min-height:40px;padding:9px 12px 9px;font-size:12px}
 }
+
+
+/* Global preview: fixed floating controller that follows the viewport */
+.global-preview-bar{
+  position:fixed;
+  top:12px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(920px,calc(100% - 40px));
+  margin:0;
+  z-index:100;
+  border-radius:18px;
+}
+@media(max-width:620px){
+  .global-preview-bar{
+    top:7px;
+    width:calc(100% - 20px);
+    border-radius:16px;
+  }
+}
