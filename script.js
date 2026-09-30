@@ -1289,6 +1289,30 @@ function updateDownloadProgress(percent, text) {
 }
 let downloadMusic = null;
 let downloadBusy = false;
+let downloadLockToken = null;
+const DOWNLOAD_LOCK_KEY = "fontory-download-lock";
+function acquireDownloadLock() {
+  if (downloadBusy) return false;
+  try {
+    const now = Date.now();
+    const current = JSON.parse(localStorage.getItem(DOWNLOAD_LOCK_KEY) || "null");
+    if (current && current.token && now - Number(current.at || 0) < 10 * 60 * 1000) return false;
+    downloadLockToken = `${now}-${Math.random().toString(36).slice(2)}`;
+    localStorage.setItem(DOWNLOAD_LOCK_KEY, JSON.stringify({ token: downloadLockToken, at: now }));
+  } catch {
+    downloadLockToken = null;
+  }
+  downloadBusy = true;
+  return true;
+}
+function releaseDownloadLock() {
+  downloadBusy = false;
+  try {
+    const current = JSON.parse(localStorage.getItem(DOWNLOAD_LOCK_KEY) || "null");
+    if (!current || current.token === downloadLockToken) localStorage.removeItem(DOWNLOAD_LOCK_KEY);
+  } catch {}
+  downloadLockToken = null;
+}
 function startDownloadMusic() {
   if (downloadMusic && !downloadMusic.paused) return;
   if (!downloadMusic) {
@@ -1359,10 +1383,9 @@ async function fetchFontBlob(font, onProgress) {
 }
 
 async function downloadSingleFont(font, button) {
-  if (!font || !button || button.disabled || downloadBusy) return;
+  if (!font || !button || button.disabled || !acquireDownloadLock()) return;
   const oldText = button.textContent;
   button.disabled = true;
-  downloadBusy = true;
   startDownloadMusic();
   try {
     await waitForSimulatedDownload();
@@ -1373,7 +1396,7 @@ async function downloadSingleFont(font, button) {
     updateDownloadProgress(100, "다운로드가 완료되었습니다.");
     hideDownloadProgressSoon();
   } finally {
-    downloadBusy = false;
+    releaseDownloadLock();
     button.disabled = false;
     button.textContent = oldText;
     hideDownloadProgressSoon();
@@ -1391,8 +1414,8 @@ async function downloadSelectedWindows() {
 
   const button = document.querySelector("#downloadWindows");
   const oldText = button.textContent;
+  if (!acquireDownloadLock()) return;
   button.disabled = true;
-  downloadBusy = true;
   startDownloadMusic();
   try {
     await waitForSimulatedDownload();
@@ -1407,7 +1430,7 @@ async function downloadSelectedWindows() {
     updateDownloadProgress(100, "다운로드가 완료되었습니다.");
     hideDownloadProgressSoon();
   } finally {
-    downloadBusy = false;
+    releaseDownloadLock();
     button.disabled = false;
     button.textContent = oldText;
     hideDownloadProgressSoon();
@@ -1425,7 +1448,7 @@ async function makeMobileConfig() {
 
   const payloads = [];
   const rejected = [];
-  downloadBusy = true;
+  if (!acquireDownloadLock()) return;
   startDownloadMusic();
   await waitForSimulatedDownload();
   for (let index = 0; index < chosen.length; index++) {
@@ -1458,7 +1481,7 @@ async function makeMobileConfig() {
   }
 
   if (!payloads.length) {
-    downloadBusy = false;
+    releaseDownloadLock();
     hideDownloadProgressSoon();
     throw new Error("유효한 iPhone용 폰트를 찾지 못했습니다. 선택한 폰트 파일을 확인해 주세요.");
   }
@@ -1521,7 +1544,7 @@ async function makeMobileConfig() {
   if (rejected.length) {
     setTimeout(() => alert(`유효하지 않아 제외된 폰트 ${rejected.length}개:\n\n${rejected.join("\n")}`), 100);
   }
-  downloadBusy = false;
+  releaseDownloadLock();
   hideDownloadProgressSoon();
 }
 
