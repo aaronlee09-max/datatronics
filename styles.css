@@ -745,3 +745,22 @@ body.dark .category-bar .chip.active{
   .category-bar{top:0}
   .global-preview-bar{top:44px}
 }
+
+
+/* Final floating preview behavior */
+.global-preview-bar{
+  position:sticky;
+  top:10px;
+  left:auto;
+  transform:none;
+  width:auto;
+  margin:0 0 24px;
+  z-index:110;
+}
+@media(max-width:620px){
+  .global-preview-bar{
+    top:7px;
+    width:auto;
+    margin:0 0 18px;
+  }
+}
