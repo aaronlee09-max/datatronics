@@ -1291,14 +1291,25 @@ let downloadMusic = null;
 let downloadBusy = false;
 let downloadLockToken = null;
 const DOWNLOAD_LOCK_KEY = "fontory-download-lock";
+const DOWNLOAD_SESSION_KEY = "fontory-download-session";
+const downloadSessionId = (() => {
+  let id = sessionStorage.getItem(DOWNLOAD_SESSION_KEY);
+  if (!id) {
+    id = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    sessionStorage.setItem(DOWNLOAD_SESSION_KEY, id);
+  }
+  return id;
+})();
 function acquireDownloadLock() {
   if (downloadBusy) return false;
   try {
     const now = Date.now();
     const current = JSON.parse(localStorage.getItem(DOWNLOAD_LOCK_KEY) || "null");
-    if (current && current.token && now - Number(current.at || 0) < 10 * 60 * 1000) return false;
+    if (current && current.sessionId === downloadSessionId) localStorage.removeItem(DOWNLOAD_LOCK_KEY);
+    else if (current && !current.sessionId) localStorage.removeItem(DOWNLOAD_LOCK_KEY);
+    else if (current && current.token && now - Number(current.at || 0) < 10 * 60 * 1000) return false;
     downloadLockToken = `${now}-${Math.random().toString(36).slice(2)}`;
-    localStorage.setItem(DOWNLOAD_LOCK_KEY, JSON.stringify({ token: downloadLockToken, at: now }));
+    localStorage.setItem(DOWNLOAD_LOCK_KEY, JSON.stringify({ token: downloadLockToken, sessionId: downloadSessionId, at: now }));
   } catch {
     downloadLockToken = null;
   }
@@ -1383,7 +1394,11 @@ async function fetchFontBlob(font, onProgress) {
 }
 
 async function downloadSingleFont(font, button) {
-  if (!font || !button || button.disabled || !acquireDownloadLock()) return;
+  if (!font || !button || button.disabled) return;
+  if (!acquireDownloadLock()) {
+    updateDownloadProgress(0, "다른 탭에서 다운로드가 진행 중입니다.");
+    return;
+  }
   const oldText = button.textContent;
   button.disabled = true;
   startDownloadMusic();
