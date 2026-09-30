@@ -728,3 +728,20 @@ body.dark .category-bar .chip.active{
 @media(max-width:620px){
   .global-preview-bar{top:7px}
 }
+
+
+/* Global preview boundary: category tabs stay above it while scrolling */
+.category-bar{
+  position:sticky;
+  top:0;
+  z-index:120;
+}
+.global-preview-bar{
+  position:sticky;
+  top:48px;
+  z-index:110;
+}
+@media(max-width:620px){
+  .category-bar{top:0}
+  .global-preview-bar{top:44px}
+}
