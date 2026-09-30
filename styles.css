@@ -796,3 +796,20 @@ body.dark .category-bar .chip.active{
 .hero-typing-title span{
   white-space:nowrap;
 }
+
+/* Prevent login typing text from shifting the auth card while it wraps */
+.auth-typing-greeting{
+  height:60px !important;
+  min-height:60px !important;
+  max-height:60px !important;
+  line-height:1.35 !important;
+  overflow:hidden !important;
+  display:block !important;
+}
+@media(max-width:620px){
+  .auth-typing-greeting{
+    height:60px !important;
+    min-height:60px !important;
+    max-height:60px !important;
+  }
+}
