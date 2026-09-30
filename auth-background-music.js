@@ -27,11 +27,12 @@
     });
     audio.addEventListener("pause", () => {
       if (!userStarted || starting || !document.body.classList.contains("auth-locked")) return;
+      // iOS Lock Screen media controls can emit pause. Resume immediately.
       window.setTimeout(() => {
         if (userStarted && !starting && document.body.classList.contains("auth-locked") && audio) {
           audio.play().catch(() => {});
         }
-      }, 250);
+      }, 50);
     });
     return audio;
   };
@@ -84,6 +85,23 @@
       userStarted = false;
     });
   };
+
+  if ("mediaSession" in navigator) {
+    try {
+      navigator.mediaSession.setActionHandler("pause", () => {
+        if (userStarted && audio && document.body.classList.contains("auth-locked")) {
+          audio.play().catch(() => {});
+        }
+      });
+    } catch {}
+    try {
+      navigator.mediaSession.setActionHandler("play", () => {
+        if (userStarted && audio && document.body.classList.contains("auth-locked")) {
+          audio.play().catch(() => {});
+        }
+      });
+    } catch {}
+  }
 
   const sync = () => {
     if (!document.body.classList.contains("auth-locked") || !document.querySelector("#fontoryAuth")) stop();
