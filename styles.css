@@ -989,3 +989,72 @@ body.dark .category-bar .chip.active{
   max-width:none;
   min-width:0;
 }
+
+/* iPhone final: real device-width layout, no clipped controls */
+.device-mobile .topbar{
+  width:100%;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  overflow:visible;
+}
+.device-mobile .topbar > .typing-fontory{
+  flex:0 0 100%;
+  width:100%;
+  min-width:0;
+  white-space:nowrap;
+  overflow:hidden;
+  font-size:clamp(12px,3.5vw,15px);
+  line-height:1.4;
+}
+.device-mobile .topbar > button{
+  flex:0 0 auto;
+  max-width:100%;
+  white-space:nowrap;
+  padding:8px 12px;
+  font-size:12px;
+}
+.device-mobile .topbar .auth-logout{
+  margin-left:0;
+}
+.device-mobile .hero-typing-title{
+  width:100%;
+  max-width:100%;
+  margin:18px 0 24px;
+  padding:0;
+  font-size:clamp(14px,4vw,18px) !important;
+  line-height:1.15 !important;
+  letter-spacing:-.055em !important;
+  white-space:nowrap !important;
+  overflow:visible !important;
+}
+.device-mobile .hero-typing-title span{
+  display:block;
+  width:100%;
+  white-space:nowrap !important;
+}
+.device-mobile .hero > p{
+  width:100%;
+  max-width:100%;
+  font-size:16px;
+  line-height:1.55;
+  overflow-wrap:normal;
+  word-break:keep-all;
+}
+.device-mobile .intro-card{
+  width:100%;
+  max-width:100%;
+  overflow:visible;
+  padding:22px 22px 34px;
+}
+.device-mobile .phone-glyph{
+  position:static;
+  width:100%;
+  text-align:right;
+  margin-top:0;
+}
+.device-mobile .app-shell{
+  padding-bottom:calc(160px + env(safe-area-inset-bottom));
+}
