@@ -1288,6 +1288,7 @@ function updateDownloadProgress(percent, text) {
   if (text) label.textContent = text;
 }
 let downloadMusic = null;
+let downloadBusy = false;
 function startDownloadMusic() {
   if (downloadMusic && !downloadMusic.paused) return;
   if (!downloadMusic) {
@@ -1358,9 +1359,10 @@ async function fetchFontBlob(font, onProgress) {
 }
 
 async function downloadSingleFont(font, button) {
-  if (!font || !button || button.disabled) return;
+  if (!font || !button || button.disabled || downloadBusy) return;
   const oldText = button.textContent;
   button.disabled = true;
+  downloadBusy = true;
   startDownloadMusic();
   try {
     await waitForSimulatedDownload();
@@ -1371,11 +1373,14 @@ async function downloadSingleFont(font, button) {
     updateDownloadProgress(100, "다운로드가 완료되었습니다.");
     hideDownloadProgressSoon();
   } finally {
+    downloadBusy = false;
     button.disabled = false;
     button.textContent = oldText;
+    hideDownloadProgressSoon();
   }
 }
 async function downloadSelectedWindows() {
+  if (downloadBusy) return;
   const chosen = fonts.filter((f) => selected.has(fontId(f)) && windowsInstallable(f));
   if (!chosen.length) return;
 
@@ -1387,6 +1392,7 @@ async function downloadSelectedWindows() {
   const button = document.querySelector("#downloadWindows");
   const oldText = button.textContent;
   button.disabled = true;
+  downloadBusy = true;
   startDownloadMusic();
   try {
     await waitForSimulatedDownload();
@@ -1401,12 +1407,15 @@ async function downloadSelectedWindows() {
     updateDownloadProgress(100, "다운로드가 완료되었습니다.");
     hideDownloadProgressSoon();
   } finally {
+    downloadBusy = false;
     button.disabled = false;
     button.textContent = oldText;
+    hideDownloadProgressSoon();
   }
 }
 
 async function makeMobileConfig() {
+  if (downloadBusy) return;
   const chosen = fonts.filter((f) => selected.has(fontId(f)) && canInstall(f));
   if (!chosen.length) return;
   if (chosen.length > 20) {
@@ -1416,6 +1425,7 @@ async function makeMobileConfig() {
 
   const payloads = [];
   const rejected = [];
+  downloadBusy = true;
   startDownloadMusic();
   await waitForSimulatedDownload();
   for (let index = 0; index < chosen.length; index++) {
@@ -1448,6 +1458,8 @@ async function makeMobileConfig() {
   }
 
   if (!payloads.length) {
+    downloadBusy = false;
+    hideDownloadProgressSoon();
     throw new Error("유효한 iPhone용 폰트를 찾지 못했습니다. 선택한 폰트 파일을 확인해 주세요.");
   }
   updateDownloadProgress(100, "iPhone 구성 프로파일을 만들었습니다.");
@@ -1509,6 +1521,8 @@ async function makeMobileConfig() {
   if (rejected.length) {
     setTimeout(() => alert(`유효하지 않아 제외된 폰트 ${rejected.length}개:\n\n${rejected.join("\n")}`), 100);
   }
+  downloadBusy = false;
+  hideDownloadProgressSoon();
 }
 
 function wrapBase64(data) {
