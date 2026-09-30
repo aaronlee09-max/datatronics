@@ -34,9 +34,10 @@
 
 (() => {
   let runId = 0;
+  let loggedInAccount = null;
   const getGreeting = () => {
     try {
-      const session = JSON.parse(sessionStorage.getItem("fontory-auth-v5") || "null");
+      const session = loggedInAccount || JSON.parse(sessionStorage.getItem("fontory-auth-v5") || "null");
       if (session?.role === "admin") return "우주지구대통령님, 좋은 하루 보내세요.";
       if (session?.username) return session.username + "님, 오늘도 좋은 하루 보내세요.";
     } catch {}
@@ -76,5 +77,8 @@
   } else {
     startFontory();
   }
-  window.addEventListener("fontory-auth-unlocked", startFontory);
+  window.addEventListener("fontory-auth-unlocked", (event) => {
+    loggedInAccount = event.detail || null;
+    startFontory();
+  });
 })();
