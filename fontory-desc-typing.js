@@ -83,8 +83,11 @@
   function applyCardPreviewFont(font) {
     const title = document.querySelector("#downloadProgressTitle");
     if (!title) return;
-    const family = (font && (font.family || font.name)) || "";
-    title.style.fontFamily = family ? '"' + family + '", sans-serif' : "inherit";
+    const card = Array.from(document.querySelectorAll(".font-card"))
+      .find(function(node) { return node.dataset.file === (font && font.file); });
+    const preview = card && card.querySelector("[data-preview]");
+    const family = (preview && preview.style.fontFamily) || (card && card.dataset.family) || (font && (font.family || font.name)) || "";
+    title.style.fontFamily = family || "inherit";
   }
 
   function announce(font) {
@@ -99,6 +102,8 @@
     applyCardPreviewFont(font);
     typePreview(getPreview(font));
   }
+
+  window.fontorySetDownloadFont = announce;
 
   document.addEventListener("click", function(event) {
     const btn = event.target.closest && event.target.closest("button[data-single-download], a.download, #downloadWindows, #makeProfile");
