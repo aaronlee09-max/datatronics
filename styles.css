@@ -790,3 +790,9 @@ body.dark .category-bar .chip.active{
     font-size:clamp(42px,12vw,72px);
   }
 }
+
+/* Keep hero typing title on one line */
+.hero-typing-title,
+.hero-typing-title span{
+  white-space:nowrap;
+}
