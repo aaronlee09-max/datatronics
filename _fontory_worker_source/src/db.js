@@ -178,3 +178,20 @@ export async function getValidMfaPending(db, pendingHash) {
 export async function deleteMfaPending(db, id) {
   return db.prepare("DELETE FROM mfa_pending WHERE id = ?").bind(id).run();
 }
+
+
+// ---- Global music setting ----
+
+export async function getMusicSetting(db) {
+  return db
+    .prepare("SELECT music_id FROM app_settings WHERE setting_key = 'global_music' LIMIT 1")
+    .first();
+}
+
+export async function setMusicSetting(db, musicId) {
+  const t = now();
+  return db
+    .prepare("INSERT INTO app_settings (setting_key, music_id, updated_at) VALUES ('global_music', ?, ?) ON CONFLICT(setting_key) DO UPDATE SET music_id = excluded.music_id, updated_at = excluded.updated_at")
+    .bind(musicId, t)
+    .run();
+}
