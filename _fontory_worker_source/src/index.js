@@ -93,6 +93,27 @@ function isValidEmail(email) {
   return typeof email === "string" && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+// ---------------- 중앙 음악 설정 ----------------
+
+async function handleGetMusic(request, env) {
+  const row = await db.getMusicSetting(env.DB);
+  return json(env, { musicId: row?.music_id || null });
+}
+
+async function handleSetMusic(request, env) {
+  const { error } = await requireAdmin(request, env);
+  if (error) return error;
+
+  const body = await request.json().catch(() => ({}));
+  const musicId = typeof body.musicId === "string" ? body.musicId.trim() : "";
+  if (!musicId || musicId.length > 128 || !/^[a-zA-Z0-9._-]+$/.test(musicId)) {
+    return badRequest(env, "음악 ID 형식이 올바르지 않습니다.");
+  }
+
+  await db.setMusicSetting(env.DB, musicId);
+  return json(env, { ok: true, musicId });
+}
+
 // ---------------- 라우트 핸들러 ----------------
 
 async function handleLogin(request, env) {
@@ -427,6 +448,9 @@ export default {
       if (pathname === "/api/auth/me" && request.method === "GET") return await handleMe(request, env);
       if (pathname === "/api/account/email" && request.method === "PATCH") return await handleUpdateOwnEmail(request, env);
       if (pathname === "/api/account/password" && request.method === "PATCH") return await handleChangeOwnPassword(request, env);
+
+      if (pathname === "/api/music" && request.method === "GET") return await handleGetMusic(request, env);
+      if (pathname === "/api/music" && request.method === "PATCH") return await handleSetMusic(request, env);
 
       if (pathname === "/api/accounts" && request.method === "GET") return await handleListAccounts(request, env);
       if (pathname === "/api/accounts" && request.method === "POST") return await handleCreateAccount(request, env);
