@@ -842,3 +842,33 @@ body.dark .category-bar .chip.active{
     margin:42px 0 20px !important;
   }
 }
+
+
+/* Hero typing title: size to fit the desktop content width */
+.hero-typing-title,
+.hero-typing-title span{
+  white-space:nowrap !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+}
+.hero-typing-title{
+  width:100% !important;
+  max-width:100% !important;
+  font-size:clamp(42px,6vw,72px) !important;
+  line-height:1.08 !important;
+  letter-spacing:-.055em !important;
+  margin:42px 0 24px !important;
+}
+@media(max-width:620px){
+  .hero-typing-title,
+  .hero-typing-title span{
+    white-space:normal !important;
+    overflow:visible !important;
+    word-break:keep-all !important;
+  }
+  .hero-typing-title{
+    font-size:clamp(38px,11vw,58px) !important;
+    line-height:1.05 !important;
+    margin:42px 0 20px !important;
+  }
+}
