@@ -814,3 +814,31 @@ body.dark .category-bar .chip.active{
   }
 }
 
+
+
+/* Final fix: keep the blue hero typing title fully visible on PC and mobile */
+.hero-typing-title,
+.hero-typing-title span{
+  white-space:normal !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+  word-break:keep-all !important;
+  overflow-wrap:normal !important;
+}
+.hero-typing-title{
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  height:auto !important;
+  min-height:1em !important;
+}
+.hero-typing-title span{
+  display:inline !important;
+}
+@media(max-width:620px){
+  .hero-typing-title{
+    font-size:clamp(42px,12.5vw,76px) !important;
+    line-height:1.02 !important;
+    margin:42px 0 20px !important;
+  }
+}
