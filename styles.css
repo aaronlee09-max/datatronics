@@ -894,3 +894,7 @@ body.dark .category-bar .chip.active{
   .ambient-glyph{filter:none;}
   .ambient-layer::before{animation-duration:24s;}
 }
+
+/* Hero: exactly two lines on mobile */
+.hero-typing-title > span{white-space:pre;}
+@media(max-width:620px){.hero-typing-title > span{font-size:19px;line-height:1.35;}}
