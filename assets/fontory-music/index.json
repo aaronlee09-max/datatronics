@@ -968,5 +968,10 @@
     "id": "keyboard-yoon-194",
     "name": "NewJeans(뉴진스) - Supernatural 피아노 커버 / NewJeans - Supernatural piano cover — 건반윤",
     "file": "./assets/fontory-music/keyboard-yoon/194.mp3"
+  },
+  {
+    "id": "keyboard-yoon-195",
+    "name": "NMIXX(엔믹스) - DICE 피아노 커버 — 건반윤",
+    "file": "./assets/fontory-music/keyboard-yoon/195.mp3"
   }
 ]
