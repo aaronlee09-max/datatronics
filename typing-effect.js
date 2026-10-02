@@ -97,7 +97,9 @@
     const render = () => {
       const partial = lines[line].slice(0, index);
       const value = line === 0 ? partial : lines[0] + "\n" + partial;
-      targets.forEach((target) => { target.textContent = value; });
+      targets.forEach((target) => {
+        if (target.textContent !== value) target.textContent = value;
+      });
     };
 
     const typeNext = () => {
@@ -106,7 +108,7 @@
 
       if (!deleting && index < text.length) {
         index += 1;
-        heroTimer = window.setTimeout(typeNext, index === 1 ? 180 : 75);
+        heroTimer = window.setTimeout(typeNext, index === 1 ? 180 : 90);
       } else if (!deleting && line === 0) {
         line = 1;
         index = 0;
@@ -116,7 +118,7 @@
         heroTimer = window.setTimeout(typeNext, 2200);
       } else if (index > 0) {
         index -= 1;
-        heroTimer = window.setTimeout(typeNext, 42);
+        heroTimer = window.setTimeout(typeNext, 58);
       } else if (line === 1) {
         line = 0;
         index = lines[0].length;
