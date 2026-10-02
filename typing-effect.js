@@ -118,3 +118,53 @@
   }
   window.addEventListener("fontory-auth-unlocked", startHero);
 })();
+
+(() => {
+  let heroTimer = null;
+  const startHero = () => {
+    const targets = [...document.querySelectorAll("[data-hero-typing]")];
+    if (!targets.length) return;
+    if (heroTimer) clearTimeout(heroTimer);
+    const lines = ["안녕하세요 Fontory입니다", "오늘도 마음에 드는 글꼴을 찾아보세요"];
+    let line = 0;
+    let index = 0;
+    let deleting = false;
+    const typeNext = () => {
+      const text = lines[line];
+      targets.forEach((target) => {
+        target.innerHTML = line === 0
+          ? text.slice(0, index)
+          : lines[0] + "<br>" + text.slice(0, index);
+      });
+      if (!deleting && index < text.length) {
+        index += 1;
+        heroTimer = window.setTimeout(typeNext, index === 1 ? 180 : 75);
+      } else if (!deleting && line === 0) {
+        line = 1;
+        index = 0;
+        heroTimer = window.setTimeout(typeNext, 250);
+      } else if (!deleting) {
+        deleting = true;
+        heroTimer = window.setTimeout(typeNext, 2200);
+      } else if (index > 0) {
+        index -= 1;
+        heroTimer = window.setTimeout(typeNext, 42);
+      } else if (line === 1) {
+        line = 0;
+        index = lines[0].length;
+        heroTimer = window.setTimeout(typeNext, 250);
+      } else {
+        deleting = false;
+        index = 0;
+        heroTimer = window.setTimeout(typeNext, 650);
+      }
+    };
+    typeNext();
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startHero, { once: true });
+  } else {
+    startHero();
+  }
+  window.addEventListener("fontory-auth-unlocked", startHero);
+})();
