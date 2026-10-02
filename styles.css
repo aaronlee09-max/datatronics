@@ -872,3 +872,15 @@ body.dark .category-bar .chip.active{
     margin:42px 0 20px !important;
   }
 }
+
+
+/* Hero typing performance + two-line layout */
+.hero-typing-title,
+.hero-typing-title span{
+  white-space:pre-line !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+}
+.hero-typing-title{
+  contain:layout paint;
+}
