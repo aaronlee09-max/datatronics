@@ -898,3 +898,14 @@ body.dark .category-bar .chip.active{
 /* Hero: exactly two lines on mobile */
 .hero-typing-title > span{white-space:pre;}
 @media(max-width:620px){.hero-typing-title > span{font-size:19px;line-height:1.35;}}
+
+
+/* Hero responsive sizing: phone and iPad */
+@media(max-width:620px){
+  .hero-typing-title{font-size:clamp(32px,9.5vw,48px);line-height:1.05;letter-spacing:-.045em;}
+  .hero-typing-title > span{white-space:pre;}
+}
+@media(min-width:621px) and (max-width:1100px){
+  .hero-typing-title{font-size:clamp(42px,5.2vw,58px);line-height:1.05;letter-spacing:-.045em;}
+  .hero-typing-title > span{white-space:pre;}
+}
