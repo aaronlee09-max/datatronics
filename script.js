@@ -1175,7 +1175,7 @@ function render() {
         if (openDownloadContext(font)) return;
         downloadSingleFont(font, btn).catch((error) => alert(error.message));
       }
-      // Mobile/tablet: keep the real target="_blank" link untouched for native new-tab behavior.
+      // Mobile/tablet keeps the real target="_blank" link for native new-tab behavior.
     });
   });
   grid.querySelectorAll("[data-copy]").forEach((btn) => {
