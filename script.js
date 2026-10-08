@@ -1328,7 +1328,7 @@ function updateDownloadProgress(percent, text) {
 let downloadMusic = null;
 let downloadBusy = false;
 let downloadLockToken = null;
-const DOWNLOAD_LOCK_KEY = "fontory-download-lock";
+const DOWNLOAD_LOCK_KEY = "fontory-download-lock-v2";
 const DOWNLOAD_SESSION_KEY = "fontory-download-session";
 const downloadSessionId = (() => {
   let id = sessionStorage.getItem(DOWNLOAD_SESSION_KEY);
