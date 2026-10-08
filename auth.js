@@ -171,28 +171,44 @@
       const currentResponse = await centralFetch("/api/music");
       const currentData = await currentResponse.json().catch(() => ({}));
       if (!currentResponse.ok) throw new Error(currentData.error || "음악 설정을 불러오지 못했습니다.");
-      const currentId = currentData.musicId || currentData.selectedMusicId || currentData.music?.id || currentData.selected?.id || (catalog[0]?.id || "");
+      const loginId = currentData.loginMusicId || currentData.musicId || currentData.selectedMusicId || catalog[0]?.id || "";
+      const downloadMode = currentData.downloadMode === "random" ? "random" : "admin-selected";
+      const downloadId = currentData.downloadMusicId || currentData.downloadSelectedMusicId || catalog[0]?.id || "";
+      const options = catalog.map((item) => '<option value="' + escapeAuth(item.id) + '">' + escapeAuth(item.name) + '</option>').join("");
       const panel = document.createElement("div");
       panel.id = "fontoryMusicPanel";
-      panel.innerHTML = '<div class="admin-card"><strong>공통 배경음악</strong><p>여기서 선택한 음악은 로그인 화면과 폰트 다운로드 진행 화면에 동시에 적용됩니다.</p><div class="admin-music-section"><h3>사용할 음악</h3><div class="admin-music-list">' +
-        catalog.map((item) => '<label class="admin-music-option"><input type="radio" name="fontoryMusicChoice" value="' + escapeAuth(item.id) + '"' + (item.id === currentId ? " checked" : "") + '><span>' + escapeAuth(item.name) + '</span></label>').join("") +
-        '</div><div class="admin-music-actions"><button type="button" id="saveMusicBtn">선택한 음악 저장</button><button type="button" id="closeMusicBtn" class="passkey-close">닫기</button></div><div id="musicAdminStatus" class="admin-music-status"></div></div></div>';
+      panel.innerHTML = '<div class="admin-card"><strong>Fontory 음악 관리</strong>' +
+        '<p>로그인 음악과 다운로드 진행 음악을 서로 독립적으로 설정합니다.</p>' +
+        '<div class="admin-music-section"><h3>로그인 화면 음악</h3><select id="loginMusicSelect">' + options + '</select></div>' +
+        '<div class="admin-music-section"><h3>다운로드 진행 음악</h3><label><input type="radio" name="downloadMusicMode" value="admin-selected"> 직접 선택</label> <label><input type="radio" name="downloadMusicMode" value="random"> 랜덤</label>' +
+        '<select id="downloadMusicSelect">' + options + '</select><p class="small">랜덤은 다운로드가 시작될 때마다 한 곡을 새로 선택하고, 한 번의 다운로드 중에는 유지됩니다.</p></div>' +
+        '<div class="admin-music-actions"><button type="button" id="saveMusicBtn">저장</button><button type="button" id="closeMusicBtn" class="passkey-close">닫기</button></div><div id="musicAdminStatus" class="admin-music-status"></div></div>';
       document.body.appendChild(panel);
+      panel.querySelector("#loginMusicSelect").value = loginId;
+      panel.querySelector("#downloadMusicSelect").value = downloadId;
+      panel.querySelector('input[name="downloadMusicMode"][value="' + downloadMode + '"]').checked = true;
       panel.querySelector("#closeMusicBtn").addEventListener("click", () => panel.remove());
       panel.querySelector("#saveMusicBtn").addEventListener("click", async () => {
-        const selected = panel.querySelector('input[name="fontoryMusicChoice"]:checked');
-        if (!selected) return;
         const button = panel.querySelector("#saveMusicBtn");
         const status = panel.querySelector("#musicAdminStatus");
         button.disabled = true;
         status.textContent = "저장 중…";
         try {
-          const response = await centralFetch("/api/music", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ musicId: selected.value }) });
+          const response = await centralFetch("/api/music", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              musicId: panel.querySelector("#loginMusicSelect").value,
+              loginMusicId: panel.querySelector("#loginMusicSelect").value,
+              downloadMode: panel.querySelector('input[name="downloadMusicMode"]:checked')?.value || "admin-selected",
+              downloadMusicId: panel.querySelector("#downloadMusicSelect").value,
+            }),
+          });
           const data = await response.json().catch(() => ({}));
           if (!response.ok) throw new Error(data.error || "음악 설정을 저장하지 못했습니다.");
           window.fontoryResetMusicCache?.();
           document.dispatchEvent(new Event("fontory-music-changed"));
-          status.textContent = "저장했습니다. 다음 로그인/다운로드부터 적용됩니다.";
+          status.textContent = "저장했습니다. 로그인 음악과 다운로드 음악 설정을 각각 적용합니다.";
         } catch (error) {
           status.textContent = error.message || "음악 설정을 저장하지 못했습니다.";
         } finally {
@@ -203,7 +219,6 @@
       alert(error.message || "음악 설정을 불러오지 못했습니다.");
     }
   }
-
   async function showPasswordPanel(account) { if (account?.method !== "server") return alert("중앙 계정으로 로그인한 뒤 비밀번호를 변경할 수 있습니다."); document.querySelector("#fontoryPasswordPanel")?.remove(); const panel = document.createElement("div"); panel.id = "fontoryPasswordPanel"; panel.innerHTML = '<div class="email-card"><strong>내 비밀번호 변경</strong><p>기존 비밀번호는 보안상 저장된 해시에서 다시 볼 수 없습니다. 새 비밀번호 입력 중에는 보기 버튼을 사용할 수 있습니다.</p><form id="passwordForm"><label>새 비밀번호<input id="newOwnPassword" type="password" minlength="8" autocomplete="new-password" required><button type="button" class="passkey-close" data-toggle="newOwnPassword">보기</button></label><label>새 비밀번호 확인<input id="confirmOwnPassword" type="password" minlength="8" autocomplete="new-password" required><button type="button" class="passkey-close" data-toggle="confirmOwnPassword">보기</button></label><div id="passwordError" role="alert"></div><div class="email-actions"><button type="submit">변경</button><button type="button" id="closePasswordBtn" class="passkey-close">닫기</button></div></form></div>'; document.body.appendChild(panel); panel.querySelector("#closePasswordBtn").addEventListener("click", () => panel.remove()); panel.querySelectorAll("[data-toggle]").forEach((button) => button.addEventListener("click", () => { const input = panel.querySelector("#" + button.dataset.toggle); input.type = input.type === "password" ? "text" : "password"; button.textContent = input.type === "password" ? "보기" : "숨기기"; })); panel.querySelector("#newOwnPassword").focus(); panel.querySelector("#passwordForm").addEventListener("submit", async (event) => { event.preventDefault(); const password = panel.querySelector("#newOwnPassword").value; const confirmPassword = panel.querySelector("#confirmOwnPassword").value; const error = panel.querySelector("#passwordError"); if (password !== confirmPassword) { error.textContent = "새 비밀번호가 일치하지 않습니다."; return; } const response = await centralFetch("/api/account/password", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password }) }); const data = await response.json().catch(() => ({})); if (!response.ok) { error.textContent = data.error || "비밀번호를 변경하지 못했습니다."; return; } alert("비밀번호를 변경했습니다."); panel.remove(); }); }
   function showAdminPanel(account) { if (account?.method === "server") return showCentralAdminPanel(account); alert("패스키 로그인은 이 기기 전용입니다. 중앙 계정 관리는 로그아웃 후 아이디·비밀번호와 이메일 인증 코드로 로그인해 주세요."); }
   async function unlock(account) { document.body.classList.remove("auth-locked"); window.dispatchEvent(new CustomEvent("fontory-auth-unlocked", { detail: { username: account?.username || "", role: account?.role || "user" } })); document.querySelector("#fontoryAuth")?.remove(); document.querySelector("#fontoryPasskeyPanel")?.remove(); document.querySelector("#fontoryEmailPanel")?.remove(); document.querySelector("#fontoryPasswordPanel")?.remove(); document.querySelector(".auth-logout")?.remove(); document.querySelector(".auth-passkey-manage")?.remove(); document.querySelector(".auth-email-manage")?.remove(); document.querySelector(".auth-password-manage")?.remove(); document.querySelector(".auth-daily-code")?.remove(); document.querySelectorAll(".auth-admin-manage").forEach((node) => node.remove()); document.querySelector("#fontoryAdminPanel")?.remove(); const topbar = document.querySelector(".topbar"); if (!topbar) return; if (account.method === "server") { const emailBtn = document.createElement("button"); emailBtn.type = "button"; emailBtn.className = "auth-email-manage"; emailBtn.textContent = "이메일 설정"; emailBtn.addEventListener("click", () => showEmailPanel(account)); topbar.appendChild(emailBtn); const passwordBtn = document.createElement("button"); passwordBtn.type = "button"; passwordBtn.className = "auth-password-manage"; passwordBtn.textContent = "비밀번호 변경"; passwordBtn.addEventListener("click", () => showPasswordPanel(account)); topbar.appendChild(passwordBtn); } if (account.role === "admin" && account.method === "server") { const adminBtn = document.createElement("button"); adminBtn.type = "button"; adminBtn.className = "auth-admin-manage"; adminBtn.textContent = "계정 관리"; adminBtn.addEventListener("click", () => showAdminPanel(account)); topbar.appendChild(adminBtn); const musicBtn = document.createElement("button"); musicBtn.type = "button"; musicBtn.className = "auth-admin-manage"; musicBtn.textContent = "음악 관리"; musicBtn.addEventListener("click", () => showMusicAdminPanel(account)); topbar.appendChild(musicBtn); } const passkeyBtn = document.createElement("button"); passkeyBtn.type = "button"; passkeyBtn.className = "auth-passkey-manage"; passkeyBtn.textContent = "패스키 만들기"; passkeyBtn.addEventListener("click", () => showPasskeyPanel(account)); topbar.appendChild(passkeyBtn); const logout = document.createElement("button"); logout.type = "button"; logout.className = "auth-logout"; logout.textContent = account.role === "admin" ? "관리자 · 로그아웃" : "로그아웃"; logout.addEventListener("click", async () => { if (account.method === "server") await centralLogout(); sessionStorage.removeItem(KEY); clearPending(); location.reload(); }); topbar.appendChild(logout); }
