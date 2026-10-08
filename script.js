@@ -1134,8 +1134,8 @@ function render() {
         ${f.file && windowsInstallable(f)
           ? `<button class="download" type="button" data-single-download="${escapeAttr(id)}">${windowsDownloadLabel(f)}</button>`
           : f.file
-            ? `<a class="download" href="${escapeAttr(assetUrl(f))}" target="_blank" rel="noopener">파일 열기</a>`
-            : `<button class="download" type="button" disabled>파일 없음</button>`}
+            ? `<button class="download" type="button" data-single-download="${escapeAttr(id)}">다운로드</button>`
+            : `<button class="download" type="button" disabled>파일 없음</button>`
         <button class="details try-font-toggle" type="button">미리 써보기</button>
         <button class="details" type="button" data-copy="${escapeAttr(f.name)}">이름 복사</button>
       </div>
