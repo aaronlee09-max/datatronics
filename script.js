@@ -1131,11 +1131,11 @@ function render() {
       </div>
       <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "실제 폰트 파일을 적용해 미리봅니다.")}<br><span class="windows-help">${escapeHtml(windowsHelp)}</span></div>
       <div class="actions">
-        ${f.file && windowsInstallable(f)
-          ? `<button class="download" type="button" data-single-download="${escapeAttr(id)}">${windowsDownloadLabel(f)}</button>`
+        \${f.file && windowsInstallable(f)
+          ? \`<a class="download" href="?fontoryDownload=\${escapeAttr(id)}&popup=1" target="_blank" rel="noopener" data-single-download="\${escapeAttr(id)}">\${windowsDownloadLabel(f)}</a>\`
           : f.file
-            ? `<button class="download" type="button" data-single-download="${escapeAttr(id)}">다운로드</button>`
-            : `<button class="download" type="button" disabled>파일 없음</button>`
+            ? \`<a class="download" href="?fontoryDownload=\${escapeAttr(id)}&popup=1" target="_blank" rel="noopener" data-single-download="\${escapeAttr(id)}">다운로드</a>\`
+            : \`<button class="download" type="button" disabled>파일 없음</button>\`
         <button class="details try-font-toggle" type="button">미리 써보기</button>
         <button class="details" type="button" data-copy="${escapeAttr(f.name)}">이름 복사</button>
       </div>
@@ -1170,24 +1170,12 @@ function render() {
       const ua = navigator.userAgent || "";
       const isTabletOrMobile = /Android|iPhone|iPad|iPod/i.test(ua) ||
         (navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) <= 1200);
-      if (isTabletOrMobile) {
+      if (!isTabletOrMobile) {
         event.preventDefault();
-        const url = new URL(window.location.href);
-        url.searchParams.set("fontoryDownload", fontId(font));
-        url.searchParams.set("popup", "1");
-        url.hash = "";
-        const link = document.createElement("a");
-        link.href = url.href;
-        link.target = "_blank";
-        link.rel = "noopener";
-        link.style.display = "none";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        return;
+        if (openDownloadContext(font)) return;
+        downloadSingleFont(font, btn).catch((error) => alert(error.message));
       }
-      if (openDownloadContext(font)) return;
-      downloadSingleFont(font, btn).catch((error) => alert(error.message));
+      // Mobile/tablet: keep the real target="_blank" link untouched for native new-tab behavior.
     });
   });
   grid.querySelectorAll("[data-copy]").forEach((btn) => {
