@@ -25,7 +25,7 @@ body {
 .orb-two { top: 52%; right: -70px; width: 230px; height: 230px; background: #d18cff; animation-delay: -6s; }
 .orb-three { bottom: -80px; left: 38%; width: 210px; height: 210px; background: #62e0d4; animation-delay: -11s; }
 .ambient-glyph { position: absolute; left: var(--x); top: var(--y); z-index: 1; color: rgba(0, 113, 227, .15); font-family: Georgia, "Times New Roman", serif; font-size: var(--size); font-weight: 800; filter: blur(var(--blur)); transform: rotate(var(--rotate)); animation: ambient-glyph-float var(--duration) ease-in-out var(--delay) infinite alternate; }
-.app-shell { position: relative; z-index: 1; }
+.app-shell { position: relative; z-index: auto; }
 @keyframes ambient-breathe { from { transform: scale(.96) rotate(-2deg); opacity: .72; } to { transform: scale(1.05) rotate(2deg); opacity: 1; } }
 @keyframes ambient-orb-float { from { transform: translate3d(-12px, 8px, 0) scale(.9); } to { transform: translate3d(26px, -24px, 0) scale(1.12); } }
 @keyframes ambient-glyph-float { from { transform: translate3d(-12px, 18px, 0) rotate(var(--rotate)); opacity: .22; } to { transform: translate3d(24px, -30px, 0) rotate(calc(var(--rotate) + 12deg)); opacity: .7; } }
