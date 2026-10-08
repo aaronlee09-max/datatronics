@@ -1166,7 +1166,26 @@ function render() {
   grid.querySelectorAll("[data-single-download]").forEach((btn) => {
     const font = list.find((item) => fontId(item) === btn.dataset.singleDownload);
     if (!font) return;
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (event) => {
+      const ua = navigator.userAgent || "";
+      const isTabletOrMobile = /Android|iPhone|iPad|iPod/i.test(ua) ||
+        (navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) <= 1200);
+      if (isTabletOrMobile) {
+        event.preventDefault();
+        const url = new URL(window.location.href);
+        url.searchParams.set("fontoryDownload", fontId(font));
+        url.searchParams.set("popup", "1");
+        url.hash = "";
+        const link = document.createElement("a");
+        link.href = url.href;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.style.display = "none";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        return;
+      }
       if (openDownloadContext(font)) return;
       downloadSingleFont(font, btn).catch((error) => alert(error.message));
     });
