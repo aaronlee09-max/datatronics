@@ -1135,7 +1135,7 @@ function render() {
           ? `<a class="download" href="?fontoryDownload=${escapeAttr(id)}&popup=1" target="_blank" rel="noopener" data-single-download="${escapeAttr(id)}">${windowsDownloadLabel(f)}</a>`
           : f.file
             ? `<a class="download" href="?fontoryDownload=${escapeAttr(id)}&popup=1" target="_blank" rel="noopener" data-single-download="${escapeAttr(id)}">다운로드</a>`
-            : `<button class="download" type="button" disabled>파일 없음</button>`
+            : `<button class="download" type="button" disabled>파일 없음</button>`}
         <button class="details try-font-toggle" type="button">미리 써보기</button>
         <button class="details" type="button" data-copy="${escapeAttr(f.name)}">이름 복사</button>
       </div>
