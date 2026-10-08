@@ -174,7 +174,16 @@
       const loginId = currentData.loginMusicId || currentData.musicId || currentData.selectedMusicId || catalog[0]?.id || "";
       const downloadMode = currentData.downloadMode === "random" ? "random" : "admin-selected";
       const downloadId = currentData.downloadMusicId || currentData.downloadSelectedMusicId || catalog[0]?.id || "";
-      const options = catalog.map((item) => '<option value="' + escapeAuth(item.id) + '">' + escapeAuth(item.name) + '</option>').join("");
+      const formatTrackDuration = (durationMs) => {
+        const value = Number(durationMs);
+        if (!Number.isSafeInteger(value) || value <= 0) return "길이 정보 없음";
+        const totalSeconds = Math.round(value / 1000);
+        return `${Math.floor(totalSeconds / 60)}:${String(totalSeconds % 60).padStart(2, "0")}`;
+      };
+      const options = catalog.map((item) => {
+        const label = `${item.name} · ${formatTrackDuration(item.durationMs)}`;
+        return '<option value="' + escapeAuth(item.id) + '">' + escapeAuth(label) + '</option>';
+      }).join("");
       const panel = document.createElement("div");
       panel.id = "fontoryMusicPanel";
       panel.innerHTML = '<div class="admin-card"><strong>Fontory 음악 관리</strong>' +

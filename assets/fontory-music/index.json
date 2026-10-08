@@ -2,1631 +2,1957 @@
   {
     "id": "default",
     "name": "Fontory 기본 음악",
-    "file": "./assets/fontory-download-music.mp3?v=20260929-padded1"
+    "file": "./assets/fontory-download-music.mp3?v=20260929-padded1",
+    "durationMs": 206352
   },
   {
     "id": "keyboard-yoon-001",
     "name": "001. [⚠️중독주의] 릴스 넘기다 무조건 한 번은 들어봤을 그 노래 | 디지털 서커스 메인 테마 / The Amazing Digital Circus - Main Theme piano — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/001.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/001.mp3",
+    "durationMs": 206016
   },
   {
     "id": "keyboard-yoon-002",
     "name": "002. [⚠️소름] 하이라이트 듣자마자 눈물 왈칵 쏟는 '최종화' 피아노 | 아이리 칸나 - '최종화' 최고난이도 피아노 편곡 / 藍璃かんな - '最終花’ piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/002.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/002.mp3",
+    "durationMs": 251328
   },
   {
     "id": "keyboard-yoon-003",
     "name": "003. [⚠️감동주의] 어릴 적 우리가 가장 사랑한 레전드 BGM | 이누야샤 OST - '시대를 초월한 마음' (シ代を越える想い) 최고난이도 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/003.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/003.mp3",
+    "durationMs": 226200
   },
   {
     "id": "keyboard-yoon-004",
     "name": "004. [⚠️심장주의] 하이라이트 터지는 순간 온몸에 닭살 돋는 '괴수의 꽃노래' 피아노 커버 / Vaundy - '怪獣の花唄' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/004.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/004.mp3",
+    "durationMs": 224880
   },
   {
     "id": "keyboard-yoon-005",
     "name": "005. [⚠️신남주의] 전주 3초 듣자마자 닌자 달리기 마려운 노래 | 나루토 - '실루엣' 최고난이도 피아노 커버 / KANA-BOON - 'Silhouette' piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/005.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/005.mp3",
+    "durationMs": 232560
   },
   {
     "id": "keyboard-yoon-006",
     "name": "006. [⚠️심장주의] 전주 듣자마자 심장 터지는 은혼 레전드 명곡 | SPYAIR - '사무라이 하트' 피아노 커버 / SPYAIR - 'Some Like It Hot' piano — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/006.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/006.mp3",
+    "durationMs": 193032
   },
   {
     "id": "keyboard-yoon-007",
     "name": "007. [⚠️눈물주의] 검은 조직도 이 연주 들으면 감동해서 눈물 흘립니다 | 명탐정 코난 OST - 'Hello Mr. My Yesterday' 최고난이도 피아노 편곡 | 애쉬그레이 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/007.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/007.mp3",
+    "durationMs": 264672
   },
   {
     "id": "keyboard-yoon-008",
     "name": "008. 진실은 언제나 하나! | 명탐정 코난 메인 테마 최고난이도 피아노 편곡 / Detective Conan - Main Theme extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/008.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/008.mp3",
+    "durationMs": 158976
   },
   {
     "id": "keyboard-yoon-009",
     "name": "009. 스파이더맨 영화 보고 오자마자 감격해서 밤새 건반 때려 부쉈습니다 | Michael Giacchino - 'Arachnoverture' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/009.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/009.mp3",
+    "durationMs": 138840
   },
   {
     "id": "keyboard-yoon-010",
     "name": "010. 로쿠데나시 특유의 아련한 슬픔을 피아노 건반 88개에 전부 다 쏟아부었습니다 | '모호함' 최고난이도 피아노 편곡 / Rokudenashi - 'あやふや' piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/010.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/010.mp3",
+    "durationMs": 230088
   },
   {
     "id": "keyboard-yoon-011",
     "name": "011. 키보드로 연타해도 손 터지는 곡을 피아노로 치면 벌어지는 일 | \"Plum - R\" 최고난이도 피아노 편곡 / \"Plum - R\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/011.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/011.mp3",
+    "durationMs": 148080
   },
   {
     "id": "keyboard-yoon-012",
     "name": "012. [⚠️후유증주의] 잊고 지내던 사이버펑크 엣지러너 후유증 1000% 재발시키는 피아노 / “I Really Want to Stay At Your House” piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/012.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/012.mp3",
+    "durationMs": 247992
   },
   {
     "id": "keyboard-yoon-013",
     "name": "013. 진짜 웅장함이 뭔지 보여드립니다. | 테일즈위버 OST - \"Second Run\" 최고난이도 피아노 편곡 / \"Second Run\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/013.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/013.mp3",
+    "durationMs": 244608
   },
   {
     "id": "keyboard-yoon-014",
     "name": "014. 자려고 누웠는데 진짜 '양의지'만 맴돌아서 밤새 쳐버린 피아노 | 아이오아이 - \"갑자기\" 최고난이도 피아노 편곡 / I.O.I - \"Suddenly\" piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/014.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/014.mp3",
+    "durationMs": 196800
   },
   {
     "id": "keyboard-yoon-015",
     "name": "015. 이 속도로 치다가 진짜 손가락 '처형' 당했습니다.. | 카사네 테토 - \"처형박수\" 피아노 최고난이도 편곡 / \"Execution Clap\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/015.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/015.mp3",
+    "durationMs": 178464
   },
   {
     "id": "keyboard-yoon-016",
     "name": "016. 카트라이더 OST - 대저택 BGM 최고난이도 피아노 편곡 / KartRider BGM - \"Mansion Dance Battle\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/016.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/016.mp3",
+    "durationMs": 236880
   },
   {
     "id": "keyboard-yoon-017",
     "name": "017. [리메이크 버전] 하울의 움직이는 성 OST - \"인생의 회전목마\" 최고난이도 피아노 편곡 / \"Merry Go Round of Life\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/017.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/017.mp3",
+    "durationMs": 162864
   },
   {
     "id": "keyboard-yoon-018",
     "name": "018. \"관성 피아노 드리프트\" / 이니셜D OST - \"Deja Vu\" 최고난이도 피아노 편곡 / Initial D OST - \"Deja Vu\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/018.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/018.mp3",
+    "durationMs": 254544
   },
   {
     "id": "keyboard-yoon-019",
     "name": "019. 리센느(RESCENE) - \"Deja Vu\" 최고난이도 피아노 편곡 / RESCENE - \"Deja Vu\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/019.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/019.mp3",
+    "durationMs": 186696
   },
   {
     "id": "keyboard-yoon-020",
     "name": "020. \"거제 야호\" / 리센느(RESCENE) - \"LOVE ATTACK\" 최고난이도 피아노 편곡 / RESCENE - \"LOVE ATTACK\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/020.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/020.mp3",
+    "durationMs": 184776
   },
   {
     "id": "keyboard-yoon-021",
     "name": "021. 메이플스토리 BGM - \"리스항구\" 최고난이도 피아노 편곡 / Lith Harbor - \"Above the Treetops\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/021.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/021.mp3",
+    "durationMs": 279288
   },
   {
     "id": "keyboard-yoon-022",
     "name": "022. \"수련의 숲\" 최고난이도 피아노 편곡 / Maplestory BGM - \"The Raindrop Flower\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/022.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/022.mp3",
+    "durationMs": 187416
   },
   {
     "id": "keyboard-yoon-023",
     "name": "023. 주술회전 OST - \"AIZO\" 최고난이도 피아노 편곡 / King Gnu - \"AIZO\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/023.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/023.mp3",
+    "durationMs": 218736
   },
   {
     "id": "keyboard-yoon-024",
     "name": "024. 가장 감동적인 소문의 낙원 피아노 커버 / AKMU - \"Paradise of Rumors\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/024.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/024.mp3",
+    "durationMs": 217800
   },
   {
     "id": "keyboard-yoon-025",
     "name": "025. 아이묭 - \"사랑을 전하고 싶다든가\" 최고난이도 피아노 편곡 / あいみょん(aimyon) - \"愛を伝えたいだとか\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/025.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/025.mp3",
+    "durationMs": 222168
   },
   {
     "id": "keyboard-yoon-026",
     "name": "026. \"Rush E\" 최고난이도 피아노 편곡 커버 / Sheet Music Boss - \"Rush E\" extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/026.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/026.mp3",
+    "durationMs": 152568
   },
   {
     "id": "keyboard-yoon-027",
     "name": "027. \"이준 치어리더 그 곡\" / YENA(최예나) - 캐치 캐치 최고난이도 피아노 편곡 / YENA - 'Catch Catch' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/027.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/027.mp3",
+    "durationMs": 183816
   },
   {
     "id": "keyboard-yoon-028",
     "name": "028. 하츠네 미쿠 - 천본앵 최고난이도 편곡 피아노 커버 / Hatsune Miku - 'Senbonzakura' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/028.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/028.mp3",
+    "durationMs": 255432
   },
   {
     "id": "keyboard-yoon-029",
     "name": "029. Hearts2Hearts(하츠투하츠) - Rude! 최고난이도 편곡 피아노 커버 / Hearts2Hearts - 'Rude!' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/029.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/029.mp3",
+    "durationMs": 201096
   },
   {
     "id": "keyboard-yoon-030",
     "name": "030. Coldplay(콜드플레이) - Viva la Vida 최고난이도 편곡 피아노 커버 / Coldplay - 'Viva la Viva' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/030.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/030.mp3",
+    "durationMs": 244128
   },
   {
     "id": "keyboard-yoon-031",
     "name": "031. 물에 빠진 나이프 OST - 코우를 쫓아 피아노 커버 / Drowning Love OST - 'コウを追いかけて' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/031.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/031.mp3",
+    "durationMs": 176280
   },
   {
     "id": "keyboard-yoon-032",
     "name": "032. BTS(방탄소년단) - Dynamite 피아노 커버 / BTS - 'Dynamite' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/032.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/032.mp3",
+    "durationMs": 200016
   },
   {
     "id": "keyboard-yoon-033",
     "name": "033. 캐리비안의 해적 OST - He's a Pirate 최고난이도 피아노 커버 / Pirates of the Caribbean - 'He's a Pirate' piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/033.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/033.mp3",
+    "durationMs": 261432
   },
   {
     "id": "keyboard-yoon-034",
     "name": "034. Yiruma(이루마) - River flows in you 최고난이도 편곡 피아노 커버 / Yiruma - 'River flows in you' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/034.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/034.mp3",
+    "durationMs": 279792
   },
   {
     "id": "keyboard-yoon-035",
     "name": "035. 파헬벨 - 캐논 변주곡 최고난이도 편곡 피아노 커버 / Pachelbel - 'Canon' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/035.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/035.mp3",
+    "durationMs": 259152
   },
   {
     "id": "keyboard-yoon-036",
     "name": "036. 히사이시 조 - 썸머(Summer) 피아노 커버 / Hisaishi Joe - 'Summer' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/036.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/036.mp3",
+    "durationMs": 208800
   },
   {
     "id": "keyboard-yoon-037",
     "name": "037. DJ Okawari - 플라워 댄스 최고난이도 편곡 피아노 커버 / DJ Okawari - 'Flower Dance' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/037.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/037.mp3",
+    "durationMs": 224040
   },
   {
     "id": "keyboard-yoon-038",
     "name": "038. 이찬혁 - 멸종위기사랑 피아노 커버 / LEE CHANHYUK - 'Endangered Love' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/038.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/038.mp3",
+    "durationMs": 222816
   },
   {
     "id": "keyboard-yoon-039",
     "name": "039. [귀멸의 칼날 OST] - 인연의 기적 피아노 커버 / MAN WITH A MISSION x milet - '絆ノ奇跡' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/039.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/039.mp3",
+    "durationMs": 222816
   },
   {
     "id": "keyboard-yoon-040",
     "name": "040. 너의 이름은 OST - 꿈의 등불(夢灯籠) 피아노 커버 / RADWIMPS - 'Dream lantern' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/040.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/040.mp3",
+    "durationMs": 294288
   },
   {
     "id": "keyboard-yoon-041",
     "name": "041. 날씨의 아이 OST - Grand escape 피아노 커버 / RADWIMPS - 'Grand escape' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/041.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/041.mp3",
+    "durationMs": 337848
   },
   {
     "id": "keyboard-yoon-042",
     "name": "042. 너의 이름은 OST - 전전전세 피아노 커버 / RADWIMPS - '前前前世' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/042.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/042.mp3",
+    "durationMs": 279864
   },
   {
     "id": "keyboard-yoon-043",
     "name": "043. 너의 이름은 OST - 아무것도 아니야 피아노 커버 / RADWIMPS - 'Nandemonaiya' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/043.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/043.mp3",
+    "durationMs": 342960
   },
   {
     "id": "keyboard-yoon-044",
     "name": "044. 제프프 - \"최강록 - 앙 (䬬)\" 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/044.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/044.mp3",
+    "durationMs": 93816
   },
   {
     "id": "keyboard-yoon-045",
     "name": "045. [30초 안에 밴드부 합격하는법] 오피셜히게단디즘 - Universe 피아노 커버 / Official髭男dism - 'Universe' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/045.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/045.mp3",
+    "durationMs": 284832
   },
   {
     "id": "keyboard-yoon-046",
     "name": "046. 노아주다(noahjooda) - 힙합보단 사랑, 사랑보단 돈 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/046.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/046.mp3",
+    "durationMs": 228648
   },
   {
     "id": "keyboard-yoon-047",
     "name": "047. 한로로(HANRORO) - 사랑하게 될 거야 피아노 커버 / HANRORO - 'Landing in Love' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/047.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/047.mp3",
+    "durationMs": 156408
   },
   {
     "id": "keyboard-yoon-048",
     "name": "048. 한로로 - 0+0 피아노 커버 / HANRORO - '0+0' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/048.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/048.mp3",
+    "durationMs": 196224
   },
   {
     "id": "keyboard-yoon-049",
     "name": "049. imase(이마세) - NIGHT DANCER 피아노 커버 / imase - 'NIGHT DANCER' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/049.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/049.mp3",
+    "durationMs": 212448
   },
   {
     "id": "keyboard-yoon-050",
     "name": "050. 로쿠데나시 - 그저 목소리 하나 피아노 커버 / ロクデナシ - 「ただ声一つ」 extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/050.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/050.mp3",
+    "durationMs": 160104
   },
   {
     "id": "keyboard-yoon-051",
     "name": "051. \"유다이 그 노래\"ㅣ 노벨브라이트 - Walking with you 피아노 커버 / Novelbright - Walking with you extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/051.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/051.mp3",
+    "durationMs": 225264
   },
   {
     "id": "keyboard-yoon-052",
     "name": "052. tuki - 만찬가 피아노 커버 / tuki - 『晩餐歌』 extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/052.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/052.mp3",
+    "durationMs": 219288
   },
   {
     "id": "keyboard-yoon-053",
     "name": "053. [2025년 마지막 곡] 미세스 그린애플 - 라일락 피아노 커버 / Mrs. GREEN APPLE - 「ライラック」 extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/053.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/053.mp3",
+    "durationMs": 290568
   },
   {
     "id": "keyboard-yoon-054",
     "name": "054. [마지막 크리스마스 캐롤] Wham! - Last Christmas 피아노 커버 / Wham! - 'Last Christmas' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/054.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/054.mp3",
+    "durationMs": 255792
   },
   {
     "id": "keyboard-yoon-055",
     "name": "055. [크리스마스 캐롤] 아리아나 그란데 - Santa Tell Me 피아노 커버 / Ariana Grande - 'Santa Tell Me' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/055.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/055.mp3",
+    "durationMs": 205488
   },
   {
     "id": "keyboard-yoon-056",
     "name": "056. [크리스마스 캐롤] 엑소 - 첫 눈 피아노 커버 / EXO - 'The First Snow' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/056.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/056.mp3",
+    "durationMs": 214488
   },
   {
     "id": "keyboard-yoon-057",
     "name": "057. [크리스마스 캐롤] 머라이어 캐리 - All I Want for Christmas Is You 피아노 커버 (Mariah Carey extreme piano cover) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/057.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/057.mp3",
+    "durationMs": 234096
   },
   {
     "id": "keyboard-yoon-058",
     "name": "058. \"박정민 그 눈빛\"ㅣ화사(HWASA) - Good Goodbye 피아노 커버 / HWASA - 'Good Goodbye' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/058.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/058.mp3",
+    "durationMs": 224736
   },
   {
     "id": "keyboard-yoon-059",
     "name": "059. 요네즈 켄시 - Lady 피아노 커버 / Kenshi Yonezu - 'Lady' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/059.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/059.mp3",
+    "durationMs": 211344
   },
   {
     "id": "keyboard-yoon-060",
     "name": "060. [크리스마스 캐롤] 프로미스나인 - 하얀 그리움 피아노 커버 / fromis_9 - 'White Memories' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/060.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/060.mp3",
+    "durationMs": 183216
   },
   {
     "id": "keyboard-yoon-061",
     "name": "061. [첫 눈 기념] IU(아이유) - 미리 메리 크리스마스 피아노 커버 / IU - 'Merry Christmas ahead' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/061.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/061.mp3",
+    "durationMs": 277584
   },
   {
     "id": "keyboard-yoon-062",
     "name": "062. [주토피아 OST] Shakira - Try Everything 피아노 커버 / [Zootopia OST] Shakira - Try Everything piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/062.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/062.mp3",
+    "durationMs": 194880
   },
   {
     "id": "keyboard-yoon-063",
     "name": "063. [주토피아2 OST] Shakira - Zoo 피아노 커버 / [Zootopia 2 OST] Shakira - Zoo extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/063.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/063.mp3",
+    "durationMs": 190632
   },
   {
     "id": "keyboard-yoon-064",
     "name": "064. [크리스마스 캐롤] SG워너비 & 브라운아이드걸스 - Must Have Love 피아노 커버 / \"크리스마스 근본 노래\" — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/064.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/064.mp3",
+    "durationMs": 257256
   },
   {
     "id": "keyboard-yoon-065",
     "name": "065. [귀멸의 칼날 OST] - 태양이 떠오르지 않는 세계 피아노 커버 / Aimer - 「太陽が昇らない世界」 extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/065.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/065.mp3",
+    "durationMs": 164496
   },
   {
     "id": "keyboard-yoon-066",
     "name": "066. 마녀 배달부 키키 OST - 바다가 보이는 마을 피아노 커버 / Joe Hisaishi - A Town with an Ocean View piano cover — @Keyboard_Yoon",
-    "file": "./assets/fontory-music/keyboard-yoon/066.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/066.mp3",
+    "durationMs": 242260
   },
   {
     "id": "keyboard-yoon-067",
     "name": "067. 오피셜히게단디즘 - Pretender 피아노 커버 / Official髭男dism - Pretender extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/067.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/067.mp3",
+    "durationMs": 325776
   },
   {
     "id": "keyboard-yoon-068",
     "name": "068. 요네즈 켄시 - Lemon 피아노 커버 / Kenshi Yonezu - 'Lemon' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/068.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/068.mp3",
+    "durationMs": 251592
   },
   {
     "id": "keyboard-yoon-069",
     "name": "069. 너의 이름은 OST - Sparkle 피아노 커버 / RADWIMPS - 'Sparkle' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/069.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/069.mp3",
+    "durationMs": 280200
   },
   {
     "id": "keyboard-yoon-070",
     "name": "070. \"페이커 6번째 우승\" 페이커 입장곡 피아노 커버 / League of legends - Legends Never Die extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/070.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/070.mp3",
+    "durationMs": 238584
   },
   {
     "id": "keyboard-yoon-071",
     "name": "071. [진격의 거인 OST] - 심장을 바쳐라! 피아노 커버 / Linked Horizon - '心臓を捧げよ!' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/071.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/071.mp3",
+    "durationMs": 90168
   },
   {
     "id": "keyboard-yoon-072",
     "name": "072. 에반게리온 OST - 잔혹한 천사의 테제 피아노 커버 / A Cruel Angel's Thesis - Neon Genesis Evangelion piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/072.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/072.mp3",
+    "durationMs": 243072
   },
   {
     "id": "keyboard-yoon-073",
     "name": "073. \"수능금지곡이라 수능 끝나고 올림\" / 카니 - 매끈매끈하다 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/073.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/073.mp3",
+    "durationMs": 31824
   },
   {
     "id": "keyboard-yoon-074",
     "name": "074. 다비치 - 타임캡슐 피아노 커버 / DAVICHI - 'TIME CAPSULE' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/074.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/074.mp3",
+    "durationMs": 252960
   },
   {
     "id": "keyboard-yoon-075",
     "name": "075. \"피아노 커버하기 49728회\" — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/075.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/075.mp3",
+    "durationMs": 44640
   },
   {
     "id": "keyboard-yoon-076",
     "name": "076. NMIXX(엔믹스) - 블루발렌타인 피아노 커버 / NMIXX - 'Blue Valentine' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/076.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/076.mp3",
+    "durationMs": 185928
   },
   {
     "id": "keyboard-yoon-077",
     "name": "077. [진격의 거인 OST] - '악마의 아이' 피아노 커버 / Ai Higuchi - '悪魔の子' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/077.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/077.mp3",
+    "durationMs": 224232
   },
   {
     "id": "keyboard-yoon-078",
     "name": "078. [진격의 거인 OST] - 홍련의 화살 피아노 커버 / Linked Horizon - '紅蓮の弓矢' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/078.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/078.mp3",
+    "durationMs": 92928
   },
   {
     "id": "keyboard-yoon-079",
     "name": "079. \"사실은 내 골반도 멈추질 않아\" — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/079.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/079.mp3",
+    "durationMs": 188520
   },
   {
     "id": "keyboard-yoon-080",
     "name": "080. [귀멸의 칼날 OST] LiSA - 불꽃 피아노 커버 / LiSA - '炎' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/080.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/080.mp3",
+    "durationMs": 268800
   },
   {
     "id": "keyboard-yoon-081",
     "name": "081. [귀멸의 칼날 OST] - '홍련화' 피아노 커버 (귀멸의 칼날 1기 OP) / LiSA - 紅蓮華 extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/081.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/081.mp3",
+    "durationMs": 236136
   },
   {
     "id": "keyboard-yoon-082",
     "name": "082. 달의하루 - '염라(Karma)' 피아노 커버 / Dareharu - 'Karma' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/082.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/082.mp3",
+    "durationMs": 271296
   },
   {
     "id": "keyboard-yoon-083",
     "name": "083. [주술회전 OST] '회회기담' 피아노 커버 / Eve - '廻廻奇譚' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/083.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/083.mp3",
+    "durationMs": 220152
   },
   {
     "id": "keyboard-yoon-084",
     "name": "084. [주술회전 OST]  '푸르름이 사는 곳' 피아노 커버 / Tatsuya Kitani - Where Our Blue Is extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/084.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/084.mp3",
+    "durationMs": 197088
   },
   {
     "id": "keyboard-yoon-085",
     "name": "085. [극장판 체인소맨 : 레제편 OST] In the pool 피아노 커버 / Kensuke ushio - In the pool extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/085.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/085.mp3",
+    "durationMs": 247320
   },
   {
     "id": "keyboard-yoon-086",
     "name": "086. [체인소맨 OST] 요네즈 켄시 - Jane Doe 피아노 커버 / Kenshi Yonezu - Jane Doe extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/086.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/086.mp3",
+    "durationMs": 235896
   },
   {
     "id": "keyboard-yoon-087",
     "name": "087. [체인소맨 OST] 요네즈 켄시 - KICK BACK 피아노 커버 / Kenshi Yonezu - 'KICK BACK' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/087.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/087.mp3",
+    "durationMs": 195096
   },
   {
     "id": "keyboard-yoon-088",
     "name": "088. [체인소맨 OST] 요네즈 켄시 - IRIS OUT 피아노 커버 / Kenshi Yonezu - IRIS OUT extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/088.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/088.mp3",
+    "durationMs": 147504
   },
   {
     "id": "keyboard-yoon-089",
     "name": "089. 귀멸의 칼날 - 잔향산가 피아노 커버 / Aimer - [Zankyosanka] extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/089.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/089.mp3",
+    "durationMs": 183768
   },
   {
     "id": "keyboard-yoon-090",
     "name": "090. Aespa(에스파) - Rich Man 피아노 커버 / Aespa - Rich Man extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/090.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/090.mp3",
+    "durationMs": 198816
   },
   {
     "id": "keyboard-yoon-091",
     "name": "091. 귀멸의 칼날 - 시노부 VS 도우마 테마 [지네의 춤] 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/091.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/091.mp3",
+    "durationMs": 72576
   },
   {
     "id": "keyboard-yoon-092",
     "name": "092. 귀멸의 칼날 OST - 탄지로의 노래 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/092.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/092.mp3",
+    "durationMs": 210024
   },
   {
     "id": "keyboard-yoon-093",
     "name": "093. 귀멸의 칼날 - 아카자 VS 기유 테마곡 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/093.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/093.mp3",
+    "durationMs": 126792
   },
   {
     "id": "keyboard-yoon-094",
     "name": "094. 귀멸의 칼날 - 젠이츠 화뢰신 테마곡 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/094.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/094.mp3",
+    "durationMs": 112536
   },
   {
     "id": "keyboard-yoon-095",
     "name": "095. 귀멸의 칼날 무한성 엔딩 노래 피아노 커버 / [귀멸의 칼날 무한성편 메인OST] LISA - '잔혹한 밤에 빛나라' 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/095.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/095.mp3",
+    "durationMs": 256560
   },
   {
     "id": "keyboard-yoon-096",
     "name": "096. IVE(아이브) - XOXZ 피아노 커버 / IVE - XOXZ extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/096.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/096.mp3",
+    "durationMs": 157080
   },
   {
     "id": "keyboard-yoon-097",
     "name": "097. 귀멸의 칼날 - 아카자 회상 장면 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/097.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/097.mp3",
+    "durationMs": 124920
   },
   {
     "id": "keyboard-yoon-098",
     "name": "098. 귀멸의 칼날 - 무한성 진입 노래 [메인OST] 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/098.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/098.mp3",
+    "durationMs": 241920
   },
   {
     "id": "keyboard-yoon-099",
     "name": "099. F1 더 무비 OST 피아노 커버 / Don Toliver - Lose My Mind extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/099.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/099.mp3",
+    "durationMs": 197976
   },
   {
     "id": "keyboard-yoon-100",
     "name": "100. aespa(에스파) - Dirty Work 피아노 커버 / aespa - Dirty Work extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/100.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/100.mp3",
+    "durationMs": 181608
   },
   {
     "id": "keyboard-yoon-101",
     "name": "101. 이안 챌린지로 유명한 노래ㅣHearts2Hearts(하츠투하츠) - STYLE 피아노 커버ㅣHearts2Hearts - STYLE extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/101.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/101.mp3",
+    "durationMs": 211176
   },
   {
     "id": "keyboard-yoon-102",
     "name": "102. 박다혜,마크툽 (MAKTUB) - 시작의 아이 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/102.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/102.mp3",
+    "durationMs": 262128
   },
   {
     "id": "keyboard-yoon-103",
     "name": "103. Rumi & Jinu (루미&진우) - 'Free' 피아노 커버 / Rumi & Jinu - 'Free' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/103.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/103.mp3",
+    "durationMs": 185088
   },
   {
     "id": "keyboard-yoon-104",
     "name": "104. HUNTR/X(헌트릭스) - What It Sounds Like 피아노 커버 / HUNTR/X - What It Sounds Like piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/104.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/104.mp3",
+    "durationMs": 247824
   },
   {
     "id": "keyboard-yoon-105",
     "name": "105. HUNTR/X(헌트릭스) - Takedown 피아노 커버 / [KPOP DEMON HUNTERS] HUNTR/X - Takedown extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/105.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/105.mp3",
+    "durationMs": 178608
   },
   {
     "id": "keyboard-yoon-106",
     "name": "106. N.Flying(엔플라잉) - 만년설 피아노 커버 / N.Flying - Everlasting extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/106.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/106.mp3",
+    "durationMs": 258480
   },
   {
     "id": "keyboard-yoon-107",
     "name": "107. DAY6(데이식스) - Congratulations 피아노 커버 / DAY6 - Congratulations extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/107.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/107.mp3",
+    "durationMs": 226368
   },
   {
     "id": "keyboard-yoon-108",
     "name": "108. HUNTR/X(헌트릭스) - How it's done 피아노 커버 / [KPOP DEMON HUNTERS] HUNTR/X - How it's done piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/108.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/108.mp3",
+    "durationMs": 172920
   },
   {
     "id": "keyboard-yoon-109",
     "name": "109. BLACKPINK(블랙핑크) - '뛰어(JUMP)' 피아노 커버 / BLACKPINK - 'JUMP' extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/109.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/109.mp3",
+    "durationMs": 165336
   },
   {
     "id": "keyboard-yoon-110",
     "name": "110. 사자 보이즈(Saja Boys) - Soda Pop 피아노 커버 / [KPOP DEMON HUNTERS] Saja Boys - Soda Pop piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/110.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/110.mp3",
+    "durationMs": 149736
   },
   {
     "id": "keyboard-yoon-111",
     "name": "111. 사자 보이즈(Saja Boys) - YOUR IDOL 피아노 커버 / [KPOP DEMON HUNTERS] Saja Boys - YOUR IDOL piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/111.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/111.mp3",
+    "durationMs": 188568
   },
   {
     "id": "keyboard-yoon-112",
     "name": "112. HUNTR/X(데몬헌터스) - Golden 피아노 커버 / Kpop Demon Hunters HUNTR/X - Golden extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/112.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/112.mp3",
+    "durationMs": 193368
   },
   {
     "id": "keyboard-yoon-113",
     "name": "113. fromis_9(프로미스나인) - LIKE YOU BETTER 피아노 커버 / fromis_9 - LIKE YOU BETTER extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/113.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/113.mp3",
+    "durationMs": 185136
   },
   {
     "id": "keyboard-yoon-114",
     "name": "114. ALLDAYPROJECT - FAMOUS 피아노 커버 / ALLDAYPROJECT - FAMOUS extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/114.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/114.mp3",
+    "durationMs": 181560
   },
   {
     "id": "keyboard-yoon-115",
     "name": "115. LE SSERAFIM(르세라핌) - CRAZY 피아노 커버 / LE SSERAFIM - CRAZY extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/115.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/115.mp3",
+    "durationMs": 166896
   },
   {
     "id": "keyboard-yoon-116",
     "name": "116. 10CM(십센치) - 그라데이션 피아노 커버 / 10CM - Gradation extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/116.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/116.mp3",
+    "durationMs": 203472
   },
   {
     "id": "keyboard-yoon-117",
     "name": "117. DAY6(데이식스) - Love me or Leave me 피아노 커버 / DAY6 - Love me or Leave me extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/117.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/117.mp3",
+    "durationMs": 223296
   },
   {
     "id": "keyboard-yoon-118",
     "name": "118. ILLIT(아일릿) - 빌려온 고양이(Do the Dance) 피아노 커버 / ILLIT - Do the Dance extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/118.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/118.mp3",
+    "durationMs": 189936
   },
   {
     "id": "keyboard-yoon-119",
     "name": "119. 조째즈 - 모르시나요 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/119.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/119.mp3",
+    "durationMs": 261552
   },
   {
     "id": "keyboard-yoon-120",
     "name": "120. QWER - 행복해져라 피아노 커버 / QWER - Be Happy extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/120.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/120.mp3",
+    "durationMs": 169824
   },
   {
     "id": "keyboard-yoon-121",
     "name": "121. 세븐틴(SEVENTEEN) - THUNDER 피아노 커버 / SEVENTEEN - THUNDER extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/121.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/121.mp3",
+    "durationMs": 166704
   },
   {
     "id": "keyboard-yoon-122",
     "name": "122. IU(아이유) - 네모의 꿈 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/122.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/122.mp3",
+    "durationMs": 204000
   },
   {
     "id": "keyboard-yoon-123",
     "name": "123. QWER - 눈물참기 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/123.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/123.mp3",
+    "durationMs": 201912
   },
   {
     "id": "keyboard-yoon-124",
     "name": "124. 이무진 - 뱁새 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/124.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/124.mp3",
+    "durationMs": 258072
   },
   {
     "id": "keyboard-yoon-125",
     "name": "125. IU(아이유) - Never Ending Story 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/125.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/125.mp3",
+    "durationMs": 220080
   },
   {
     "id": "keyboard-yoon-126",
     "name": "126. 마크툽(MAKTUB) - 시작의 아이 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/126.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/126.mp3",
+    "durationMs": 256512
   },
   {
     "id": "keyboard-yoon-127",
     "name": "127. RIIZE(라이즈) - Fly Up 피아노 커버 / RIIZE - Fly Up extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/127.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/127.mp3",
+    "durationMs": 179016
   },
   {
     "id": "keyboard-yoon-128",
     "name": "128. IMPROVER - Feel The Future extreme piano cover / 요즘 뜨고있는 레전드 비트박스 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/128.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/128.mp3",
+    "durationMs": 143040
   },
   {
     "id": "keyboard-yoon-129",
     "name": "129. 레이디가가,브루노마스 - Die with a Smile 피아노 커버 / Lady Gaga, Bruno Mars - Die with a Smile extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/129.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/129.mp3",
+    "durationMs": 250872
   },
   {
     "id": "keyboard-yoon-130",
     "name": "130. 10CM(십센치) - 너에게 닿기를 피아노 커버 / 10CM - To Reach You extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/130.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/130.mp3",
+    "durationMs": 155424
   },
   {
     "id": "keyboard-yoon-131",
     "name": "131. 빅뱅 - 뱅뱅뱅 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/131.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/131.mp3",
+    "durationMs": 222960
   },
   {
     "id": "keyboard-yoon-132",
     "name": "132. 이세계아이돌 - Misty Rainbow 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/132.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/132.mp3",
+    "durationMs": 235368
   },
   {
     "id": "keyboard-yoon-133",
     "name": "133. TWS(투어스) - '마음 따라 뛰는 건 멋지지 않아?' 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/133.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/133.mp3",
+    "durationMs": 152256
   },
   {
     "id": "keyboard-yoon-134",
     "name": "134. 버스커버스커 - 벚꽃 엔딩 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/134.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/134.mp3",
+    "durationMs": 249792
   },
   {
     "id": "keyboard-yoon-135",
     "name": "135. SHAUN(숀) - 터미널 춤 추면서 피아노로 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/135.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/135.mp3",
+    "durationMs": 166872
   },
   {
     "id": "keyboard-yoon-136",
     "name": "136. 대성(DAESUNG) - Universe 피아노 커버 / DAESUNG - Universe extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/136.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/136.mp3",
+    "durationMs": 222936
   },
   {
     "id": "keyboard-yoon-137",
     "name": "137. Wing(윙) - Dopamine 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/137.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/137.mp3",
+    "durationMs": 162288
   },
   {
     "id": "keyboard-yoon-138",
     "name": "138. STAYC(스테이씨) - BEBE 피아노 커버 / STAYC - BEBE extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/138.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/138.mp3",
+    "durationMs": 181656
   },
   {
     "id": "keyboard-yoon-139",
     "name": "139. JENNIE(제니) - like JENNIE 피아노 커버 / JENNIE - like JENNIE extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/139.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/139.mp3",
+    "durationMs": 125064
   },
   {
     "id": "keyboard-yoon-140",
     "name": "140. [띵곡 피아노 커버] STEREO DIVE FOUNDATION - STORYSEEKER 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/140.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/140.mp3",
+    "durationMs": 232512
   },
   {
     "id": "keyboard-yoon-141",
     "name": "141. 솔로지옥4 OST 피아노 커버 / Troy Tang & Jasmine - At Last extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/141.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/141.mp3",
+    "durationMs": 164064
   },
   {
     "id": "keyboard-yoon-142",
     "name": "142. 지수 - earthquake 피아노 커버 / JISOO - earthquake extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/142.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/142.mp3",
+    "durationMs": 191472
   },
   {
     "id": "keyboard-yoon-143",
     "name": "143. QWER - 청춘서약 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/143.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/143.mp3",
+    "durationMs": 195528
   },
   {
     "id": "keyboard-yoon-144",
     "name": "144. WOODZ(우즈) - Drowning 피아노 커버 / WOODZ - Drowning extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/144.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/144.mp3",
+    "durationMs": 247320
   },
   {
     "id": "keyboard-yoon-145",
     "name": "145. G-DRAGON(지드래곤) - TOO BAD 피아노 커버 / G-DRAGON - TOO BAD extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/145.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/145.mp3",
+    "durationMs": 155208
   },
   {
     "id": "keyboard-yoon-146",
     "name": "146. IVE(아이브) - ATTITUDE 피아노 커버 / IVE - ATTITUDE extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/146.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/146.mp3",
+    "durationMs": 196780
   },
   {
     "id": "keyboard-yoon-147",
     "name": "147. 위대한 쇼맨 OST - This Is Me 피아노 커버 / The Greatest Showman Cast - This Is Me extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/147.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/147.mp3",
+    "durationMs": 203040
   },
   {
     "id": "keyboard-yoon-148",
     "name": "148. Chill guy 피아노로 chill 하게 치기 / Chill guy extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/148.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/148.mp3",
+    "durationMs": 84408
   },
   {
     "id": "keyboard-yoon-149",
     "name": "149. ROSE(로제) - toxic till the end 피아노 커버 / ROSE - toxic till the end extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/149.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/149.mp3",
+    "durationMs": 157368
   },
   {
     "id": "keyboard-yoon-150",
     "name": "150. PLAVE(플레이브) - Dash 피아노 커버 / PLAVE - Dash extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/150.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/150.mp3",
+    "durationMs": 176040
   },
   {
     "id": "keyboard-yoon-151",
     "name": "151. 재쓰비 - 너와의 모든 지금 피아노 커버 / JAESSBEE - Every Moment With You extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/151.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/151.mp3",
+    "durationMs": 173328
   },
   {
     "id": "keyboard-yoon-152",
     "name": "152. IVE(아이브) - REBEL HEART 피아노 커버 / IVE - REBEL HEART extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/152.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/152.mp3",
+    "durationMs": 189072
   },
   {
     "id": "keyboard-yoon-153",
     "name": "153. 여자친구(GFRIEND) - 우리의 다정한 계절 속에 피아노 커버 / GFRIEND - Season of Memories extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/153.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/153.mp3",
+    "durationMs": 188280
   },
   {
     "id": "keyboard-yoon-154",
     "name": "154. 제프프 - 성기훈 얼음 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/154.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/154.mp3",
+    "durationMs": 81648
   },
   {
     "id": "keyboard-yoon-155",
     "name": "155. 이무진 X 헤이즈 - 눈이 오잖아 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/155.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/155.mp3",
+    "durationMs": 209928
   },
   {
     "id": "keyboard-yoon-156",
     "name": "156. 보이넥스트도어 - 오늘만 I LOVE YOU 피아노 커버 / BOYNEXTDOOR - IF I SAY, I LOVE YOU extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/156.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/156.mp3",
+    "durationMs": 166056
   },
   {
     "id": "keyboard-yoon-157",
     "name": "157. 24년을 마무리하며 올리는 곡 / QWER - 안녕, 나의 슬픔 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/157.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/157.mp3",
+    "durationMs": 271320
   },
   {
     "id": "keyboard-yoon-158",
     "name": "158. G-DRAGON(지드래곤) - POWER 피아노 커버 / G-DRAGON - POWER extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/158.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/158.mp3",
+    "durationMs": 146678
   },
   {
     "id": "keyboard-yoon-159",
     "name": "159. 크리스마스 캐롤 피아노 커버 / Kelly Clarkson - Underneath the Tree extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/159.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/159.mp3",
+    "durationMs": 229992
   },
   {
     "id": "keyboard-yoon-160",
     "name": "160. ILLIT(아일릿) - Cherish 피아노 커버 / ILLIT - Cherish extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/160.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/160.mp3",
+    "durationMs": 180048
   },
   {
     "id": "keyboard-yoon-161",
     "name": "161. YENA(최예나) - 네모네모 피아노 커버 / YENA - NEMONEMO extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/161.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/161.mp3",
+    "durationMs": 182208
   },
   {
     "id": "keyboard-yoon-162",
     "name": "162. G-DRAGON(지드래곤) - HOME SWEET HOME 피아노 커버 / G-DRAGON - HOME SWEET HOME extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/162.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/162.mp3",
+    "durationMs": 210240
   },
   {
     "id": "keyboard-yoon-163",
     "name": "163. FIFTY FIFTY (피프티피프티) - Gravity 피아노 커버 / FIFTY FIFTY - Gravity extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/163.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/163.mp3",
+    "durationMs": 173688
   },
   {
     "id": "keyboard-yoon-164",
     "name": "164. LUCY(루시) - 개화 피아노 커버 / LUCY - Flowering extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/164.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/164.mp3",
+    "durationMs": 252816
   },
   {
     "id": "keyboard-yoon-165",
     "name": "165. aespa(에스파) - Whiplash 피아노 커버 / aespa - Whiplash extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/165.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/165.mp3",
+    "durationMs": 186312
   },
   {
     "id": "keyboard-yoon-166",
     "name": "166. 카리나 - UP 피아노 커버 / KARINA - UP extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/166.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/166.mp3",
+    "durationMs": 167592
   },
   {
     "id": "keyboard-yoon-167",
     "name": "167. ROSE & Bruno Mars - APT. 피아노 커버 / ROSE & Bruno Mars - APT. extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/167.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/167.mp3",
+    "durationMs": 172512
   },
   {
     "id": "keyboard-yoon-168",
     "name": "168. 펀치 - 널 사랑할게 피아노 커버 / Punch - I will always love you extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/168.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/168.mp3",
+    "durationMs": 202056
   },
   {
     "id": "keyboard-yoon-169",
     "name": "169. Novelbright - 달맞이꽃 피아노 커버 / Novelbright - ツキミソウ extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/169.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/169.mp3",
+    "durationMs": 298080
   },
   {
     "id": "keyboard-yoon-170",
     "name": "170. H1-KEY(하이키) - 건물 사이에 피어난 장미 피아노 커버 / H1-KEY - Rose Blossom extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/170.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/170.mp3",
+    "durationMs": 197328
   },
   {
     "id": "keyboard-yoon-171",
     "name": "171. 이무진 - 청춘만화 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/171.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/171.mp3",
+    "durationMs": 272904
   },
   {
     "id": "keyboard-yoon-172",
     "name": "172. 경서(KyoungSeo) - 첫 키스에 내 심장은 120BPM 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/172.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/172.mp3",
+    "durationMs": 186648
   },
   {
     "id": "keyboard-yoon-173",
     "name": "173. 윤하(YOUNHA) - 태양물고기 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/173.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/173.mp3",
+    "durationMs": 220152
   },
   {
     "id": "keyboard-yoon-174",
     "name": "174. 도경수&이수현 - Rewrite The Stars 피아노 커버 / DOH KYUNG SOO & LEE SUHYUN - Rewrite The Stars piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/174.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/174.mp3",
+    "durationMs": 219072
   },
   {
     "id": "keyboard-yoon-175",
     "name": "175. QWER -  내 이름 맑음 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/175.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/175.mp3",
+    "durationMs": 190584
   },
   {
     "id": "keyboard-yoon-176",
     "name": "176. LUCY(루시) - 못 죽는 기사와 비단 요람 피아노 커버 / LUCY - The knight who can't die and the silk cradle piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/176.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/176.mp3",
+    "durationMs": 247704
   },
   {
     "id": "keyboard-yoon-177",
     "name": "177. DAY6(데이식스) - HAPPY 피아노 커버 / DAY6 - HAPPY extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/177.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/177.mp3",
+    "durationMs": 188928
   },
   {
     "id": "keyboard-yoon-178",
     "name": "178. DAY6(데이식스) - 녹아내려요 피아노 커버 / DAY6 - Melt Down extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/178.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/178.mp3",
+    "durationMs": 166224
   },
   {
     "id": "keyboard-yoon-179",
     "name": "179. PLAVE(플레이브) - Pump up the volume! 피아노 커버 / PLAVE - Pump up the volume! extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/179.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/179.mp3",
+    "durationMs": 178176
   },
   {
     "id": "keyboard-yoon-180",
     "name": "180. QWER - 가짜 아이돌 피아노 커버 / QWER - FAKE IDOL extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/180.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/180.mp3",
+    "durationMs": 162576
   },
   {
     "id": "keyboard-yoon-181",
     "name": "181. 여자친구 -  시간을 달려서 피아노 커버 / GFRIEND - Rough extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/181.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/181.mp3",
+    "durationMs": 210480
   },
   {
     "id": "keyboard-yoon-182",
     "name": "182. OneRepublic - Counting Stars 피아노 커버 / OneRepublic - Counting Stars extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/182.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/182.mp3",
+    "durationMs": 259080
   },
   {
     "id": "keyboard-yoon-183",
     "name": "183. 볼빨간사춘기 - 나의 사춘기에게 피아노 커버 / BOL4 - To My Youth extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/183.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/183.mp3",
+    "durationMs": 223992
   },
   {
     "id": "keyboard-yoon-184",
     "name": "184. 프로미스나인 - Supersonic 피아노 커버 / fromis_9 - Supersonic extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/184.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/184.mp3",
+    "durationMs": 176952
   },
   {
     "id": "keyboard-yoon-185",
     "name": "185. Ed Sheeran - Shape of You 피아노 커버 / Ed Sheeran - Shape of You extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/185.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/185.mp3",
+    "durationMs": 235272
   },
   {
     "id": "keyboard-yoon-186",
     "name": "186. Charlie Puth(찰리 푸스) - Dangerously 피아노 커버 / Charlie Puth - Dangerously extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/186.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/186.mp3",
+    "durationMs": 200400
   },
   {
     "id": "keyboard-yoon-187",
     "name": "187. Alan Walker(앨런 워커) - Faded 피아노 커버 / Alan Walker - Faded extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/187.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/187.mp3",
+    "durationMs": 210384
   },
   {
     "id": "keyboard-yoon-188",
     "name": "188. LUCY(루시) - 21세기의 어떤 날 피아노 커버 / LUCY - Some Day in the 21century piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/188.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/188.mp3",
+    "durationMs": 232728
   },
   {
     "id": "keyboard-yoon-189",
     "name": "189. 투어스(TWS) - 내가 S면 넌 나의 N가 되어줘 피아노 커버 / TWS - If I’m S, Can You Be My N piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/189.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/189.mp3",
+    "durationMs": 172104
   },
   {
     "id": "keyboard-yoon-190",
     "name": "190. Vaundy - 무희 피아노 웅장한 커버 / Vaundy - 踊り子(Odoriko) piano extreme cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/190.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/190.mp3",
+    "durationMs": 228936
   },
   {
     "id": "keyboard-yoon-191",
     "name": "191. KISS OF LIFE(키스오브라이프) - Sticky 피아노 커버 / KISS OF LIFE - Sticky extreme piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/191.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/191.mp3",
+    "durationMs": 159384
   },
   {
     "id": "keyboard-yoon-192",
     "name": "192. 신지 - Always 피아노 커버 / Shinji - Always piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/192.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/192.mp3",
+    "durationMs": 208536
   },
   {
     "id": "keyboard-yoon-193",
     "name": "193. (여자)아이들((G)I-DLE) - 클락션(Klaxon) 피아노 커버 / (G)I-DLE - Klaxon piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/193.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/193.mp3",
+    "durationMs": 175200
   },
   {
     "id": "keyboard-yoon-194",
     "name": "194. NewJeans(뉴진스) - Supernatural 피아노 커버 / NewJeans - Supernatural piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/194.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/194.mp3",
+    "durationMs": 189720
   },
   {
     "id": "keyboard-yoon-195",
     "name": "195. NMIXX(엔믹스) - DICE 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/195.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/195.mp3",
+    "durationMs": 164136
   },
   {
     "id": "keyboard-yoon-196",
     "name": "196. 이영지(feat.도경수) - Small Girl 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/196.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/196.mp3",
+    "durationMs": 188832
   },
   {
     "id": "keyboard-yoon-197",
     "name": "197. RIIZE(라이즈) - Boom Boom Base 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/197.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/197.mp3",
+    "durationMs": 157152
   },
   {
     "id": "keyboard-yoon-198",
     "name": "198. 테일즈위버 OST - Reminiscence 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/198.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/198.mp3",
+    "durationMs": 147912
   },
   {
     "id": "keyboard-yoon-199",
     "name": "199. 서이브 - 마라탕후루 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/199.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/199.mp3",
+    "durationMs": 158448
   },
   {
     "id": "keyboard-yoon-200",
     "name": "200. IU(아이유) - Strawberry moon 피아노 커버 / IU - Strawberry Piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/200.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/200.mp3",
+    "durationMs": 208536
   },
   {
     "id": "keyboard-yoon-201",
     "name": "201. aespa(에스파) - Armageddon 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/201.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/201.mp3",
+    "durationMs": 199128
   },
   {
     "id": "keyboard-yoon-202",
     "name": "202. ECLIPSE(이클립스) - 소나기 [선재업고 튀어 OST] 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/202.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/202.mp3",
+    "durationMs": 230424
   },
   {
     "id": "keyboard-yoon-203",
     "name": "203. QWER - Discord 피아노 솔로 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/203.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/203.mp3",
+    "durationMs": 170952
   },
   {
     "id": "keyboard-yoon-204",
     "name": "204. IVE(아이브) - Accendio 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/204.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/204.mp3",
+    "durationMs": 192336
   },
   {
     "id": "keyboard-yoon-205",
     "name": "205. NewJeans(뉴진스) - How Sweet 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/205.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/205.mp3",
+    "durationMs": 220704
   },
   {
     "id": "keyboard-yoon-206",
     "name": "206. 이세계아이돌 - 리와인드(RE:WIND) 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/206.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/206.mp3",
+    "durationMs": 268440
   },
   {
     "id": "keyboard-yoon-207",
     "name": "207. aespa(에스파) - Supernova 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/207.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/207.mp3",
+    "durationMs": 174984
   },
   {
     "id": "keyboard-yoon-208",
     "name": "208. BABYMONSTER(베이비몬스터) - SHEESH 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/208.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/208.mp3",
+    "durationMs": 171624
   },
   {
     "id": "keyboard-yoon-209",
     "name": "209. SEVENTEEN(세븐틴) - 청춘찬가 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/209.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/209.mp3",
+    "durationMs": 194616
   },
   {
     "id": "keyboard-yoon-210",
     "name": "210. 프리터댄스 (ft.여르미) 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/210.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/210.mp3",
+    "durationMs": 202056
   },
   {
     "id": "keyboard-yoon-211",
     "name": "211. 세계로 가 챌린지 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/211.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/211.mp3",
+    "durationMs": 44688
   },
   {
     "id": "keyboard-yoon-212",
     "name": "212. 지코 - SPOT! 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/212.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/212.mp3",
+    "durationMs": 166968
   },
   {
     "id": "keyboard-yoon-213",
     "name": "213. YOASOBI - 아이돌 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/213.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/213.mp3",
+    "durationMs": 216624
   },
   {
     "id": "keyboard-yoon-214",
     "name": "214. IVE(아이브) - 해야(HEYA) 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/214.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/214.mp3",
+    "durationMs": 191016
   },
   {
     "id": "keyboard-yoon-215",
     "name": "215. NewJeans(뉴진스) - Bubble Gum 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/215.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/215.mp3",
+    "durationMs": 197280
   },
   {
     "id": "keyboard-yoon-216",
     "name": "216. SEVENTEEN(세븐틴) - MAESTRO 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/216.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/216.mp3",
+    "durationMs": 158040
   },
   {
     "id": "keyboard-yoon-217",
     "name": "217. 청하 - I'm Ready 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/217.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/217.mp3",
+    "durationMs": 193008
   },
   {
     "id": "keyboard-yoon-218",
     "name": "218. IU(아이유) - 홀씨 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/218.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/218.mp3",
+    "durationMs": 191664
   },
   {
     "id": "keyboard-yoon-219",
     "name": "219. 태연 - INVU 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/219.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/219.mp3",
+    "durationMs": 206736
   },
   {
     "id": "keyboard-yoon-220",
     "name": "220. 이창섭 - 천상연 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/220.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/220.mp3",
+    "durationMs": 265728
   },
   {
     "id": "keyboard-yoon-221",
     "name": "221. RIIZE(라이즈) - Impossible 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/221.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/221.mp3",
+    "durationMs": 184656
   },
   {
     "id": "keyboard-yoon-222",
     "name": "222. 포켓몬 댄스 챌린지 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/222.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/222.mp3",
+    "durationMs": 81864
   },
   {
     "id": "keyboard-yoon-223",
     "name": "223. KISS OF LIFE(키스오브라이프) - Midas Touch 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/223.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/223.mp3",
+    "durationMs": 165000
   },
   {
     "id": "keyboard-yoon-224",
     "name": "224. ILLIT(아일릿) - Lucky Girl Syndrome 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/224.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/224.mp3",
+    "durationMs": 141696
   },
   {
     "id": "keyboard-yoon-225",
     "name": "225. YOASOBI - 밤을 달리다 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/225.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/225.mp3",
+    "durationMs": 262176
   },
   {
     "id": "keyboard-yoon-226",
     "name": "226. 일본 구구단송 챌린지 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/226.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/226.mp3",
+    "durationMs": 38808
   },
   {
     "id": "keyboard-yoon-227",
     "name": "227. 프로미스나인 - DM 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/227.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/227.mp3",
+    "durationMs": 204552
   },
   {
     "id": "keyboard-yoon-228",
     "name": "228. TWICE(트와이스) - 날 바라바라봐 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/228.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/228.mp3",
+    "durationMs": 192408
   },
   {
     "id": "keyboard-yoon-229",
     "name": "229. 부석순(SEVENTEEN) - 파이팅 해야지 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/229.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/229.mp3",
+    "durationMs": 203832
   },
   {
     "id": "keyboard-yoon-230",
     "name": "230. TWICE(트와이스) - ONE SPARK 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/230.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/230.mp3",
+    "durationMs": 186816
   },
   {
     "id": "keyboard-yoon-231",
     "name": "231. IVE(아이브) - ELEVEN 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/231.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/231.mp3",
+    "durationMs": 179256
   },
   {
     "id": "keyboard-yoon-232",
     "name": "232. DAY6(데이식스) - Welcome to the show 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/232.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/232.mp3",
+    "durationMs": 208944
   },
   {
     "id": "keyboard-yoon-233",
     "name": "233. ILLIT(아일릿) - Magnetic 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/233.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/233.mp3",
+    "durationMs": 163344
   },
   {
     "id": "keyboard-yoon-234",
     "name": "234. ZEROBASEONE(제로베이스원) - In bloom 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/234.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/234.mp3",
+    "durationMs": 180888
   },
   {
     "id": "keyboard-yoon-235",
     "name": "235. ITZY(있지) - Cake 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/235.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/235.mp3",
+    "durationMs": 200712
   },
   {
     "id": "keyboard-yoon-236",
     "name": "236. IU(아이유) - Eight(에잇) 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/236.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/236.mp3",
+    "durationMs": 167040
   },
   {
     "id": "keyboard-yoon-237",
     "name": "237. IVE(아이브) - LOVE DIVE 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/237.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/237.mp3",
+    "durationMs": 178392
   },
   {
     "id": "keyboard-yoon-238",
     "name": "238. 우지 - 어떤미래 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/238.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/238.mp3",
+    "durationMs": 232776
   },
   {
     "id": "keyboard-yoon-239",
     "name": "239. NewJeans(뉴진스) - Ditto 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/239.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/239.mp3",
+    "durationMs": 189888
   },
   {
     "id": "keyboard-yoon-240",
     "name": "240. QWER - 고민중독 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/240.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/240.mp3",
+    "durationMs": 178584
   },
   {
     "id": "keyboard-yoon-241",
     "name": "241. LE SSERAFIM(르세라핌) - Smart 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/241.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/241.mp3",
+    "durationMs": 166944
   },
   {
     "id": "keyboard-yoon-242",
     "name": "242. 박재정 - 헤어지자 말해요 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/242.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/242.mp3",
+    "durationMs": 238848
   },
   {
     "id": "keyboard-yoon-243",
     "name": "243. NewJeans(뉴진스) - Cookie 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/243.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/243.mp3",
+    "durationMs": 237384
   },
   {
     "id": "keyboard-yoon-244",
     "name": "244. (여자)아이들((G)I-DLE) - 퀸카(Queencard) 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/244.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/244.mp3",
+    "durationMs": 165024
   },
   {
     "id": "keyboard-yoon-245",
     "name": "245. 벤슨 분(Benson Boone) - Beautiful Things 피아노 웅장한 커버 / piano extreme cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/245.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/245.mp3",
+    "durationMs": 182760
   },
   {
     "id": "keyboard-yoon-246",
     "name": "246. IU(아이유) - 꿈빛 파티시엘 피아노 편곡 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/246.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/246.mp3",
+    "durationMs": 75672
   },
   {
     "id": "keyboard-yoon-247",
     "name": "247. NewJeans(뉴진스) - OMG 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/247.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/247.mp3",
+    "durationMs": 215976
   },
   {
     "id": "keyboard-yoon-248",
     "name": "248. 세븐틴 - 예쁘다 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/248.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/248.mp3",
+    "durationMs": 209880
   },
   {
     "id": "keyboard-yoon-249",
     "name": "249. KISS OF LIFE(키스오브라이프) - Bad News 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/249.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/249.mp3",
+    "durationMs": 162264
   },
   {
     "id": "keyboard-yoon-250",
     "name": "250. IVE(아이브) - I AM 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/250.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/250.mp3",
+    "durationMs": 182736
   },
   {
     "id": "keyboard-yoon-251",
     "name": "251. 이무진 - 신호등 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/251.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/251.mp3",
+    "durationMs": 237048
   },
   {
     "id": "keyboard-yoon-252",
     "name": "252. (여자)아이들((G)I-DLE) - 아픈건 딱 질색이니까 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/252.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/252.mp3",
+    "durationMs": 160896
   },
   {
     "id": "keyboard-yoon-253",
     "name": "253. DAY6(데이식스) - 한 페이지가 될 수 있게 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/253.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/253.mp3",
+    "durationMs": 206016
   },
   {
     "id": "keyboard-yoon-254",
     "name": "254. DAY6(데이식스) - 예뻤어 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/254.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/254.mp3",
+    "durationMs": 270648
   },
   {
     "id": "keyboard-yoon-255",
     "name": "255. NMIXX - Sonar 피아노 커버 / NMIXX - Sonar piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/255.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/255.mp3",
+    "durationMs": 175728
   },
   {
     "id": "keyboard-yoon-256",
     "name": "256. [웡카OST] 움파룸파 댄스 피아노 커버 / Oompa Loompa - Hugh Grant & Timothée Chalamet piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/256.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/256.mp3",
+    "durationMs": 64488
   },
   {
     "id": "keyboard-yoon-257",
     "name": "257. 르세라핌 - EASY 피아노 커버 / LE SSERAFIM - EASY piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/257.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/257.mp3",
+    "durationMs": 168360
   },
   {
     "id": "keyboard-yoon-258",
     "name": "258. 하이디라오 나루토 춤 챌린지 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/258.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/258.mp3",
+    "durationMs": 42768
   },
   {
     "id": "keyboard-yoon-259",
     "name": "259. TWS(투어스) - 첫 만남은 계획대로 되지 않아 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/259.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/259.mp3",
+    "durationMs": 154176
   },
   {
     "id": "keyboard-yoon-260",
     "name": "260. 비비 - 밤양갱 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/260.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/260.mp3",
+    "durationMs": 144960
   },
   {
     "id": "keyboard-yoon-261",
     "name": "261. 아이유 - Shopper 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/261.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/261.mp3",
+    "durationMs": 216024
   },
   {
     "id": "keyboard-yoon-262",
     "name": "262. 여유만만 - 짱구 밴드 'Discord (디스코드)' 절대음감 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/262.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/262.mp3",
+    "durationMs": 75480
   },
   {
     "id": "keyboard-yoon-263",
     "name": "263. 세븐틴 - 손오공 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/263.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/263.mp3",
+    "durationMs": 201720
   },
   {
     "id": "keyboard-yoon-264",
     "name": "264. (여자)아이들((G)I-DLE) - Super Lady 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/264.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/264.mp3",
+    "durationMs": 155016
   },
   {
     "id": "keyboard-yoon-265",
     "name": "265. ITZY - Untouchable 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/265.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/265.mp3",
+    "durationMs": 198048
   },
   {
     "id": "keyboard-yoon-266",
     "name": "266. NMIXX - Dash 피아노로 개쩔게 치기 / NMIXX - Dash Piano extreme cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/266.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/266.mp3",
+    "durationMs": 168024
   },
   {
     "id": "keyboard-yoon-267",
     "name": "267. 이보다 웅장한 임재현 -  비의 랩소디 피아노 커버는 없습니다. — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/267.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/267.mp3",
+    "durationMs": 239112
   },
   {
     "id": "keyboard-yoon-268",
     "name": "268. VIVIZ(비비지) - MANIAC 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/268.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/268.mp3",
+    "durationMs": 195552
   },
   {
     "id": "keyboard-yoon-269",
     "name": "269. IU(아이유) - Love wins all 피아노로 소름돋게 만들기 / IU - Love wins all piano extreme cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/269.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/269.mp3",
+    "durationMs": 277728
   },
   {
     "id": "keyboard-yoon-270",
     "name": "270. 유우리 - 베텔기우스 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/270.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/270.mp3",
+    "durationMs": 261912
   },
   {
     "id": "keyboard-yoon-271",
     "name": "271. 팔꿈치 머리 발로 피아노 개쩔게 치기 (Jon Schmidt - All of Me) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/271.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/271.mp3",
+    "durationMs": 137520
   },
   {
     "id": "keyboard-yoon-272",
     "name": "272. RIIZE(라이즈) - Get A Guitar 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/272.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/272.mp3",
+    "durationMs": 162144
   },
   {
     "id": "keyboard-yoon-273",
     "name": "273. 제니 - You & Me 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/273.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/273.mp3",
+    "durationMs": 183648
   },
   {
     "id": "keyboard-yoon-274",
     "name": "274. IVE(아이브) - Baddie 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/274.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/274.mp3",
+    "durationMs": 157080
   },
   {
     "id": "keyboard-yoon-275",
     "name": "275. 이무진 - 에피소드 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/275.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/275.mp3",
+    "durationMs": 191784
   },
   {
     "id": "keyboard-yoon-276",
     "name": "276. 태연 'To. X' 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/276.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/276.mp3",
+    "durationMs": 172824
   },
   {
     "id": "keyboard-yoon-277",
     "name": "277. QWER - Discord (Tak Remix) 버전 피아노로 개쩔게 만들기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/277.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/277.mp3",
+    "durationMs": 193776
   },
   {
     "id": "keyboard-yoon-278",
     "name": "278. Aespa(에스파) - Drama 피아노로 웅장하게 만들기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/278.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/278.mp3",
+    "durationMs": 217176
   },
   {
     "id": "keyboard-yoon-279",
     "name": "279. 히로시의 회상 - 짱구는 못말려 극장판 어른제국의 역습 OST 피아노로 소름돋게 만들기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/279.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/279.mp3",
+    "durationMs": 170808
   },
   {
     "id": "keyboard-yoon-280",
     "name": "280. 하울의 움직이는 성 OST - 인생의 회전목마 피아노로 개쩔게 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/280.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/280.mp3",
+    "durationMs": 113952
   },
   {
     "id": "keyboard-yoon-281",
     "name": "281. 이보다 웅장한 너의 이름은 OST - Sparkle 피아노 커버는 없습니다. — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/281.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/281.mp3",
+    "durationMs": 94200
   },
   {
     "id": "keyboard-yoon-282",
     "name": "282. 놀면뭐하니 ONE TOP (원탑) - Say Yes 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/282.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/282.mp3",
+    "durationMs": 225792
   },
   {
     "id": "keyboard-yoon-283",
     "name": "283. [위시] 안유진 - 소원을 빌어 피아노로 소름돋게 만들기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/283.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/283.mp3",
+    "durationMs": 199944
   },
   {
     "id": "keyboard-yoon-284",
     "name": "284. EXO(엑소) - 첫 눈 피아노 커버 / 겨울만 되면 듣고 싶어지는 노래 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/284.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/284.mp3",
+    "durationMs": 79272
   },
   {
     "id": "keyboard-yoon-285",
     "name": "285. 우디 - 사막에서 꽃을 피우듯 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/285.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/285.mp3",
+    "durationMs": 220536
   },
   {
     "id": "keyboard-yoon-286",
     "name": "286. QWER - 수수께끼 다이어리 피아노 커버 해서 5번째 멤버는... 될 수 없지만 되고싶어하기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/286.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/286.mp3",
+    "durationMs": 161232
   },
   {
     "id": "keyboard-yoon-287",
     "name": "287. [구독자 신청곡] 연인 OST 미연 - 달빛에 그려지는 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/287.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/287.mp3",
+    "durationMs": 225600
   },
   {
     "id": "keyboard-yoon-288",
     "name": "288. [Playlist] 메이플스토리 엘리니아 bgm 피아노 메들리 (총 3곡) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/288.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/288.mp3",
+    "durationMs": 117648
   },
   {
     "id": "keyboard-yoon-289",
     "name": "289. [Playlist] ☃️크리스마스 캐롤❄️모음 피아노 메들리 (총 4곡) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/289.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/289.mp3",
+    "durationMs": 151704
   },
   {
     "id": "keyboard-yoon-290",
     "name": "290. 정국 - Standing Next to You 피아노 커버 / Jung Kook - Standing Next to You Piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/290.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/290.mp3",
+    "durationMs": 203112
   },
   {
     "id": "keyboard-yoon-291",
     "name": "291. GODS (ft. 뉴진스) 2023 월드 챔피언십 주제곡 - 리그 오브 레전드 피아노 커버 / GODS - League of Legends Piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/291.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/291.mp3",
+    "durationMs": 218208
   },
   {
     "id": "keyboard-yoon-292",
     "name": "292. 세븐틴 - 음악의 신 피아노 커버 (구독자 5천명 기념 영상) / Seventeen - God of music Piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/292.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/292.mp3",
+    "durationMs": 205224
   },
   {
     "id": "keyboard-yoon-293",
     "name": "293. AKMU - Love Lee 피아노 커버 / AKMU - Love Lee Piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/293.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/293.mp3",
+    "durationMs": 181848
   },
   {
     "id": "keyboard-yoon-294",
     "name": "294. LE SSERAFIM - Perfect Night 피아노로 쳐보기 / LE SSERAFIM - Perfect Night Piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/294.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/294.mp3",
+    "durationMs": 161544
   },
   {
     "id": "keyboard-yoon-295",
     "name": "295. QWER - Discord 피아노로 개쩔게 쳐서 5번째 멤버 QWERT 되고싶어하기 (구독자 1000명 기념 영상) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/295.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/295.mp3",
+    "durationMs": 167832
   },
   {
     "id": "keyboard-yoon-296",
     "name": "296. 네모의 꿈 피아노로 개쩔게 쳐보기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/296.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/296.mp3",
+    "durationMs": 87072
   },
   {
     "id": "keyboard-yoon-297",
     "name": "297. 진격의거인 마지막화 The Final season OST - [ 2천년... 혹은... 2만년 후의 너에게... ] 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/297.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/297.mp3",
+    "durationMs": 268536
   },
   {
     "id": "keyboard-yoon-298",
     "name": "298. 디오X수현 - Rewrite the star (위대한 쇼맨 OST) 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/298.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/298.mp3",
+    "durationMs": 63312
   },
   {
     "id": "keyboard-yoon-299",
     "name": "299. 진격의 거인 웅장한 장면에 항상 등장했던 OST - Attack on titan 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/299.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/299.mp3",
+    "durationMs": 105720
   },
   {
     "id": "keyboard-yoon-300",
     "name": "300. 지금부터 이 채널의 퀄리티가 상승합니다. (JVKE - Golden hour piano cover) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/300.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/300.mp3",
+    "durationMs": 59208
   },
   {
     "id": "keyboard-yoon-301",
     "name": "301. 전완근으로 치는 쾌걸근육맨2세 - 질풍가도 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/301.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/301.mp3",
+    "durationMs": 109656
   },
   {
     "id": "keyboard-yoon-302",
     "name": "302. 빵빵이의 삐융삐융 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/302.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/302.mp3",
+    "durationMs": 81120
   },
   {
     "id": "keyboard-yoon-303",
     "name": "303. QWER - 별의 하모니 피아노로 쳐서 5번째 멤버 QWERT 되고싶어하기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/303.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/303.mp3",
+    "durationMs": 210744
   },
   {
     "id": "keyboard-yoon-304",
     "name": "304. 🦶🏻발로 피아노를 칠 수 있다 ?!🦶🏻발로 친 젓가락 행진곡 손으로 풍성하게 만들기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/304.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/304.mp3",
+    "durationMs": 60048
   },
   {
     "id": "keyboard-yoon-305",
     "name": "305. 🦋명곡 편곡해보기🦋이루마 - River flows in you 9가지 버전으로 편곡해보기 Yiruma - River flows in you 9 versions piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/305.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/305.mp3",
+    "durationMs": 167904
   },
   {
     "id": "keyboard-yoon-306",
     "name": "306. 💦 이렇게 시원한 원피스 본 적 있어 ?💦 원피스 OST 피아노로 치기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/306.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/306.mp3",
+    "durationMs": 121032
   },
   {
     "id": "keyboard-yoon-307",
     "name": "307. 신병2 ost 더 웅장하게 만들기 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/307.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/307.mp3",
+    "durationMs": 93624
   },
   {
     "id": "keyboard-yoon-308",
     "name": "308. 익스트림 버전 스즈메의 문단속 ost 피아노 커버 — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/308.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/308.mp3",
+    "durationMs": 72192
   },
   {
     "id": "keyboard-yoon-309",
     "name": "309. 블랙핑크 - shut down 에 원곡인 라 캄파넬라 피아노로 녹이기/ Blackpink - shut down & La campanella piano remix — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/309.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/309.mp3",
+    "durationMs": 35952
   },
   {
     "id": "keyboard-yoon-310",
     "name": "310. 휴가나온 군인이 치는 군대 기상나팔 피아노 편곡 The military's wake-up piano arrangement — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/310.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/310.mp3",
+    "durationMs": 85416
   },
   {
     "id": "keyboard-yoon-311",
     "name": "311. 공대생들의 데파페페 - Start 피아노 기타 합주 Depapepe - Start Piano & Guitar cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/311.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/311.mp3",
+    "durationMs": 286200
   },
   {
     "id": "keyboard-yoon-312",
     "name": "312. 손 풀때 치는 메이플스토리 피아노 메들리 Maplestory piano medley — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/312.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/312.mp3",
+    "durationMs": 220800
   },
   {
     "id": "keyboard-yoon-313",
     "name": "313. Wiz Khalifa - See You Again 피아노 커버 Piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/313.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/313.mp3",
+    "durationMs": 65280
   },
   {
     "id": "keyboard-yoon-314",
     "name": "314. BTS-Dynamite 피아노 커버 piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/314.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/314.mp3",
+    "durationMs": 36048
   },
   {
     "id": "keyboard-yoon-315",
     "name": "315. 아리아나 그란데가 부른 Stronger 피아노 커버 Stronger - Ariana Grande piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/315.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/315.mp3",
+    "durationMs": 36048
   },
   {
     "id": "keyboard-yoon-316",
     "name": "316. Tones and i - Dance Monkey 피아노 커버 piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/316.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/316.mp3",
+    "durationMs": 53616
   },
   {
     "id": "keyboard-yoon-317",
     "name": "317. 20초 만에 시선 사로잡는 곡 The piano that catches the eye in 20 seconds. — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/317.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/317.mp3",
+    "durationMs": 22536
   },
   {
     "id": "keyboard-yoon-318",
     "name": "318. 오마이걸-던던댄스 피아노 커버 OH MY GIRL- Dun Dun Dance piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/318.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/318.mp3",
+    "durationMs": 38280
   },
   {
     "id": "keyboard-yoon-319",
     "name": "319. 브레이브걸스 치맛바람 피아노 편곡 (Brave girls Chi Mat Ba Ram piano cover) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/319.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/319.mp3",
+    "durationMs": 96432
   },
   {
     "id": "keyboard-yoon-320",
     "name": "320. 브레이브걸스-운전만해 피아노 편곡 (Brave girls_We Ride piano cover) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/320.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/320.mp3",
+    "durationMs": 55008
   },
   {
     "id": "keyboard-yoon-321",
     "name": "321. 라캄파넬라 클라이맥스 - 30초 La campanella piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/321.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/321.mp3",
+    "durationMs": 34128
   },
   {
     "id": "keyboard-yoon-322",
     "name": "322. 자기 전에 들으면 좋은 피아노 캐논 Canon extreme — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/322.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/322.mp3",
+    "durationMs": 164472
   },
   {
     "id": "keyboard-yoon-323",
     "name": "323. 캐리비안의 해적 ost 피아노 편곡 Pirates of the Caribbean - He's pirate piano cover — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/323.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/323.mp3",
+    "durationMs": 68160
   },
   {
     "id": "keyboard-yoon-324",
     "name": "324. 인터스텔라 ost 피아노 Interstellar - no time for caution (피아노 치는 이정환님 cover) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/324.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/324.mp3",
+    "durationMs": 156984
   },
   {
     "id": "keyboard-yoon-325",
     "name": "325. 크로아티안 랩소디 피아노 (밤하늘님 따라 하기) — 건반윤",
-    "file": "./assets/fontory-music/keyboard-yoon/325.mp3"
+    "file": "./assets/fontory-music/keyboard-yoon/325.mp3",
+    "durationMs": 77712
   }
 ]
