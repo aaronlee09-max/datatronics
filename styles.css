@@ -136,11 +136,7 @@ input {
   box-shadow: 0 -2px 8px rgba(0,0,0,.035);
   z-index: 1;
 }
-.global-preview-bar{
-  position: sticky;
-  top: 10px;
-  z-index: 40;
-  margin: 0 0 24px;
+.global-preview-bar{position:sticky;top:10px;z-index:40;margin:12px 0 10px;
   padding: 14px 18px;
   border: 1px solid var(--line);
   border-radius: 0 0 20px 20px;
