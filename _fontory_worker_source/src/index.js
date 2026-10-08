@@ -443,6 +443,13 @@ async function handleSetupAdmin(request, env) {
 
 export default {
   async fetch(request, env) {
+    // Keep the existing PC ALLOWED_ORIGIN binding; echo only the explicitly approved mobile origin.
+    const requestedOrigin = request.headers.get("Origin");
+    if (requestedOrigin === "https://m.softronics.run.place") {
+      const requestEnv = Object.create(env);
+      Object.defineProperty(requestEnv, "ALLOWED_ORIGIN", { value: requestedOrigin });
+      env = requestEnv;
+    }
     const url = new URL(request.url);
     const { pathname } = url;
 
