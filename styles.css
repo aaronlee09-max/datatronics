@@ -905,3 +905,8 @@ body.dark .category-bar .chip.active{
   .hero-typing-title{font-size:clamp(42px,5.2vw,58px);line-height:1.05;letter-spacing:-.045em;}
   .hero-typing-title > span{white-space:pre;}
 }
+
+/* Standalone download window/tab */
+body.download-popup .app-shell > *:not(#downloadProgress) { display: none !important; }
+body.download-popup .app-shell { width: 100%; max-width: none; padding: 0; }
+body.download-popup #downloadProgress { z-index: 99999; }
