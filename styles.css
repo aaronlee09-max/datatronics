@@ -935,3 +935,23 @@ body.download-popup #downloadProgress { z-index: 99999; }
     top: env(safe-area-inset-top, 0px);
   }
 }
+
+
+/* Fontory download page polish — visual-only, no media assets */
+body.download-popup{background:radial-gradient(circle at 18% 12%,rgba(10,132,255,.16),transparent 34%),radial-gradient(circle at 84% 82%,rgba(94,92,230,.16),transparent 36%),#080a12}
+body.download-popup #downloadProgress{display:grid;place-items:center;min-height:100vh;padding:clamp(22px,6vw,76px);box-sizing:border-box}
+body.download-popup .download-progress-card{position:relative;width:min(680px,100%);overflow:hidden;padding:clamp(30px,6vw,62px);border:1px solid rgba(255,255,255,.14);border-radius:32px;background:linear-gradient(145deg,rgba(30,31,42,.94),rgba(14,16,26,.96));box-shadow:0 30px 100px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.08);isolation:isolate}
+body.download-popup .download-progress-card::before{content:"";position:absolute;width:240px;height:240px;top:-150px;right:-80px;border-radius:50%;background:radial-gradient(circle,rgba(10,132,255,.28),transparent 68%);pointer-events:none;z-index:-1}
+body.download-popup .download-progress-card::after{content:"";position:absolute;left:clamp(30px,6vw,62px);top:clamp(24px,5vw,48px);width:42px;height:4px;border-radius:99px;background:linear-gradient(90deg,#0a84ff,#5e5ce6);box-shadow:0 0 22px rgba(10,132,255,.5)}
+body.download-popup .download-progress-preview-wrap{margin-top:22px;margin-bottom:34px}
+body.download-popup .download-progress-title{font-size:clamp(34px,6vw,64px);line-height:1.08;letter-spacing:-.055em;text-shadow:0 8px 30px rgba(0,0,0,.25)}
+body.download-popup .download-progress-font-name{color:#b9cfff;font-size:clamp(14px,2vw,18px);letter-spacing:-.02em}
+body.download-popup .download-progress-description{max-width:46ch;color:rgba(235,235,245,.66);font-size:14px}
+body.download-popup .download-progress-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px;color:rgba(245,245,247,.72);font-size:12px;font-weight:700;letter-spacing:.02em}
+body.download-popup .download-progress-head #downloadProgressValue{color:#fff!important;font-size:14px;font-variant-numeric:tabular-nums}
+body.download-popup .download-progress progress{display:block;width:100%;height:10px;overflow:hidden;border:0;border-radius:99px;background:rgba(255,255,255,.09);appearance:none}
+body.download-popup .download-progress progress::-webkit-progress-bar{border-radius:99px;background:rgba(255,255,255,.09)}
+body.download-popup .download-progress progress::-webkit-progress-value{border-radius:99px;background:linear-gradient(90deg,#0a84ff,#5e5ce6);box-shadow:0 0 18px rgba(10,132,255,.58);transition:width .28s ease}
+body.download-popup .download-progress progress::-moz-progress-bar{border-radius:99px;background:linear-gradient(90deg,#0a84ff,#5e5ce6);box-shadow:0 0 18px rgba(10,132,255,.58)}
+@media(max-width:620px){body.download-popup #downloadProgress{padding:18px}body.download-popup .download-progress-card{padding:30px 22px 26px;border-radius:26px}body.download-popup .download-progress-card::after{left:22px;top:24px}body.download-popup .download-progress-preview-wrap{margin-top:20px;margin-bottom:28px}body.download-popup .download-progress-description{font-size:12px}}
+@media(prefers-reduced-motion:reduce){body.download-popup .download-progress-title::after{animation:none}body.download-popup .download-progress progress::-webkit-progress-value{transition:none}}

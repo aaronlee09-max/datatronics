@@ -6,7 +6,7 @@ import {
   sha256Hex,
 } from "./crypto.js";
 import * as db from "./db.js";
-import { sendMfaCodeEmail } from "./mail.js";
+import { sendMfaCodeEmail, sendSignupApprovalEmail } from "./mail.js";
 
 const SESSION_COOKIE = "fontory_session";
 const LOCK_THRESHOLD = 5; // 5회 실패 시 잠금
@@ -127,6 +127,24 @@ async function handleSetMusic(request, env) {
 
 // ---------------- 라우트 핸들러 ----------------
 
+async function handleSignup(request, env) {
+  const body = await request.json().catch(() => ({}));
+  const username = typeof body.username === "string" ? body.username.trim() : "";
+  const password = typeof body.password === "string" ? body.password : "";
+  const passwordConfirm = typeof body.passwordConfirm === "string" ? body.passwordConfirm : "";
+  const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+  if (!isValidUsername(username)) return badRequest(env, "아이디는 영문, 숫자, 일부 기호를 포함한 3~32자여야 합니다.");
+  if (!isValidPassword(password)) return badRequest(env, "비밀번호는 8자 이상이어야 합니다.");
+  if (password !== passwordConfirm) return badRequest(env, "비밀번호 확인이 일치하지 않습니다.");
+  if (!isValidEmail(email)) return badRequest(env, "이메일 형식이 올바르지 않습니다.");
+  if (await db.getAccountByUsername(env.DB, username)) return json(env, { error: "이미 사용 중인 아이디입니다." }, 409);
+  if (await env.DB.prepare("SELECT username FROM accounts WHERE LOWER(email) = ? LIMIT 1").bind(email).first()) return json(env, { error: "이미 등록된 이메일입니다." }, 409);
+  const passwordHash = await hashPassword(password); const t = Date.now();
+  await env.DB.prepare("INSERT INTO accounts (username, password_hash, role, status, disabled, mfa_enabled, email, created_at, updated_at) VALUES (?, ?, 'user', 'pending', 1, 0, ?, ?, ?)").bind(username, passwordHash, email, t, t).run();
+  let emailSent = true; try { await sendSignupApprovalEmail(env, { username, email }); } catch (error) { emailSent = false; console.error("Signup approval email failed:", error?.message || String(error)); }
+  return json(env, { ok: true, status: "pending", emailSent, message: "가입 신청이 접수되었습니다. 관리자 승인 후 로그인할 수 있습니다." }, 201);
+}
+
 async function handleLogin(request, env) {
   const body = await request.json().catch(() => ({}));
   const { username, password } = body;
@@ -139,7 +157,8 @@ async function handleLogin(request, env) {
   const genericFail = () => unauthorized(env, "아이디 또는 비밀번호가 올바르지 않습니다.");
 
   if (!account) return genericFail();
-  if (account.disabled) return forbidden(env, "중지된 계정입니다.");
+  if (account.disabled || account.status === "pending") return forbidden(env, account.status === "pending" ? "관리자 승인 대기 중인 계정입니다." : "중지된 계정입니다.");
+  if (account.status === "rejected") return forbidden(env, "가입이 거절된 계정입니다.");
   if (account.locked_until && account.locked_until > Date.now()) {
     return json(env, { error: "로그인 시도가 너무 많습니다. 잠시 후 다시 시도하세요." }, 429);
   }
@@ -341,6 +360,16 @@ async function handleListAccounts(request, env) {
   return json(env, { accounts });
 }
 
+async function handleSignupDecision(request, env, username, decision) {
+  const { error } = await requireAdmin(request, env); if (error) return error;
+  const account = await db.getAccountByUsername(env.DB, username);
+  if (!account) return notFound(env, "계정을 찾을 수 없습니다.");
+  if (account.role === "admin") return badRequest(env, "관리자 계정은 이 화면에서 승인/거절할 수 없습니다.");
+  const status = decision === "approve" ? "managed" : "rejected"; const disabled = decision !== "approve";
+  await env.DB.prepare("UPDATE accounts SET status = ?, disabled = ?, updated_at = ? WHERE username = ?").bind(status, disabled ? 1 : 0, Date.now(), username).run();
+  return json(env, { ok: true, username, status, disabled });
+}
+
 async function handleCreateAccount(request, env) {
   const { error, auth } = await requireAdmin(request, env);
   if (error) return error;
@@ -458,6 +487,7 @@ export default {
     }
 
     try {
+      if (pathname === "/api/auth/signup" && request.method === "POST") return await handleSignup(request, env);
       if (pathname === "/api/auth/login" && request.method === "POST") return await handleLogin(request, env);
       if (pathname === "/api/auth/mfa/send" && request.method === "POST") return await handleMfaSend(request, env);
       if (pathname === "/api/auth/mfa/daily" && request.method === "POST") return await handleDailyVerify(request, env);
@@ -474,6 +504,9 @@ export default {
       if (pathname === "/api/accounts" && request.method === "POST") return await handleCreateAccount(request, env);
 
       let m;
+      if ((m = pathname.match(/^\/api\/accounts\/([^/]+)\/(approve|reject)$/)) && request.method === "POST") {
+        return await handleSignupDecision(request, env, decodeURIComponent(m[1]), m[2] === "approve" ? "approve" : "reject");
+      }
       if ((m = pathname.match(/^\/api\/accounts\/([^/]+)\/password$/)) && request.method === "PATCH") {
         return await handleChangePassword(request, env, decodeURIComponent(m[1]));
       }

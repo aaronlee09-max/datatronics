@@ -132,3 +132,12 @@ export async function sendMfaCodeEmail(env, to, code) {
     text: `Fontory 로그인 인증 코드: ${code}\n\n이 코드는 ${env.MFA_TTL_MINUTES || 5}분간 유효하며, 1회만 사용할 수 있습니다.\n요청하지 않으셨다면 이 메일을 무시하세요.`,
   });
 }
+
+
+export async function sendSignupApprovalEmail(env, { username, email }) {
+  await sendMail(env, {
+    to: env.ADMIN_SIGNUP_EMAIL || "aaronshlee.kr@gmail.com",
+    subject: "[Fontory] 새 회원가입 승인 요청",
+    text: `새 회원가입 승인 요청\n\n아이디: ${username}\n이메일: ${email}\n\n관리자 계정 관리 화면에서 승인 또는 거절해 주세요.`,
+  });
+}
