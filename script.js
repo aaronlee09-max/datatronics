@@ -1132,9 +1132,9 @@ function render() {
       <div class="font-info">${escapeHtml([f.family, f.style].filter(Boolean).join(" · ") || "실제 폰트 파일을 적용해 미리봅니다.")}<br><span class="windows-help">${escapeHtml(windowsHelp)}</span></div>
       <div class="actions">
         ${f.file && windowsInstallable(f)
-          ? `<a class="download" href="./?fontoryDownload=${escapeAttr(id)}&popup=1" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, '_blank'); return false;" data-single-download="${escapeAttr(id)}">${windowsDownloadLabel(f)}</a>`
+          ? `<a class="download" href="./?fontoryDownload=${escapeAttr(id)}&popup=1" target="_blank" rel="noopener noreferrer" data-single-download="${escapeAttr(id)}">${windowsDownloadLabel(f)}</a>`
           : f.file
-            ? `<a class="download" href="./?fontoryDownload=${escapeAttr(id)}&popup=1" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, '_blank'); return false;" data-single-download="${escapeAttr(id)}">다운로드</a>`
+            ? `<a class="download" href="./?fontoryDownload=${escapeAttr(id)}&popup=1" target="_blank" rel="noopener noreferrer" data-single-download="${escapeAttr(id)}">다운로드</a>`
             : `<button class="download" type="button" disabled>파일 없음</button>`}
         <button class="details try-font-toggle" type="button">미리 써보기</button>
         <button class="details" type="button" data-copy="${escapeAttr(f.name)}">이름 복사</button>
@@ -1175,9 +1175,10 @@ function render() {
         if (openDownloadContext(font)) return;
         downloadSingleFont(font, btn).catch((error) => alert(error.message));
       }
-      // Mobile/tablet keeps the real target="_blank" link for native new-tab behavior.
+      // Mobile/tablet: native target="_blank" navigation handles the new tab.
     });
   });
+
   grid.querySelectorAll("[data-copy]").forEach((btn) => {
     btn.addEventListener("click", async () => {
       try {
