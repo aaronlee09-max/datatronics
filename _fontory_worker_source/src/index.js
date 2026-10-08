@@ -96,8 +96,14 @@ function isValidEmail(email) {
 // ---------------- 중앙 음악 설정 ----------------
 
 async function handleGetMusic(request, env) {
-  const row = await db.getMusicSetting(env.DB);
-  return json(env, { musicId: row?.music_id || null });
+  const rows = await db.getMusicSettings(env.DB);
+  const settings = Object.fromEntries(rows.map((row) => [row.setting_key, row]));
+  return json(env, {
+    musicId: settings.global_music?.music_id || null,
+    loginMusicId: settings.global_music?.music_id || null,
+    downloadMode: settings.download_music_mode?.setting_value === "random" ? "random" : "admin-selected",
+    downloadMusicId: settings.download_music?.music_id || null,
+  });
 }
 
 async function handleSetMusic(request, env) {
@@ -105,13 +111,18 @@ async function handleSetMusic(request, env) {
   if (error) return error;
 
   const body = await request.json().catch(() => ({}));
-  const musicId = typeof body.musicId === "string" ? body.musicId.trim() : "";
-  if (!musicId || musicId.length > 128 || !/^[a-zA-Z0-9._-]+$/.test(musicId)) {
+  const loginMusicId = typeof body.loginMusicId === "string" ? body.loginMusicId.trim() : (typeof body.musicId === "string" ? body.musicId.trim() : "");
+  const downloadMusicId = typeof body.downloadMusicId === "string" ? body.downloadMusicId.trim() : "";
+  const downloadMode = body.downloadMode === "random" ? "random" : "admin-selected";
+  const validate = (value) => !value || (value.length <= 128 && /^[a-zA-Z0-9._-]+$/.test(value));
+  if (!validate(loginMusicId) || !validate(downloadMusicId)) {
     return badRequest(env, "음악 ID 형식이 올바르지 않습니다.");
   }
 
-  await db.setMusicSetting(env.DB, musicId);
-  return json(env, { ok: true, musicId });
+  if (loginMusicId) await db.setAppSetting(env.DB, "global_music", loginMusicId, null);
+  if (downloadMusicId) await db.setAppSetting(env.DB, "download_music", downloadMusicId, null);
+  await db.setAppSetting(env.DB, "download_music_mode", null, downloadMode);
+  return json(env, { ok: true, musicId: loginMusicId || null, loginMusicId: loginMusicId || null, downloadMode, downloadMusicId: downloadMusicId || null });
 }
 
 // ---------------- 라우트 핸들러 ----------------
