@@ -910,3 +910,28 @@ body.dark .category-bar .chip.active{
 body.download-popup .app-shell > *:not(#downloadProgress) { display: none !important; }
 body.download-popup .app-shell { width: 100%; max-width: none; padding: 0; }
 body.download-popup #downloadProgress { z-index: 99999; }
+
+
+/* Keep the preview bar sticky for the whole catalog, not just its former header parent. */
+#globalPreviewBar.global-preview-bar {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 48px);
+  left: auto;
+  right: auto;
+  transform: none;
+  width: auto;
+  z-index: 110;
+}
+#categoryBar.category-bar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 120;
+}
+@media (max-width: 620px) {
+  #globalPreviewBar.global-preview-bar {
+    top: calc(env(safe-area-inset-top, 0px) + 44px);
+  }
+  #categoryBar.category-bar {
+    top: env(safe-area-inset-top, 0px);
+  }
+}

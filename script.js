@@ -1167,15 +1167,7 @@ function render() {
     const font = list.find((item) => fontId(item) === btn.dataset.singleDownload);
     if (!font) return;
     btn.addEventListener("click", (event) => {
-      const ua = navigator.userAgent || "";
-      const isTabletOrMobile = /Android|iPhone|iPad|iPod/i.test(ua) ||
-        (navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) <= 1200);
-      if (!isTabletOrMobile) {
-        event.preventDefault();
-        if (openDownloadContext(font)) return;
-        downloadSingleFont(font, btn).catch((error) => alert(error.message));
-      }
-      // Mobile/tablet: native target="_blank" navigation handles the new tab.
+      if (openDownloadContext(font)) event.preventDefault();
     });
   });
 
@@ -1415,6 +1407,7 @@ function waitForSimulatedDownload(durationMs = window.__fontoryDownloadDurationM
   });
 }
 function hideDownloadProgressSoon() {
+  if (document.body.classList.contains("download-popup")) return;
   setTimeout(() => { const panel = document.querySelector("#downloadProgress"); if (panel) panel.hidden = true; }, 1800);
 }
 async function downloadBlob(blob, filename) {
@@ -1715,17 +1708,11 @@ function openDownloadContext(font) {
   url.searchParams.set("fontoryDownload", fontId(font));
   url.searchParams.set("popup", "1");
   url.hash = "";
-  const ua = navigator.userAgent || "";
-  const isTabletOrMobile = /Android|iPhone|iPad|iPod/i.test(ua) ||
-    (navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) <= 1200);
-  const target = isTabletOrMobile ? "_blank" : "fontory-download";
-  const features = isTabletOrMobile ? undefined : "popup=yes,width=560,height=760,resizable=yes,scrollbars=yes";
-  const child = window.open(url.href, target, features);
+  const child = window.open(url.href, "fontory-download", "popup=yes,width=560,height=760,resizable=yes,scrollbars=yes");
   if (child) {
     try { child.opener = null; } catch {}
     return true;
   }
-  alert("다운로드 창이 차단되었습니다. 브라우저의 팝업 허용 후 다시 눌러주세요.");
   return false;
 }
 
