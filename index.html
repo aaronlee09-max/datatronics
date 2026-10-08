@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#f5f5f7">
   <meta name="description" content="iPhone과 Windows에서 사용할 폰트를 찾고 골라 담는 글꼴 라이브러리">
   <title>Fontory · 글꼴 보관소</title>
-  <link rel="stylesheet" href="./styles.css?v=20261008-download-wait-video1">
+  <link rel="stylesheet" href="./styles.css?v=20261008-floating-popup-fix2">
   <link rel="stylesheet" href="./passkey.css?v=20260925-session-token">
 </head>
 <body>
@@ -59,9 +59,6 @@
     </div>
     <div id="downloadProgress" class="download-progress" hidden aria-live="polite">
       <div class="download-progress-card">
-        <video class="download-progress-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-          <source src="./assets/fontory-download-wait-loop.mp4" type="video/mp4">
-        </video>
         <div class="download-progress-preview-wrap"><div id="downloadProgressTitle" class="download-progress-title"></div><div id="downloadProgressFontName" class="download-progress-font-name"></div><p id="downloadProgressDescription" class="download-progress-description"></p></div>
         <div class="download-progress-head"><span id="downloadProgressLabel">다운로드 준비 중…</span><span id="downloadProgressValue">0%</span></div>
         <progress id="downloadProgressMeter" max="100" value="0"></progress>
