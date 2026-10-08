@@ -1167,6 +1167,7 @@ function render() {
     const font = list.find((item) => fontId(item) === btn.dataset.singleDownload);
     if (!font) return;
     btn.addEventListener("click", () => {
+      if (openDownloadContext(font)) return;
       downloadSingleFont(font, btn).catch((error) => alert(error.message));
     });
   });
@@ -1700,6 +1701,39 @@ document.querySelector("#downloadWindows").addEventListener("click", () => {
 });
 if (localStorage.getItem("font-theme") === "dark") document.body.classList.add("dark");
 
+function openDownloadContext(font) {
+  if (!font?.id || !font.file) return false;
+  const url = new URL(window.location.href);
+  url.searchParams.set("fontoryDownload", fontId(font));
+  url.searchParams.set("popup", "1");
+  url.hash = "";
+  const ua = navigator.userAgent || "";
+  const isTabletOrMobile = /Android|iPhone|iPad|iPod/i.test(ua) ||
+    (navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) <= 1200);
+  const target = isTabletOrMobile ? "_blank" : "fontory-download";
+  const features = isTabletOrMobile ? undefined : "popup=yes,width=560,height=760,resizable=yes,scrollbars=yes";
+  const child = window.open(url.href, target, features);
+  if (child) {
+    try { child.opener = null; } catch {}
+    return true;
+  }
+  alert("다운로드 창이 차단되었습니다. 브라우저의 팝업 허용 후 다시 눌러주세요.");
+  return false;
+}
+
+async function runDownloadFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("fontoryDownload");
+  if (!id) return;
+  const font = fonts.find((item) => fontId(item) === id);
+  if (!font) return;
+  document.body.classList.add("download-popup");
+  document.title = `Fontory · ${font.name} 다운로드`;
+  render();
+  const fakeButton = { disabled: false, textContent: "다운로드" };
+  await downloadSingleFont(font, fakeButton);
+}
+
 async function init() {
   try {
     const response = await fetch("./fonts.json", { cache: "no-store" });
@@ -1711,6 +1745,7 @@ async function init() {
       statusBanner.textContent = "원본 폰트 ZIP이 저장소에서 확인되지 않아 카드에 연결할 파일이 없습니다. 폰트 파일을 fonts/ 아래 카테고리 폴더에 넣은 뒤 fonts.json을 갱신하면 목록이 채워집니다.";
     }
     render();
+    await runDownloadFromQuery();
   } catch (error) {
     fonts = [];
     count.textContent = "0 fonts";
