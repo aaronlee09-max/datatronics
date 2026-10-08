@@ -384,7 +384,7 @@ input {
 .download-progress {
   position: fixed;
   inset: 0;
-  z-index: 30;
+  z-index: 9990;
   display: grid;
   place-items: center;
   width: auto;
