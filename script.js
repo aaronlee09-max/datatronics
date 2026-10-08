@@ -1356,7 +1356,8 @@ function releaseDownloadLock() {
 }
 async function startDownloadMusic() {
   if (downloadMusic && !downloadMusic.paused) return;
-  const source = await (window.fontoryGetMusicUrl?.() || Promise.resolve("./assets/fontory-download-music.mp3?v=20260929-padded1"));
+  const selected = await (window.fontorySelectDownloadMusicForJob?.() || window.fontoryGetSelectedMusic?.() || Promise.resolve({ file: "./assets/fontory-download-music.mp3?v=20260929-padded1" }));
+  const source = selected.file;
   if (!downloadMusic || downloadMusic.dataset.fontorySource !== source) {
     if (downloadMusic) {
       downloadMusic.pause();
@@ -1364,22 +1365,43 @@ async function startDownloadMusic() {
     }
     downloadMusic = new Audio(source);
     downloadMusic.dataset.fontorySource = source;
-    downloadMusic.preload = "auto";
+    downloadMusic.preload = "metadata";
     downloadMusic.volume = 0.45;
   }
+  const durationMs = await new Promise((resolve) => {
+    let settled = false;
+    const finish = (value) => { if (settled) return; settled = true; cleanup(); resolve(value); };
+    const cleanup = () => {
+      clearTimeout(timeout);
+      downloadMusic.removeEventListener("loadedmetadata", onMetadata);
+      downloadMusic.removeEventListener("error", onError);
+    };
+    const onMetadata = () => {
+      const seconds = Number(downloadMusic.duration);
+      finish(Number.isFinite(seconds) && seconds > 0 ? seconds * 1000 : 206_350);
+    };
+    const onError = () => finish(206_350);
+    const timeout = setTimeout(() => finish(206_350), 8_000);
+    downloadMusic.addEventListener("loadedmetadata", onMetadata, { once: true });
+    downloadMusic.addEventListener("error", onError, { once: true });
+    try { downloadMusic.load(); } catch { finish(206_350); }
+  });
+  window.__fontoryDownloadDurationMs = durationMs;
   downloadMusic.currentTime = 0;
   downloadMusic.play().catch(() => {});
+  return durationMs;
 }
-function waitForSimulatedDownload() {
+function waitForSimulatedDownload(durationMs = window.__fontoryDownloadDurationMs || 206_350) {
   return new Promise((resolve) => {
     const started = performance.now();
-    const duration = 206_350; // 전체 곡 길이 + 시작 안전 여백: 약 3분 26초
+    const duration = Math.max(1000, Number(durationMs) || 206_350);
     updateDownloadProgress(0, "다운로드 준비 중…");
     const timer = setInterval(() => {
       const percent = Math.min(100, ((performance.now() - started) / duration) * 100);
       updateDownloadProgress(percent, percent >= 100 ? "파일을 저장하는 중…" : "다운로드 준비 중…");
       if (percent >= 100) {
         clearInterval(timer);
+        window.fontoryResetDownloadMusicJob?.();
         resolve();
       }
     }, 250);
@@ -1437,7 +1459,7 @@ async function downloadSingleFont(font, button) {
   }
   const oldText = button.textContent;
   button.disabled = true;
-  startDownloadMusic();
+  await startDownloadMusic();
   window.fontorySetDownloadFont?.(font);
   try {
     await waitForSimulatedDownload();
@@ -1469,7 +1491,7 @@ async function downloadSelectedWindows() {
   const oldText = button.textContent;
   if (!acquireDownloadLock()) return;
   button.disabled = true;
-  startDownloadMusic();
+  await await startDownloadMusic();
   window.fontorySetDownloadFont?.(chosen[0]);
   try {
     await waitForSimulatedDownload();
@@ -1503,7 +1525,7 @@ async function makeMobileConfig() {
   const payloads = [];
   const rejected = [];
   if (!acquireDownloadLock()) return;
-  startDownloadMusic();
+  await await startDownloadMusic();
   window.fontorySetDownloadFont?.(chosen[0]);
   await waitForSimulatedDownload();
   for (let index = 0; index < chosen.length; index++) {
