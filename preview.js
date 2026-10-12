@@ -31,8 +31,10 @@
     typeTitle();
   }
   const PAGE_SIZE = 24;
-  const assetUrl = (font) => new URL(font.file, window.location.href).href;
+  const FONT_ASSET_BASE = "https://media.githubusercontent.com/media/aaronlee09-max/datatronics/main/";
+  const assetUrl = (font) => new URL(String(font.file || "").split("/").map(encodeURIComponent).join("/"), FONT_ASSET_BASE).href;
   const ext = (font) => String(font.file || "").split(".").pop().toLowerCase();
+  const fontFormat = (font) => ({ ttf: "truetype", otf: "opentype", woff: "woff", woff2: "woff2" })[ext(font)];
   const canPreview = (font) => ["ttf", "otf", "woff", "woff2"].includes(ext(font));
   const familyFor = (font) => `FontoryPublicPreview-${String(font.id || font.file || font.name).replace(/[^a-zA-Z0-9_-]/g, "-")}`;
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -88,10 +90,11 @@
     if (!canPreview(font) || loaded.has(font.file) || failed.has(String(font.id || font.file || font.name))) return;
     const id = String(font.id || font.file || font.name);
     try {
-      const face = await new FontFace(familyFor(font), `url("${assetUrl(font)}") format("${ext(font)}")`, { display: "swap" }).load();
+      const face = await new FontFace(familyFor(font), `url("${assetUrl(font)}") format("${fontFormat(font)}")`, { display: "swap" }).load();
       document.fonts.add(face); loaded.add(font.file);
       grid.querySelectorAll(`[data-id="${CSS.escape(id)}"] [data-preview]`).forEach((node) => { node.style.fontFamily = `"${familyFor(font)}", sans-serif`; });
-    } catch {
+    } catch (error) {
+      console.warn("Public font preview failed:", font.id, error);
       failed.add(id);
       grid.querySelectorAll(`[data-id="${CSS.escape(id)}"] [data-preview]`).forEach((node) => { node.classList.add("preview-failed"); node.textContent = "미리보기 로드 실패"; });
     }
