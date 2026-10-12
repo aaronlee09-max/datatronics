@@ -1784,44 +1784,11 @@ function openDownloadContext(font) {
   url.hash = "";
   const child = window.open(url.href, "fontory-download", "popup=yes,width=560,height=760,resizable=yes,scrollbars=yes");
   if (child) {
+    // Progress belongs to the download popup, never the source tab.
+    const sourceProgress = document.querySelector("#downloadProgress");
+    if (sourceProgress) sourceProgress.hidden = true;
     try { child.opener = null; } catch {}
     return true;
   }
   return false;
 }
-
-async function runDownloadFromQuery() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("fontoryDownload");
-  if (!id) return;
-  const font = fonts.find((item) => fontId(item) === id);
-  if (!font) return;
-  document.body.classList.add("download-popup");
-  document.title = `Fontory · ${font.name} 다운로드`;
-  render();
-  const fakeButton = { disabled: false, textContent: "다운로드" };
-  await downloadSingleFont(font, fakeButton);
-}
-
-async function init() {
-  try {
-    const response = await fetch("./fonts.json", { cache: "no-store" });
-    if (!response.ok) throw new Error("fonts.json을 불러오지 못했습니다.");
-    const data = await response.json();
-    fonts = Array.isArray(data) ? data : [];
-    if (!fonts.length) {
-      statusBanner.hidden = false;
-      statusBanner.textContent = "원본 폰트 ZIP이 저장소에서 확인되지 않아 카드에 연결할 파일이 없습니다. 폰트 파일을 fonts/ 아래 카테고리 폴더에 넣은 뒤 fonts.json을 갱신하면 목록이 채워집니다.";
-    }
-    render();
-    await runDownloadFromQuery();
-  } catch (error) {
-    fonts = [];
-    count.textContent = "0 fonts";
-    empty.hidden = false;
-    empty.textContent = "폰트 목록을 불러오지 못했습니다.";
-    console.error(error);
-  }
-}
-
-init();
