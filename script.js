@@ -1378,9 +1378,11 @@ async function startDownloadMusic() {
   try { downloadMusic.load(); } catch {}
   try { downloadMusic.currentTime = 0; } catch {}
   try {
-    downloadMusic.play().catch((error) => console.warn("Fontory download music playback failed", error));
+    await downloadMusic.play();
   } catch (error) {
     console.warn("Fontory download music playback failed", error);
+    window.fontoryResetDownloadMusicJob?.();
+    throw new Error("음악 재생을 시작하지 못해 다운로드를 중단했습니다.");
   }
   return durationMs;
 }
@@ -1391,19 +1393,91 @@ function waitForSimulatedDownload(durationMs = window.__fontoryDownloadDurationM
       reject(new Error("선택한 음악의 사전 분석된 재생 시간 정보가 없어 진행 표시를 시작하지 않았습니다."));
       return;
     }
-    const started = performance.now();
-    updateDownloadProgress(0, "다운로드 준비 중…");
-    const tickTimer = setInterval(() => {
-      const elapsed = Math.max(0, performance.now() - started);
-      const percent = Math.min(99.9, (elapsed / duration) * 100);
-      updateDownloadProgress(percent, "다운로드 준비 중…");
-    }, 250);
-    setTimeout(() => {
-      clearInterval(tickTimer);
+
+    const params = new URLSearchParams(window.location.search);
+    const parentAudioMode = document.body.classList.contains("download-popup")
+      && params.get("fontoryMusicParent") === "1";
+    let lastCurrentTime = 0;
+    let settled = false;
+    let channel = null;
+
+    const cleanup = () => {
+      if (channel) {
+        channel.removeEventListener("message", onParentMessage);
+        channel.close();
+        channel = null;
+      }
+      if (!parentAudioMode && downloadMusic) {
+        downloadMusic.removeEventListener("timeupdate", onLocalTimeUpdate);
+        downloadMusic.removeEventListener("ended", onLocalEnded);
+        downloadMusic.removeEventListener("error", onLocalError);
+        downloadMusic.removeEventListener("pause", onLocalPause);
+      }
+    };
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      cleanup();
       updateDownloadProgress(100, "파일을 저장하는 중…");
       window.fontoryResetDownloadMusicJob?.();
       resolve();
-    }, duration);
+    };
+    const fail = (message) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      window.fontoryResetDownloadMusicJob?.();
+      reject(new Error(message));
+    };
+    const paintProgress = (currentTime) => {
+      if (settled) return;
+      const seconds = Number(currentTime);
+      if (!Number.isFinite(seconds) || seconds < 0) return;
+      lastCurrentTime = Math.min(duration / 1000, seconds);
+      const percent = Math.min(99.9, (lastCurrentTime * 1000 / duration) * 100);
+      updateDownloadProgress(percent, "다운로드 준비 중…");
+    };
+    const onLocalTimeUpdate = () => paintProgress(downloadMusic.currentTime);
+    const onLocalEnded = () => finish();
+    const onLocalError = () => fail("음악 재생 중 오류가 발생해 다운로드를 중단했습니다.");
+    const onLocalPause = () => {
+      if (!settled && downloadMusic && !downloadMusic.ended) {
+        updateDownloadProgress((lastCurrentTime * 1000 / duration) * 100, "음악이 일시 정지되어 진행률이 멈췄습니다.");
+      }
+    };
+    const onParentMessage = (event) => {
+      const state = event.data;
+      if (!state || state.type !== "fontory-download-audio-state") return;
+      if (Number.isFinite(Number(state.currentTime))) paintProgress(Number(state.currentTime));
+      if (state.error) fail("음악 재생 중 오류가 발생해 다운로드를 중단했습니다.");
+      else if (state.ended) finish();
+      else if (state.paused) updateDownloadProgress((lastCurrentTime * 1000 / duration) * 100, "음악이 일시 정지되어 진행률이 멈췄습니다.");
+      else updateDownloadProgress((lastCurrentTime * 1000 / duration) * 100, "다운로드 준비 중…");
+    };
+
+    updateDownloadProgress(0, "다운로드 준비 중…");
+    if (parentAudioMode) {
+      if (typeof BroadcastChannel !== "function") {
+        fail("이 브라우저에서는 음악 재생 동기화를 지원하지 않아 다운로드를 시작할 수 없습니다.");
+        return;
+      }
+      channel = new BroadcastChannel("fontory-download-audio-sync");
+      channel.addEventListener("message", onParentMessage);
+      channel.postMessage({ type: "fontory-download-audio-state-request" });
+      return;
+    }
+
+    if (!downloadMusic) {
+      fail("다운로드 음악이 준비되지 않았습니다.");
+      return;
+    }
+    downloadMusic.addEventListener("timeupdate", onLocalTimeUpdate);
+    downloadMusic.addEventListener("ended", onLocalEnded);
+    downloadMusic.addEventListener("error", onLocalError);
+    downloadMusic.addEventListener("pause", onLocalPause);
+    paintProgress(downloadMusic.currentTime);
+    if (downloadMusic.ended) finish();
+    else if (downloadMusic.paused) fail("음악 재생이 시작되지 않아 다운로드를 중단했습니다.");
   });
 }
 function hideDownloadProgressSoon() {
