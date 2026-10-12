@@ -89,7 +89,7 @@
 
   async function getSelected() {
     const settings = await getSettings();
-    return (await findMusic(settings.loginMusicId)) || (await getCatalog())[0] || FALLBACK_MUSIC;
+    return (await findMusic(settings.loginMusicId)) || (await findMusic(FALLBACK_MUSIC.id)) || FALLBACK_MUSIC;
   }
 
   async function selectDownloadMusicForJob() {
@@ -108,7 +108,7 @@
           if (!selected) throw new Error(`선택한 다운로드 음악(${settings.downloadMusicId})을 목록에서 찾을 수 없습니다.`);
           return selected;
         }
-        return catalog[0] || FALLBACK_MUSIC;
+        return (await findMusic(FALLBACK_MUSIC.id)) || FALLBACK_MUSIC;
       })();
     }
     return downloadJobPromise;

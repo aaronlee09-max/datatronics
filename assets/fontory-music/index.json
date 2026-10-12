@@ -1,5 +1,11 @@
 [
   {
+    "id": "glassbox-beautiful-world",
+    "name": "유리상자 – 아름다운 세상",
+    "file": "./assets/fontory-music/glassbox/beautiful-world.mp3",
+    "durationMs": 232608
+  },
+  {
     "id": "default",
     "name": "Fontory 기본 음악",
     "file": "./assets/fontory-download-music.mp3?v=20260929-padded1",
