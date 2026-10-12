@@ -1821,11 +1821,26 @@ async function runDownloadFromQuery() {
 
 async function init() {
   try {
-    const response = await fetch("./fonts.json", { cache: "no-store" });
-    if (!response.ok) throw new Error(`fonts.json을 불러오지 못했습니다 (${response.status}).`);
-    const data = await response.json();
-    fonts = Array.isArray(data) ? data : [];
-    if (!fonts.length) throw new Error("fonts.json에 폰트 항목이 없습니다.");
+    const catalogCandidates = [
+      "./fonts.json",
+      "https://raw.githubusercontent.com/aaronlee09-max/datatronics/main/fonts.json",
+      "https://raw.githubusercontent.com/aaronlee09-max/Fontory/main/fonts.json"
+    ];
+    let catalogError = null;
+    for (const catalogUrl of catalogCandidates) {
+      try {
+        const response = await fetch(catalogUrl, { cache: "no-store", mode: "cors", credentials: "omit" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${catalogUrl}`);
+        const data = await response.json();
+        if (!Array.isArray(data) || data.length === 0) throw new Error(`유효하지 않은 폰트 목록: ${catalogUrl}`);
+        fonts = data;
+        break;
+      } catch (error) {
+        catalogError = error;
+        console.warn("Font catalog source failed:", catalogUrl, error);
+      }
+    }
+    if (!fonts.length) throw new Error(`폰트 목록을 불러오지 못했습니다: ${catalogError?.message || "사용 가능한 데이터가 없습니다"}`);
     render();
     await runDownloadFromQuery();
   } catch (error) {
