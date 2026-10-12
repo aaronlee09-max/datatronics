@@ -1792,3 +1792,53 @@ function openDownloadContext(font) {
   }
   return false;
 }
+
+
+async function runDownloadFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const bundleIds = (params.get("fontoryBundle") || "").split(",").filter(Boolean);
+  if (bundleIds.length) {
+    document.body.classList.add("download-popup");
+    window.__fontorySkipBundleConfirm = true;
+    bundleIds.forEach((id) => selected.add(id));
+    const chosen = fonts.filter((font) => selected.has(fontId(font)) && windowsInstallable(font));
+    if (!chosen.length) return;
+    document.title = `Fontory · ${chosen.length}개 폰트 번들 다운로드`;
+    render();
+    await downloadSelectedWindows();
+    return;
+  }
+
+  const id = params.get("fontoryDownload");
+  if (!id) return;
+  const font = fonts.find((item) => fontId(item) === id);
+  if (!font) return;
+  document.body.classList.add("download-popup");
+  document.title = `Fontory · ${font.name} 다운로드`;
+  render();
+  await downloadSingleFont(font, { disabled: false, textContent: "다운로드" });
+}
+
+async function init() {
+  try {
+    const response = await fetch("./fonts.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`fonts.json을 불러오지 못했습니다 (${response.status}).`);
+    const data = await response.json();
+    fonts = Array.isArray(data) ? data : [];
+    if (!fonts.length) throw new Error("fonts.json에 폰트 항목이 없습니다.");
+    render();
+    await runDownloadFromQuery();
+  } catch (error) {
+    fonts = [];
+    count.textContent = "0 fonts";
+    empty.hidden = false;
+    empty.textContent = "폰트 목록을 불러오지 못했습니다.";
+    if (statusBanner) {
+      statusBanner.hidden = false;
+      statusBanner.textContent = error.message || "폰트 목록을 불러오지 못했습니다.";
+    }
+    console.error("Fontory font catalog initialization failed:", error);
+  }
+}
+
+init();
