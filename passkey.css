@@ -29,3 +29,9 @@
 .admin-2fa-choice button { width: 100%; border: 0; border-radius: 12px; padding: 12px 14px; background: #0071e3; color: #fff; font-weight: 800; cursor: pointer; }
 .admin-2fa-choice button.auth-passkey { border: 1px solid #38383a; background: transparent; color: #f5f5f7; }
 .admin-2fa-choice button:disabled { opacity: .55; cursor: wait; }
+#fontoryTotpPanel{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.55)}
+#fontoryTotpPanel form{display:grid;gap:12px}
+.totp-qr{display:grid;place-items:center;margin:8px auto;width:min(200px,70vw);padding:8px;border-radius:12px;background:#fff}
+.totp-qr svg{width:100%;height:auto}
+.totp-secret code{display:block;padding:10px 12px;border-radius:10px;background:var(--bg);font-size:15px;letter-spacing:.06em;word-break:break-all;user-select:all}
+#totpError{min-height:20px;color:#d33;font-size:12px}

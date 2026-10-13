@@ -18,7 +18,14 @@ export async function listAccounts(db) {
       "SELECT username, role, status, disabled, mfa_enabled, email, created_at, updated_at FROM accounts ORDER BY username"
     )
     .all();
+  for (const row of results) row.skip_wait = await getSkipWait(db, row.username);
   return results; // password_hash는 의도적으로 SELECT하지 않음
+}
+
+// 다운로드 대기 건너뛰기 설정 (운영 Worker와 동일: app_settings의 skip_wait:<username>)
+export async function getSkipWait(db, username) {
+  const row = await db.prepare("SELECT setting_value FROM app_settings WHERE setting_key = ?").bind("skip_wait:" + username).first();
+  return row ? String(row.setting_value) === "1" : username.toLowerCase() === "htxoh";
 }
 
 export async function countAdmins(db, excludeId = null) {
@@ -206,4 +213,54 @@ export async function getMusicSetting(db) {
 
 export async function setMusicSetting(db, musicId) {
   return setAppSetting(db, "global_music", musicId, null);
+}
+
+// ---- TOTP (인증 앱) ----
+// 마이그레이션 0004가 아직 적용되지 않은 DB에서도 기존 로그인이 깨지지 않도록
+// 조회는 "테이블 없음"을 TOTP 미사용으로 취급한다.
+
+export async function getTotp(db, accountId) {
+  try {
+    return await db.prepare("SELECT * FROM totp_credentials WHERE account_id = ?").bind(accountId).first();
+  } catch (e) {
+    if (String(e && e.message).includes("no such table")) return null;
+    throw e;
+  }
+}
+
+export async function upsertPendingTotp(db, accountId, secretEnc) {
+  const t = now();
+  return db
+    .prepare(
+      "INSERT INTO totp_credentials (account_id, secret_enc, enabled, last_used_step, created_at, updated_at) VALUES (?, ?, 0, NULL, ?, ?) " +
+        "ON CONFLICT(account_id) DO UPDATE SET secret_enc = excluded.secret_enc, enabled = 0, last_used_step = NULL, updated_at = excluded.updated_at WHERE totp_credentials.enabled = 0"
+    )
+    .bind(accountId, secretEnc, t, t)
+    .run();
+}
+
+export async function enableTotp(db, accountId, step) {
+  return db
+    .prepare("UPDATE totp_credentials SET enabled = 1, last_used_step = ?, updated_at = ? WHERE account_id = ? AND enabled = 0")
+    .bind(step, now(), accountId)
+    .run();
+}
+
+// 같은 step 이하의 코드는 다시 쓸 수 없다. 동시에 두 요청이 와도 하나만 성공한다.
+export async function consumeTotpStep(db, accountId, step) {
+  const res = await db
+    .prepare(
+      "UPDATE totp_credentials SET last_used_step = ?, updated_at = ? WHERE account_id = ? AND enabled = 1 AND (last_used_step IS NULL OR last_used_step < ?)"
+    )
+    .bind(step, now(), accountId, step)
+    .run();
+  return (res.meta && res.meta.changes) === 1;
+}
+
+export async function deleteTotp(db, accountId) {
+  return db.prepare("DELETE FROM totp_credentials WHERE account_id = ?").bind(accountId).run();
+}
+
+export async function incrementPendingAttempts(db, id) {
+  return db.prepare("UPDATE mfa_pending SET attempts = attempts + 1 WHERE id = ?").bind(id).run();
 }

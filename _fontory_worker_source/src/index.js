@@ -6,13 +6,22 @@ import {
   sha256Hex,
 } from "./crypto.js";
 import * as db from "./db.js";
-import { sendMfaCodeEmail, sendSignupApprovalEmail } from "./mail.js";
+import {
+  generateTotpSecret,
+  verifyTotp,
+  otpauthUri,
+  encryptSecret,
+  decryptSecret,
+  totpKeyConfigured,
+} from "./totp.js";
+import { sendMfaCodeEmail } from "./mail.js";
 
 const SESSION_COOKIE = "fontory_session";
 const LOCK_THRESHOLD = 5; // 5회 실패 시 잠금
 const LOCK_MINUTES = 15;
 const MFA_MAX_PER_WINDOW = 1; // 일반 사용자는 15분당 1회 발송
 const MFA_RATE_WINDOW_MS = 15 * 60_000;
+const TOTP_MAX_ATTEMPTS = 5; // 로그인 1회(pending)당 TOTP 입력 허용 횟수
 
 function cors(env, extraHeaders = {}) {
   return {
@@ -141,8 +150,8 @@ async function handleSignup(request, env) {
   if (await env.DB.prepare("SELECT username FROM accounts WHERE LOWER(email) = ? LIMIT 1").bind(email).first()) return json(env, { error: "이미 등록된 이메일입니다." }, 409);
   const passwordHash = await hashPassword(password); const t = Date.now();
   await env.DB.prepare("INSERT INTO accounts (username, password_hash, role, status, disabled, mfa_enabled, email, created_at, updated_at) VALUES (?, ?, 'user', 'pending', 1, 0, ?, ?, ?)").bind(username, passwordHash, email, t, t).run();
-  let emailSent = true; try { await sendSignupApprovalEmail(env, { username, email }); } catch (error) { emailSent = false; console.error("Signup approval email failed:", error?.message || String(error)); }
-  return json(env, { ok: true, status: "pending", emailSent, message: "가입 신청이 접수되었습니다. 관리자 승인 후 로그인할 수 있습니다." }, 201);
+  // 운영 Worker와 동일하게 가입 승인 메일은 보내지 않는다(관리자 화면에서 승인).
+  return json(env, { ok: true, status: "pending", message: "가입 신청이 접수되었습니다. 관리자 승인 후 로그인할 수 있습니다." }, 201);
 }
 
 async function handleLogin(request, env) {
@@ -170,22 +179,27 @@ async function handleLogin(request, env) {
   }
   await db.resetFailedLogins(env.DB, account.id);
 
-  // 이메일을 등록하기 전에는 초기 로그인에 2FA를 요구하지 않는다.
-  // 사용자가 이메일을 저장한 순간부터 모든 계정에 이메일 2FA를 적용한다.
-  const mfaRequired = Boolean(account.email);
+  // 이메일을 등록했거나 인증 앱(TOTP)을 켠 계정은 2단계 인증을 거친다.
+  const totp = await db.getTotp(env.DB, account.id);
+  const totpEnabled = Boolean(totp && totp.enabled);
+  const mfaRequired = Boolean(account.email) || totpEnabled;
 
   if (mfaRequired) {
-    if (!account.email) {
-      // 이메일이 없으면 MFA를 강제할 수 없으므로 관리자에게 알리고 로그인 차단
-      return json(env, { error: "MFA가 필요하지만 계정에 이메일이 등록되어 있지 않습니다. 관리자에게 문의하세요." }, 400);
-    }
     const pendingToken = randomToken(24);
     const pendingHash = await sha256Hex(pendingToken);
     await db.createMfaPending(env.DB, account.id, pendingHash, parseInt(env.MFA_TTL_MINUTES || "5", 10));
 
-    // 중앙 관리자는 이메일 발송 전에 이메일 MFA와 간편 코드 중 선택한다.
+    // 중앙 관리자는 이메일 발송 전에 인증 방법을 선택한다. (기존 이메일/간편 코드는 그대로 유지)
     if (account.role === "admin") {
-      return json(env, { mfaRequired: true, mfaMethods: ["email", "daily"], username: account.username, role: account.role, pendingToken });
+      const mfaMethods = [...(totpEnabled ? ["totp"] : []), ...(account.email ? ["email"] : []), "daily"];
+      return json(env, { mfaRequired: true, mfaMethods, username: account.username, role: account.role, pendingToken });
+    }
+
+    // 인증 앱을 켠 일반 사용자는 이메일을 자동 발송하지 않고 인증 앱 코드를 먼저 묻는다.
+    // 이메일이 있으면 /api/auth/mfa/send 로 이메일 코드를 대신 받을 수 있다.
+    if (totpEnabled) {
+      const mfaMethods = ["totp", ...(account.email ? ["email"] : [])];
+      return json(env, { mfaRequired: true, mfaMethods, username: account.username, role: account.role, pendingToken });
     }
 
     const since = Date.now() - MFA_RATE_WINDOW_MS;
@@ -254,6 +268,109 @@ async function handleMfaSend(request, env) {
     return json(env, { error: "인증 코드 이메일 발송에 실패했습니다." }, 502);
   }
   return json(env, { ok: true });
+}
+
+// ---------------- TOTP (인증 앱) ----------------
+
+async function handleTotpLoginVerify(request, env) {
+  const body = await request.json().catch(() => ({}));
+  const { pendingToken, code } = body;
+  if (typeof pendingToken !== "string" || typeof code !== "string") return badRequest(env, "요청 형식이 올바르지 않습니다.");
+  const pending = await db.getValidMfaPending(env.DB, await sha256Hex(pendingToken));
+  if (!pending) return unauthorized(env, "인증 요청이 만료되었거나 유효하지 않습니다.");
+  if ((pending.attempts || 0) >= TOTP_MAX_ATTEMPTS) {
+    await db.deleteMfaPending(env.DB, pending.id);
+    return unauthorized(env, "인증 시도 횟수를 초과했습니다. 다시 로그인해주세요.");
+  }
+  const account = await db.getAccountById(env.DB, pending.account_id);
+  if (!account || account.disabled) return forbidden(env, "중지된 계정입니다.");
+  const totp = await db.getTotp(env.DB, account.id);
+  if (!totp || !totp.enabled) return badRequest(env, "인증 앱이 설정되지 않은 계정입니다.");
+  if (!totpKeyConfigured(env)) return json(env, { error: "인증 앱 기능이 서버에 설정되지 않았습니다. 이메일 인증을 사용하세요." }, 503);
+
+  const secret = await decryptSecret(env, totp.secret_enc, account.id);
+  const step = await verifyTotp(secret, code);
+  if (step === null) {
+    await db.incrementPendingAttempts(env.DB, pending.id);
+    return unauthorized(env, "인증 앱 코드가 올바르지 않습니다.");
+  }
+  if (!(await db.consumeTotpStep(env.DB, account.id, step))) {
+    await db.incrementPendingAttempts(env.DB, pending.id);
+    return unauthorized(env, "이미 사용한 코드입니다. 다음 코드를 기다려 입력하세요.");
+  }
+  await db.deleteMfaPending(env.DB, pending.id);
+  return await issueSession(env, account);
+}
+
+async function handleTotpStatus(request, env) {
+  const auth = await requireSession(request, env);
+  if (!auth) return unauthorized(env);
+  const totp = await db.getTotp(env.DB, auth.account.id);
+  return json(env, { enabled: Boolean(totp && totp.enabled), available: totpKeyConfigured(env) });
+}
+
+// 1단계: 현재 비밀번호 확인 후 새 비밀키 발급 (아직 켜지지 않음)
+async function handleTotpSetup(request, env) {
+  const auth = await requireSession(request, env);
+  if (!auth) return unauthorized(env);
+  if (!totpKeyConfigured(env)) return json(env, { error: "인증 앱 기능이 서버에 설정되지 않았습니다." }, 503);
+  const body = await request.json().catch(() => ({}));
+  if (typeof body.password !== "string" || !(await verifyPassword(body.password, auth.account.password_hash))) {
+    return unauthorized(env, "현재 비밀번호가 올바르지 않습니다.");
+  }
+  const existing = await db.getTotp(env.DB, auth.account.id);
+  if (existing && existing.enabled) return json(env, { error: "이미 인증 앱이 켜져 있습니다. 먼저 해제하세요." }, 409);
+
+  const secret = generateTotpSecret();
+  await db.upsertPendingTotp(env.DB, auth.account.id, await encryptSecret(env, secret, auth.account.id));
+  return json(env, { secret, otpauthUri: otpauthUri({ account: auth.account.username, secret }) });
+}
+
+// 2단계: 인증 앱에 표시된 코드로 확인되면 켠다
+async function handleTotpEnable(request, env) {
+  const auth = await requireSession(request, env);
+  if (!auth) return unauthorized(env);
+  const body = await request.json().catch(() => ({}));
+  const totp = await db.getTotp(env.DB, auth.account.id);
+  if (!totp) return badRequest(env, "먼저 인증 앱 등록을 시작하세요.");
+  if (totp.enabled) return json(env, { error: "이미 인증 앱이 켜져 있습니다." }, 409);
+  if (!totpKeyConfigured(env)) return json(env, { error: "인증 앱 기능이 서버에 설정되지 않았습니다." }, 503);
+  const step = await verifyTotp(await decryptSecret(env, totp.secret_enc, auth.account.id), body.code);
+  if (step === null) return unauthorized(env, "인증 앱 코드가 올바르지 않습니다. 기기 시간이 맞는지 확인하세요.");
+  await db.enableTotp(env.DB, auth.account.id, step);
+  return json(env, { ok: true, enabled: true });
+}
+
+// 해제: 현재 비밀번호 + 인증 앱 코드 둘 다 필요
+async function handleTotpDisable(request, env) {
+  const auth = await requireSession(request, env);
+  if (!auth) return unauthorized(env);
+  const body = await request.json().catch(() => ({}));
+  if (typeof body.password !== "string" || !(await verifyPassword(body.password, auth.account.password_hash))) {
+    return unauthorized(env, "현재 비밀번호가 올바르지 않습니다.");
+  }
+  const totp = await db.getTotp(env.DB, auth.account.id);
+  if (!totp || !totp.enabled) {
+    if (totp) await db.deleteTotp(env.DB, auth.account.id); // 등록 중이던 미완료 키 정리
+    return json(env, { ok: true, enabled: false });
+  }
+  if (!totpKeyConfigured(env)) return json(env, { error: "인증 앱 기능이 서버에 설정되지 않았습니다." }, 503);
+  const step = await verifyTotp(await decryptSecret(env, totp.secret_enc, auth.account.id), body.code);
+  if (step === null || !(await db.consumeTotpStep(env.DB, auth.account.id, step))) {
+    return unauthorized(env, "인증 앱 코드가 올바르지 않습니다.");
+  }
+  await db.deleteTotp(env.DB, auth.account.id);
+  return json(env, { ok: true, enabled: false });
+}
+
+// 관리자: 휴대폰 분실 등으로 사용자의 인증 앱을 초기화
+async function handleAdminResetTotp(request, env, username) {
+  const { error } = await requireAdmin(request, env);
+  if (error) return error;
+  const account = await db.getAccountByUsername(env.DB, username);
+  if (!account) return notFound(env, "계정을 찾을 수 없습니다.");
+  await db.deleteTotp(env.DB, account.id);
+  return json(env, { ok: true, username, totpEnabled: false });
 }
 
 async function issueSession(env, account) {
@@ -344,6 +461,23 @@ async function handleChangeOwnPassword(request, env) {
   const passwordHash = await hashPassword(password);
   await db.updatePasswordHashById(env.DB, auth.account.id, passwordHash);
   return json(env, { ok: true });
+}
+
+async function handleGetDownloadSettings(request, env) {
+  const auth = await requireSession(request, env);
+  if (!auth) return unauthorized(env);
+  return json(env, { skipWait: await db.getSkipWait(env.DB, auth.account.username) });
+}
+
+async function handleSetDownloadSettings(request, env) {
+  const { error } = await requireAdmin(request, env);
+  if (error) return error;
+  const body = await request.json().catch(() => ({}));
+  const username = typeof body.username === "string" ? body.username.trim() : "";
+  if (!isValidUsername(username) || typeof body.skipWait !== "boolean") return badRequest(env, "설정 값이 올바르지 않습니다.");
+  if (!(await db.getAccountByUsername(env.DB, username))) return notFound(env, "계정을 찾을 수 없습니다.");
+  await db.setAppSetting(env.DB, "skip_wait:" + username, null, body.skipWait ? "1" : "0");
+  return json(env, { ok: true, username, skipWait: body.skipWait });
 }
 
 async function requireAdmin(request, env) {
@@ -492,6 +626,11 @@ export default {
       if (pathname === "/api/auth/mfa/send" && request.method === "POST") return await handleMfaSend(request, env);
       if (pathname === "/api/auth/mfa/daily" && request.method === "POST") return await handleDailyVerify(request, env);
       if (pathname === "/api/auth/mfa/verify" && request.method === "POST") return await handleMfaVerify(request, env);
+      if (pathname === "/api/auth/mfa/totp" && request.method === "POST") return await handleTotpLoginVerify(request, env);
+      if (pathname === "/api/account/totp" && request.method === "GET") return await handleTotpStatus(request, env);
+      if (pathname === "/api/account/totp/setup" && request.method === "POST") return await handleTotpSetup(request, env);
+      if (pathname === "/api/account/totp/enable" && request.method === "POST") return await handleTotpEnable(request, env);
+      if (pathname === "/api/account/totp/disable" && request.method === "POST") return await handleTotpDisable(request, env);
       if (pathname === "/api/auth/logout" && request.method === "POST") return await handleLogout(request, env);
       if (pathname === "/api/auth/me" && request.method === "GET") return await handleMe(request, env);
       if (pathname === "/api/account/email" && request.method === "PATCH") return await handleUpdateOwnEmail(request, env);
@@ -499,6 +638,9 @@ export default {
 
       if (pathname === "/api/music" && request.method === "GET") return await handleGetMusic(request, env);
       if (pathname === "/api/music" && request.method === "PATCH") return await handleSetMusic(request, env);
+
+      if (pathname === "/api/account/download-settings" && request.method === "GET") return await handleGetDownloadSettings(request, env);
+      if (pathname === "/api/account/download-settings" && request.method === "PATCH") return await handleSetDownloadSettings(request, env);
 
       if (pathname === "/api/accounts" && request.method === "GET") return await handleListAccounts(request, env);
       if (pathname === "/api/accounts" && request.method === "POST") return await handleCreateAccount(request, env);
@@ -515,6 +657,9 @@ export default {
       }
       if ((m = pathname.match(/^\/api\/accounts\/([^/]+)\/disable$/)) && request.method === "POST") {
         return await handleDisableAccount(request, env, decodeURIComponent(m[1]));
+      }
+      if ((m = pathname.match(/^\/api\/accounts\/([^/]+)\/totp$/)) && request.method === "DELETE") {
+        return await handleAdminResetTotp(request, env, decodeURIComponent(m[1]));
       }
       if ((m = pathname.match(/^\/api\/accounts\/([^/]+)$/)) && request.method === "DELETE") {
         return await handleDeleteAccount(request, env, decodeURIComponent(m[1]));
