@@ -137,6 +137,10 @@ export async function revokeSessionByTokenHash(db, tokenHash) {
 
 // ---- MFA ----
 
+export async function revokeAllSessions(db, accountId) {
+  return db.prepare("UPDATE sessions SET revoked_at = ? WHERE account_id = ? AND revoked_at IS NULL").bind(now(), accountId).run();
+}
+
 export async function createMfaCode(db, accountId, codeHash, ttlMinutes, purpose = "login") {
   const t = now();
   return db

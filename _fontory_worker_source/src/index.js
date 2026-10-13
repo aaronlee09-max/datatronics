@@ -408,12 +408,15 @@ async function handleTotpDisable(request, env) {
 
 // 관리자: 휴대폰 분실 등으로 사용자의 인증 앱을 전부 초기화
 async function handleAdminResetTotp(request, env, username) {
-  const { error } = await requireAdmin(request, env);
+  const { error, auth } = await requireAdmin(request, env);
   if (error) return error;
   const account = await db.getAccountByUsername(env.DB, username);
   if (!account) return notFound(env, "계정을 찾을 수 없습니다.");
   await db.deleteAllTotp(env.DB, account.id);
-  return json(env, { ok: true, username, totpEnabled: false });
+  // 분실한 기기에 남은 로그인 세션도 끊는다. (관리자가 자기 계정을 초기화할 때는 현재 세션 유지)
+  const revokeSessions = auth.account.id !== account.id;
+  if (revokeSessions) await db.revokeAllSessions(env.DB, account.id);
+  return json(env, { ok: true, username, totpEnabled: false, sessionsRevoked: revokeSessions });
 }
 
 async function issueSession(env, account) {
