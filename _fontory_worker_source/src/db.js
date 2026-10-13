@@ -18,10 +18,11 @@ export async function listAccounts(db) {
       "SELECT id, username, role, status, disabled, mfa_enabled, email, created_at, updated_at FROM accounts ORDER BY username"
     )
     .all();
-  const totpOn = await listTotpEnabledIds(db);
+  const totpCounts = await listTotpDeviceCounts(db);
   for (const row of results) {
     row.skip_wait = await getSkipWait(db, row.username);
-    row.totp_enabled = totpOn.has(row.id);
+    row.totp_count = totpCounts.get(row.id) || 0;
+    row.totp_enabled = row.totp_count > 0;
     delete row.id; // 내부 ID는 응답에 노출하지 않음
   }
   return results; // password_hash는 의도적으로 SELECT하지 않음
@@ -220,63 +221,92 @@ export async function setMusicSetting(db, musicId) {
   return setAppSetting(db, "global_music", musicId, null);
 }
 
-// ---- TOTP (인증 앱) ----
-// 마이그레이션 0004가 아직 적용되지 않은 DB에서도 기존 로그인이 깨지지 않도록
+// ---- TOTP (인증 앱) : 계정당 여러 기기 ----
+// 마이그레이션 0005가 아직 적용되지 않은 DB에서도 기존 로그인이 깨지지 않도록
 // 조회는 "테이블 없음"을 TOTP 미사용으로 취급한다.
 
-export async function getTotp(db, accountId) {
+function noTable(e) {
+  return String(e && e.message).includes("no such table");
+}
+
+// 켜진(확인 완료) 기기 목록
+export async function listTotpDevices(db, accountId) {
   try {
-    return await db.prepare("SELECT * FROM totp_credentials WHERE account_id = ?").bind(accountId).first();
+    const { results } = await db
+      .prepare("SELECT id, label, secret_enc, last_used_step, created_at FROM totp_devices WHERE account_id = ? AND enabled = 1 ORDER BY id")
+      .bind(accountId)
+      .all();
+    return results || [];
   } catch (e) {
-    if (String(e && e.message).includes("no such table")) return null;
+    if (noTable(e)) return [];
     throw e;
   }
 }
 
-export async function upsertPendingTotp(db, accountId, secretEnc) {
+export async function getTotpDevice(db, accountId, id) {
+  try {
+    return await db.prepare("SELECT * FROM totp_devices WHERE account_id = ? AND id = ?").bind(accountId, id).first();
+  } catch (e) {
+    if (noTable(e)) return null;
+    throw e;
+  }
+}
+
+// 등록 중(미확인)이던 키는 정리하고 새 키를 하나 만든다. 새 기기의 id 를 반환.
+export async function createPendingTotpDevice(db, accountId, label, secretEnc) {
   const t = now();
-  return db
-    .prepare(
-      "INSERT INTO totp_credentials (account_id, secret_enc, enabled, last_used_step, created_at, updated_at) VALUES (?, ?, 0, NULL, ?, ?) " +
-        "ON CONFLICT(account_id) DO UPDATE SET secret_enc = excluded.secret_enc, enabled = 0, last_used_step = NULL, updated_at = excluded.updated_at WHERE totp_credentials.enabled = 0"
-    )
-    .bind(accountId, secretEnc, t, t)
-    .run();
-}
-
-export async function enableTotp(db, accountId, step) {
-  return db
-    .prepare("UPDATE totp_credentials SET enabled = 1, last_used_step = ?, updated_at = ? WHERE account_id = ? AND enabled = 0")
-    .bind(step, now(), accountId)
-    .run();
-}
-
-// 같은 step 이하의 코드는 다시 쓸 수 없다. 동시에 두 요청이 와도 하나만 성공한다.
-export async function consumeTotpStep(db, accountId, step) {
+  await db.prepare("DELETE FROM totp_devices WHERE account_id = ? AND enabled = 0").bind(accountId).run();
   const res = await db
-    .prepare(
-      "UPDATE totp_credentials SET last_used_step = ?, updated_at = ? WHERE account_id = ? AND enabled = 1 AND (last_used_step IS NULL OR last_used_step < ?)"
-    )
-    .bind(step, now(), accountId, step)
+    .prepare("INSERT INTO totp_devices (account_id, label, secret_enc, enabled, last_used_step, created_at, updated_at) VALUES (?, ?, ?, 0, NULL, ?, ?)")
+    .bind(accountId, label, secretEnc, t, t)
+    .run();
+  return res.meta && res.meta.last_row_id;
+}
+
+export async function enableTotpDevice(db, accountId, id, step) {
+  const res = await db
+    .prepare("UPDATE totp_devices SET enabled = 1, last_used_step = ?, updated_at = ? WHERE account_id = ? AND id = ? AND enabled = 0")
+    .bind(step, now(), accountId, id)
     .run();
   return (res.meta && res.meta.changes) === 1;
 }
 
-export async function deleteTotp(db, accountId) {
-  return db.prepare("DELETE FROM totp_credentials WHERE account_id = ?").bind(accountId).run();
+// 같은 기기에서 같은 step 이하의 코드는 다시 쓸 수 없다. 동시에 두 요청이 와도 하나만 성공한다.
+export async function consumeTotpDeviceStep(db, id, step) {
+  const res = await db
+    .prepare(
+      "UPDATE totp_devices SET last_used_step = ?, updated_at = ? WHERE id = ? AND enabled = 1 AND (last_used_step IS NULL OR last_used_step < ?)"
+    )
+    .bind(step, now(), id, step)
+    .run();
+  return (res.meta && res.meta.changes) === 1;
+}
+
+export async function deleteTotpDevice(db, accountId, id) {
+  return db.prepare("DELETE FROM totp_devices WHERE account_id = ? AND id = ?").bind(accountId, id).run();
+}
+
+// 관리자 초기화 / 일괄 삭제 (미완료 키 포함)
+export async function deleteAllTotp(db, accountId) {
+  try {
+    return await db.prepare("DELETE FROM totp_devices WHERE account_id = ?").bind(accountId).run();
+  } catch (e) {
+    if (noTable(e)) return null;
+    throw e;
+  }
 }
 
 export async function incrementPendingAttempts(db, id) {
   return db.prepare("UPDATE mfa_pending SET attempts = attempts + 1 WHERE id = ?").bind(id).run();
 }
 
-// 관리자 계정 목록에 인증 앱 사용 여부를 표시하기 위한 조회 (테이블이 없으면 빈 목록)
-export async function listTotpEnabledIds(db) {
+// 관리자 계정 목록에 인증 앱 등록 수를 표시하기 위한 조회 (테이블이 없으면 빈 맵)
+export async function listTotpDeviceCounts(db) {
   try {
-    const { results } = await db.prepare("SELECT account_id FROM totp_credentials WHERE enabled = 1").all();
-    return new Set((results || []).map((r) => r.account_id));
+    const { results } = await db.prepare("SELECT account_id, COUNT(*) AS n FROM totp_devices WHERE enabled = 1 GROUP BY account_id").all();
+    return new Map((results || []).map((r) => [r.account_id, r.n]));
   } catch (e) {
-    if (String(e && e.message).includes("no such table")) return new Set();
+    if (noTable(e)) return new Map();
     throw e;
   }
 }

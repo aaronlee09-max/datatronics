@@ -180,8 +180,7 @@ async function handleLogin(request, env) {
   await db.resetFailedLogins(env.DB, account.id);
 
   // 이메일을 등록했거나 인증 앱(TOTP)을 켠 계정은 2단계 인증을 거친다.
-  const totp = await db.getTotp(env.DB, account.id);
-  const totpEnabled = Boolean(totp && totp.enabled);
+  const totpEnabled = (await db.listTotpDevices(env.DB, account.id)).length > 0;
   const mfaRequired = Boolean(account.email) || totpEnabled;
 
   if (mfaRequired) {
@@ -286,6 +285,23 @@ async function checkCurrentPassword(env, account, password) {
   return null;
 }
 
+const TOTP_MAX_DEVICES = 5; // 계정당 인증 앱 최대 개수
+
+function cleanLabel(v) {
+  const t = typeof v === "string" ? v.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 30) : "";
+  return t;
+}
+
+// 켜진 기기들 중 코드가 맞는 기기를 찾는다. 반환: { device, step } 또는 null
+async function matchTotpDevice(env, accountId, devices, code) {
+  let found = null;
+  for (const d of devices) {
+    const step = await verifyTotp(await decryptSecret(env, d.secret_enc, accountId), code);
+    if (step !== null && !found) found = { device: d, step };
+  }
+  return found;
+}
+
 async function handleTotpLoginVerify(request, env) {
   const body = await request.json().catch(() => ({}));
   const { pendingToken, code } = body;
@@ -298,17 +314,16 @@ async function handleTotpLoginVerify(request, env) {
   }
   const account = await db.getAccountById(env.DB, pending.account_id);
   if (!account || account.disabled) return forbidden(env, "중지된 계정입니다.");
-  const totp = await db.getTotp(env.DB, account.id);
-  if (!totp || !totp.enabled) return badRequest(env, "인증 앱이 설정되지 않은 계정입니다.");
+  const devices = await db.listTotpDevices(env.DB, account.id);
+  if (!devices.length) return badRequest(env, "인증 앱이 설정되지 않은 계정입니다.");
   if (!totpKeyConfigured(env)) return json(env, { error: "인증 앱 기능이 서버에 설정되지 않았습니다. 이메일 인증을 사용하세요." }, 503);
 
-  const secret = await decryptSecret(env, totp.secret_enc, account.id);
-  const step = await verifyTotp(secret, code);
-  if (step === null) {
+  const hit = await matchTotpDevice(env, account.id, devices, code);
+  if (!hit) {
     await db.incrementPendingAttempts(env.DB, pending.id);
     return unauthorized(env, "인증 앱 코드가 올바르지 않습니다.");
   }
-  if (!(await db.consumeTotpStep(env.DB, account.id, step))) {
+  if (!(await db.consumeTotpDeviceStep(env.DB, hit.device.id, hit.step))) {
     await db.incrementPendingAttempts(env.DB, pending.id);
     return unauthorized(env, "이미 사용한 코드입니다. 다음 코드를 기다려 입력하세요.");
   }
@@ -319,11 +334,16 @@ async function handleTotpLoginVerify(request, env) {
 async function handleTotpStatus(request, env) {
   const auth = await requireSession(request, env);
   if (!auth) return unauthorized(env);
-  const totp = await db.getTotp(env.DB, auth.account.id);
-  return json(env, { enabled: Boolean(totp && totp.enabled), available: totpKeyConfigured(env) });
+  const devices = await db.listTotpDevices(env.DB, auth.account.id);
+  return json(env, {
+    enabled: devices.length > 0,
+    available: totpKeyConfigured(env),
+    max: TOTP_MAX_DEVICES,
+    devices: devices.map((d) => ({ id: d.id, label: d.label || "인증 앱", createdAt: d.created_at })),
+  });
 }
 
-// 1단계: 현재 비밀번호 확인 후 새 비밀키 발급 (아직 켜지지 않음)
+// 1단계: 현재 비밀번호 확인 후 새 기기용 비밀키 발급 (아직 켜지지 않음)
 async function handleTotpSetup(request, env) {
   const auth = await requireSession(request, env);
   if (!auth) return unauthorized(env);
@@ -331,57 +351,68 @@ async function handleTotpSetup(request, env) {
   const body = await request.json().catch(() => ({}));
   const pwError = await checkCurrentPassword(env, auth.account, body.password);
   if (pwError) return pwError;
-  const existing = await db.getTotp(env.DB, auth.account.id);
-  if (existing && existing.enabled) return json(env, { error: "이미 인증 앱이 켜져 있습니다. 먼저 해제하세요." }, 409);
+  const devices = await db.listTotpDevices(env.DB, auth.account.id);
+  if (devices.length >= TOTP_MAX_DEVICES) return json(env, { error: `인증 앱은 최대 ${TOTP_MAX_DEVICES}개까지 등록할 수 있습니다.` }, 409);
 
+  const label = cleanLabel(body.label) || `인증 앱 ${devices.length + 1}`;
   const secret = generateTotpSecret();
-  await db.upsertPendingTotp(env.DB, auth.account.id, await encryptSecret(env, secret, auth.account.id));
-  return json(env, { secret, otpauthUri: otpauthUri({ account: auth.account.username, secret }) });
+  const deviceId = await db.createPendingTotpDevice(env.DB, auth.account.id, label, await encryptSecret(env, secret, auth.account.id));
+  return json(env, { deviceId, label, secret, otpauthUri: otpauthUri({ account: `${auth.account.username} (${label})`, secret }) });
 }
 
-// 2단계: 인증 앱에 표시된 코드로 확인되면 켠다
+// 2단계: 인증 앱에 표시된 코드로 확인되면 그 기기를 켠다
 async function handleTotpEnable(request, env) {
   const auth = await requireSession(request, env);
   if (!auth) return unauthorized(env);
   const body = await request.json().catch(() => ({}));
-  const totp = await db.getTotp(env.DB, auth.account.id);
-  if (!totp) return badRequest(env, "먼저 인증 앱 등록을 시작하세요.");
-  if (totp.enabled) return json(env, { error: "이미 인증 앱이 켜져 있습니다." }, 409);
+  const deviceId = Number(body.deviceId);
+  if (!Number.isInteger(deviceId)) return badRequest(env, "먼저 인증 앱 등록을 시작하세요.");
+  const device = await db.getTotpDevice(env.DB, auth.account.id, deviceId);
+  if (!device) return badRequest(env, "먼저 인증 앱 등록을 시작하세요.");
+  if (device.enabled) return json(env, { error: "이미 등록된 인증 앱입니다." }, 409);
   if (!totpKeyConfigured(env)) return json(env, { error: "인증 앱 기능이 서버에 설정되지 않았습니다." }, 503);
-  const step = await verifyTotp(await decryptSecret(env, totp.secret_enc, auth.account.id), body.code);
+  if ((await db.listTotpDevices(env.DB, auth.account.id)).length >= TOTP_MAX_DEVICES) {
+    return json(env, { error: `인증 앱은 최대 ${TOTP_MAX_DEVICES}개까지 등록할 수 있습니다.` }, 409);
+  }
+  const step = await verifyTotp(await decryptSecret(env, device.secret_enc, auth.account.id), body.code);
   if (step === null) return unauthorized(env, "인증 앱 코드가 올바르지 않습니다. 기기 시간이 맞는지 확인하세요.");
-  await db.enableTotp(env.DB, auth.account.id, step);
-  return json(env, { ok: true, enabled: true });
+  if (!(await db.enableTotpDevice(env.DB, auth.account.id, deviceId, step))) {
+    return json(env, { error: "이미 등록된 인증 앱입니다." }, 409);
+  }
+  return json(env, { ok: true, enabled: true, deviceId });
 }
 
-// 해제: 현재 비밀번호 + 인증 앱 코드 둘 다 필요
+// 삭제: 현재 비밀번호 + 등록된 인증 앱 중 아무거나의 코드 필요 (마지막 하나를 지우면 인증 앱 2FA가 꺼진다)
 async function handleTotpDisable(request, env) {
   const auth = await requireSession(request, env);
   if (!auth) return unauthorized(env);
   const body = await request.json().catch(() => ({}));
   const pwError = await checkCurrentPassword(env, auth.account, body.password);
   if (pwError) return pwError;
-  const totp = await db.getTotp(env.DB, auth.account.id);
-  if (!totp || !totp.enabled) {
-    if (totp) await db.deleteTotp(env.DB, auth.account.id); // 등록 중이던 미완료 키 정리
-    return json(env, { ok: true, enabled: false });
+  const devices = await db.listTotpDevices(env.DB, auth.account.id);
+  if (!devices.length) {
+    await db.deleteAllTotp(env.DB, auth.account.id); // 등록 중이던 미완료 키 정리
+    return json(env, { ok: true, enabled: false, devices: [] });
   }
+  const deviceId = Number(body.deviceId);
+  if (!devices.some((d) => d.id === deviceId)) return badRequest(env, "삭제할 인증 앱을 찾을 수 없습니다.");
   if (!totpKeyConfigured(env)) return json(env, { error: "인증 앱 기능이 서버에 설정되지 않았습니다." }, 503);
-  const step = await verifyTotp(await decryptSecret(env, totp.secret_enc, auth.account.id), body.code);
-  if (step === null || !(await db.consumeTotpStep(env.DB, auth.account.id, step))) {
+  const hit = await matchTotpDevice(env, auth.account.id, devices, body.code);
+  if (!hit || !(await db.consumeTotpDeviceStep(env.DB, hit.device.id, hit.step))) {
     return unauthorized(env, "인증 앱 코드가 올바르지 않습니다.");
   }
-  await db.deleteTotp(env.DB, auth.account.id);
-  return json(env, { ok: true, enabled: false });
+  await db.deleteTotpDevice(env.DB, auth.account.id, deviceId);
+  const left = await db.listTotpDevices(env.DB, auth.account.id);
+  return json(env, { ok: true, enabled: left.length > 0, devices: left.map((d) => ({ id: d.id, label: d.label || "인증 앱", createdAt: d.created_at })) });
 }
 
-// 관리자: 휴대폰 분실 등으로 사용자의 인증 앱을 초기화
+// 관리자: 휴대폰 분실 등으로 사용자의 인증 앱을 전부 초기화
 async function handleAdminResetTotp(request, env, username) {
   const { error } = await requireAdmin(request, env);
   if (error) return error;
   const account = await db.getAccountByUsername(env.DB, username);
   if (!account) return notFound(env, "계정을 찾을 수 없습니다.");
-  await db.deleteTotp(env.DB, account.id);
+  await db.deleteAllTotp(env.DB, account.id);
   return json(env, { ok: true, username, totpEnabled: false });
 }
 
