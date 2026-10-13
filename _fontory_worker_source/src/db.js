@@ -15,10 +15,15 @@ export async function getAccountById(db, id) {
 export async function listAccounts(db) {
   const { results } = await db
     .prepare(
-      "SELECT username, role, status, disabled, mfa_enabled, email, created_at, updated_at FROM accounts ORDER BY username"
+      "SELECT id, username, role, status, disabled, mfa_enabled, email, created_at, updated_at FROM accounts ORDER BY username"
     )
     .all();
-  for (const row of results) row.skip_wait = await getSkipWait(db, row.username);
+  const totpOn = await listTotpEnabledIds(db);
+  for (const row of results) {
+    row.skip_wait = await getSkipWait(db, row.username);
+    row.totp_enabled = totpOn.has(row.id);
+    delete row.id; // 내부 ID는 응답에 노출하지 않음
+  }
   return results; // password_hash는 의도적으로 SELECT하지 않음
 }
 
@@ -263,4 +268,15 @@ export async function deleteTotp(db, accountId) {
 
 export async function incrementPendingAttempts(db, id) {
   return db.prepare("UPDATE mfa_pending SET attempts = attempts + 1 WHERE id = ?").bind(id).run();
+}
+
+// 관리자 계정 목록에 인증 앱 사용 여부를 표시하기 위한 조회 (테이블이 없으면 빈 목록)
+export async function listTotpEnabledIds(db) {
+  try {
+    const { results } = await db.prepare("SELECT account_id FROM totp_credentials WHERE enabled = 1").all();
+    return new Set((results || []).map((r) => r.account_id));
+  } catch (e) {
+    if (String(e && e.message).includes("no such table")) return new Set();
+    throw e;
+  }
 }
