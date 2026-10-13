@@ -272,6 +272,20 @@ async function handleMfaSend(request, env) {
 
 // ---------------- TOTP (인증 앱) ----------------
 
+// 인증 앱 등록/해제 시 현재 비밀번호 확인. 로그인과 같은 잠금 규칙(5회 실패 → 15분)을 적용한다.
+// 반환: null(통과) 또는 오류 Response
+async function checkCurrentPassword(env, account, password) {
+  if (account.locked_until && account.locked_until > Date.now()) {
+    return json(env, { error: "비밀번호 시도가 너무 많습니다. 잠시 후 다시 시도하세요." }, 429);
+  }
+  if (typeof password !== "string" || !(await verifyPassword(password, account.password_hash))) {
+    await db.recordFailedLogin(env.DB, account.id, LOCK_THRESHOLD, LOCK_MINUTES);
+    return unauthorized(env, "현재 비밀번호가 올바르지 않습니다.");
+  }
+  if (account.failed_attempts) await db.resetFailedLogins(env.DB, account.id);
+  return null;
+}
+
 async function handleTotpLoginVerify(request, env) {
   const body = await request.json().catch(() => ({}));
   const { pendingToken, code } = body;
@@ -315,9 +329,8 @@ async function handleTotpSetup(request, env) {
   if (!auth) return unauthorized(env);
   if (!totpKeyConfigured(env)) return json(env, { error: "인증 앱 기능이 서버에 설정되지 않았습니다." }, 503);
   const body = await request.json().catch(() => ({}));
-  if (typeof body.password !== "string" || !(await verifyPassword(body.password, auth.account.password_hash))) {
-    return unauthorized(env, "현재 비밀번호가 올바르지 않습니다.");
-  }
+  const pwError = await checkCurrentPassword(env, auth.account, body.password);
+  if (pwError) return pwError;
   const existing = await db.getTotp(env.DB, auth.account.id);
   if (existing && existing.enabled) return json(env, { error: "이미 인증 앱이 켜져 있습니다. 먼저 해제하세요." }, 409);
 
@@ -346,9 +359,8 @@ async function handleTotpDisable(request, env) {
   const auth = await requireSession(request, env);
   if (!auth) return unauthorized(env);
   const body = await request.json().catch(() => ({}));
-  if (typeof body.password !== "string" || !(await verifyPassword(body.password, auth.account.password_hash))) {
-    return unauthorized(env, "현재 비밀번호가 올바르지 않습니다.");
-  }
+  const pwError = await checkCurrentPassword(env, auth.account, body.password);
+  if (pwError) return pwError;
   const totp = await db.getTotp(env.DB, auth.account.id);
   if (!totp || !totp.enabled) {
     if (totp) await db.deleteTotp(env.DB, auth.account.id); // 등록 중이던 미완료 키 정리
