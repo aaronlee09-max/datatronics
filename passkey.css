@@ -35,3 +35,4 @@
 .totp-qr svg{width:100%;height:auto}
 .totp-secret code{display:block;padding:10px 12px;border-radius:10px;background:var(--bg);font-size:15px;letter-spacing:.06em;word-break:break-all;user-select:all}
 #totpError{min-height:20px;color:#d33;font-size:12px}
+.admin-table th,.admin-table td{white-space:nowrap}.admin-table .admin-actions{white-space:normal;min-width:220px}
