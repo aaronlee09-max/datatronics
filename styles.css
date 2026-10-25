@@ -955,3 +955,7 @@ body.download-popup .download-progress progress::-webkit-progress-value{border-r
 body.download-popup .download-progress progress::-moz-progress-bar{border-radius:99px;background:linear-gradient(90deg,#0a84ff,#5e5ce6);box-shadow:0 0 18px rgba(10,132,255,.58)}
 @media(max-width:620px){body.download-popup #downloadProgress{padding:18px}body.download-popup .download-progress-card{padding:30px 22px 26px;border-radius:26px}body.download-popup .download-progress-card::after{left:22px;top:24px}body.download-popup .download-progress-preview-wrap{margin-top:20px;margin-bottom:28px}body.download-popup .download-progress-description{font-size:12px}}
 @media(prefers-reduced-motion:reduce){body.download-popup .download-progress-title::after{animation:none}body.download-popup .download-progress progress::-webkit-progress-value{transition:none}}
+
+/* Fontory brand logo */
+.site-logo { width: 36px; height: 36px; flex: 0 0 36px; object-fit: contain; border-radius: 10px; }
+.topbar { gap: 10px; }
