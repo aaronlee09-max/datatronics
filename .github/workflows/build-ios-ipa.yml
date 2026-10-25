@@ -1,0 +1,55 @@
+name: Build Fontory iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/native-ios-fontory
+    paths:
+      - "ios/**"
+      - ".github/workflows/build-ios-ipa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: ios
+        run: xcodegen generate
+
+      - name: Build archive without signing
+        run: |
+          xcodebuild \
+            -project ios/Fontory.xcodeproj \
+            -scheme Fontory \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath "$RUNNER_TEMP/Fontory.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            archive
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p "$RUNNER_TEMP/ipa/Payload"
+          APP_PATH="$RUNNER_TEMP/Fontory.xcarchive/Products/Applications/Fontory.app"
+          test -d "$APP_PATH"
+          cp -R "$APP_PATH" "$RUNNER_TEMP/ipa/Payload/Fontory.app"
+          cd "$RUNNER_TEMP/ipa"
+          /usr/bin/zip -qry "$GITHUB_WORKSPACE/Fontory-unsigned.ipa" Payload
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fontory-unsigned-IPA
+          path: Fontory-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 14
