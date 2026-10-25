@@ -1,0 +1,21 @@
+name: Fontory
+options:
+  bundleIdPrefix: run.softronics
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  Fontory:
+    type: application
+    platform: iOS
+    sources:
+      - Fontory
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: run.softronics.fontory
+        PRODUCT_NAME: Fontory
+        INFOPLIST_KEY_CFBundleDisplayName: Fontory
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SUPPORTS_MACCATALYST: NO
